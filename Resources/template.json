@@ -1,0 +1,64 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourcePrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of new Azure VNet where you can deploy Azure Sql Managed Instances and the resources that use them"
+            }
+        },
+        "virtualNetworkAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "First 2 octects of VNet Private IP address range (VNet prefix)"
+            }
+        }
+    },
+    "variables": {
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
+        "environmentPrefix": "[concat(parameters('resourcePrefix'),'-vnet')]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "sharedNetworkEnvironment",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'environment.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "virtualNetworkPrefix": {
+                        "value": "[variables('environmentPrefix')]"
+                    },
+                    "virtualNetworkAddressPrefix": {
+                        "value": "172.17"
+                    },
+                    "virtualNetworkSubnets": {
+                        "value": [ "appgateway" ]
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "sharedAppGateway",
+            "type": "Microsoft.Resources/deployments",
+            "condition": false,
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'environment.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
