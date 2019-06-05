@@ -63,6 +63,9 @@
                     },
                     "subnetRef": {
                       "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', reference('sharedNetworkEnvironment').outputs.virtualNetworkName.value, 'appgateway')]"
+                    },
+                    "appGatewayTier": {
+                        "value": "Standard_v2"
                     }
                 }
             }

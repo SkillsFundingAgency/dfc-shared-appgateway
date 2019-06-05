@@ -46,48 +46,76 @@
                 "description": "Set the private IP address for application gateway (public IP address generated if empty)"
             }
         },
-        "frontendPort": {
+        "httpFrontendPort": {
             "type": "int",
             "defaultValue": 80,
             "metadata": {
-                "description": "application gateway front end port"
+                "description": "Http frontend port."
+            }
+        },
+        "httpFrontendPortHttps": {
+            "type": "int",
+            "defaultValue": 443,
+            "metadata": {
+                "description": "Https frontend port."
             }
         },
         "backendPort": {
-          "type": "int",
-          "defaultValue": 80,
-          "metadata": {
-            "description": "application gateway back end port"
-          }
+            "type": "int",
+            "defaultValue": 443,
+            "metadata": {
+                "description": "application gateway back end port"
+            }
         },
         "backendIPAddresses": {
-          "type": "array",
-          "defaultValue": [],
-          "metadata": {
-            "description": "back end pool ip addresses"
-          }
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "back end pool ip addresses"
+            }
         },
         "cookieBasedAffinity": {
-          "type": "string",
-          "allowedValues": [
-            "Enabled",
-            "Disabled"
-          ],
-          "defaultValue": "Disabled",
-          "metadata": {
-            "description": "cookie based affinity"
-          }
+            "type": "string",
+            "allowedValues": [
+                "Enabled",
+                "Disabled"
+            ],
+            "defaultValue": "Disabled",
+            "metadata": {
+                "description": "cookie based affinity"
+            }
         },
         "routingType": {
-          "type": "string",
-          "allowedValues": [
-            "Basic",
-            "PathBasedRouting"
-          ],
-          "defaultValue": "Basic",
-          "metadata": {
-            "description": "basic or path based routing"
-          }
+            "type": "string",
+            "allowedValues": [
+                "Basic",
+                "PathBasedRouting"
+            ],
+            "defaultValue": "Basic",
+            "metadata": {
+                "description": "basic or path based routing"
+            }
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the key vault."
+            }
+        },
+        "keyVaultSecretName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the certificate/secret stored in key vault."
+            }
+        },
+        "userAssignedIdentityName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the user assigned identity."
+            }
         }
     },
     "variables": {
@@ -163,9 +191,9 @@
                 ],
                 "frontendPorts": [
                     {
-                        "name": "appGatewayFrontendPort",
+                        "name": "default-frontend-port",
                         "properties": {
-                            "Port": "[parameters('frontendPort')]"
+                            "Port": "[parameters('httpFrontendPort')]"
                         }
                     }
                 ],
