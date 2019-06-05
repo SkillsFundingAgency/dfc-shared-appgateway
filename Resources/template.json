@@ -38,7 +38,7 @@
                     "virtualNetworkAddressPrefix": {
                         "value": "[parameters('virtualNetworkAddressPrefix')]"
                     },
-                    "virtualNetworkSubnets": {
+                    "virtualNetworkNonRoutedSubnets": {
                         "value": [ "appgateway" ]
                     }
                 }
