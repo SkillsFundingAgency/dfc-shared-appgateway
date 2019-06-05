@@ -16,7 +16,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-754_ArmTemplate/Resources/ArmTemplates/",
         "environmentPrefix": "[concat(parameters('resourcePrefix'),'-vnet')]"
     },
     "resources": [
