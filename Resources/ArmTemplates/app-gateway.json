@@ -62,9 +62,20 @@
         },
         "backendPort": {
             "type": "int",
-            "defaultValue": 443,
+            "defaultValue": 80,
             "metadata": {
                 "description": "application gateway back end port"
+            }
+        },
+        "backendProtocol": {
+            "type": "string",
+            "allowedValues": [
+                "Http",
+                "Https"
+            ],
+            "defaultValue": "Http",
+            "metadata": {
+                "description": "application gateway back end protocol"
             }
         },
         "backendIPAddresses": {
@@ -210,7 +221,7 @@
                     "name": "appGatewayBackendHttpSettings",
                     "properties": {
                       "Port": "[parameters('backendPort')]",
-                      "Protocol": "Http",
+                      "Protocol": "[parameters('backendProtocol')]",
                       "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]"
                     }
                   }
