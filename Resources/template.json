@@ -54,7 +54,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'environment.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'),'app-gateway.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
