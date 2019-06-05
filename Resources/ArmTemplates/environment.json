@@ -292,24 +292,6 @@
             }
         },
         {
-            "name": "[concat(variables('virtualNetworkName'), '/', parameters('virtualNetworkNonRoutedSubnets')[copyIndex()])]",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2018-08-01",
-            "dependsOn": [
-                "[variables('virtualNetworkName')]"
-            ],
-            "condition": "[greater(length(parameters('virtualNetworkNonRoutedSubnets')), 0)]",
-            "copy": {
-                "name": "nonroutedcopy",
-                "count": "[length(parameters('virtualNetworkNonRoutedSubnets'))]",
-                "mode": "Serial",
-                "batchSize": 1
-            },
-            "properties": {
-                "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex(128), '.0/24')]"
-            }
-        },
-        {
             "name": "[concat(variables('virtualNetworkName'), '/', variables('allRoutedSubnets')[copyIndex()])]",
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2018-08-01",
@@ -327,6 +309,24 @@
                 "routeTable": {
                     "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
                 }
+            }
+        },
+        {
+            "name": "[concat(variables('virtualNetworkName'), '/', parameters('virtualNetworkNonRoutedSubnets')[copyIndex()])]",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2018-08-01",
+            "dependsOn": [
+                "subnetcopy"
+            ],
+            "condition": "[greater(length(parameters('virtualNetworkNonRoutedSubnets')), 0)]",
+            "copy": {
+                "name": "nonroutedcopy",
+                "count": "[length(parameters('virtualNetworkNonRoutedSubnets'))]",
+                "mode": "Serial",
+                "batchSize": 1
+            },
+            "properties": {
+                "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex(128), '.0/24')]"
             }
         }
     ],
