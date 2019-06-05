@@ -35,7 +35,7 @@
                         "value": "[variables('environmentPrefix')]"
                     },
                     "virtualNetworkAddressPrefix": {
-                        "value": "172.17"
+                        "value": "[parameters('virtualNetworkAddressPrefix')]"
                     },
                     "virtualNetworkSubnets": {
                         "value": [ "appgateway" ]

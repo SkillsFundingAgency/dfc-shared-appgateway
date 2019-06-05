@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "resourcePrefix": {
-            "value": "__resourcePrefix__"
+            "value": "__AzurePrefix__"
         },
         "virtualNetworkAddressPrefix": {
-            "value": "__ipAddressPrefix__"
+            "value": "__networkPrefix__"
         }
     }
 }
