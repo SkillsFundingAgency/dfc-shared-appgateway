@@ -17,7 +17,8 @@
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-754_ArmTemplate/Resources/ArmTemplates/",
-        "environmentPrefix": "[concat(parameters('resourcePrefix'),'-vnet')]"
+        "environmentPrefix": "[concat(parameters('resourcePrefix'),'-vnet')]",
+        "appGatewayName": "[concat(parameters('resourcePrefix'),'-ag')]"
     },
     "resources": [
         {
@@ -47,7 +48,9 @@
             "apiVersion": "2017-05-10",
             "name": "sharedAppGateway",
             "type": "Microsoft.Resources/deployments",
-            "condition": false,
+            "dependsOn": [
+                "sharedNetworkEnvironment"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -55,6 +58,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "appGatewayName": {
+                        "value": "[variables('appGatewayName')]"
+                    },
+                    "subnetRef": {
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', reference('sharedNetworkEnvironment').outputs.virtualNetworkName.value, 'appgateway')]"
+                    }
                 }
             }
         }
