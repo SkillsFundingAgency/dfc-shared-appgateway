@@ -142,6 +142,19 @@
         },
         "frontendIpType": "[if(equals(length(parameters('privateIpAddress')),0),'public','private')]",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
+        "publicIPAddressProperties": {
+            "withDnsLabel": {
+                "PublicIPAddress": {
+                    "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
+                    "dnsSettings": {
+                        "domainNameLabel": "[parameters('publicDnsLabel')]"
+                    }
+                }
+            },
+            "withoutDnsLabel": {
+                "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
+            }
+        },
         "frontendIp": {
             "public": {
                 "PublicIPAddress": {
@@ -199,12 +212,7 @@
             "sku":{
                 "name": "[if(contains(parameters('appGatewayTier'),'v2'), 'Standard', 'Basic')]"
             },
-            "properties": {
-                "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
-                "dnsSettings": {
-                    "domainNameLabel": "[if(equals(length(parameters('routingRules')),0), json('null'), parameters('publicDnsLabel'))]"
-                }
-            }
+            "properties": "[if(equals(length(parameters('publicDnsLabel')),0), variables('publicIPAddressProperties').withoutDnsLabel, variables('publicIPAddressProperties').withDnsLabel)]"
         },
         {
             "name": "[parameters('appGatewayName')]",
