@@ -144,11 +144,9 @@
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "publicIPAddressProperties": {
             "withDnsLabel": {
-                "PublicIPAddress": {
-                    "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
-                    "dnsSettings": {
-                        "domainNameLabel": "[parameters('publicDnsLabel')]"
-                    }
+                "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('publicDnsLabel')]"
                 }
             },
             "withoutDnsLabel": {
