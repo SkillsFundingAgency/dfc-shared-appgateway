@@ -154,7 +154,19 @@
                     "id": "[parameters('subnetRef')]"
                 }
             }
-        }
+        },
+        "copy": [
+            {
+                "name": "backendAddressPools",
+                "count": "[parameters('backendIPAddresses')]",
+                "input": {
+                    "name": "[concat('appGatewayBackendPool',copyIndex('backendAddressPools'))]",
+                    "properties": {
+                      "BackendAddresses": "[parameters('backendIPAddresses')[copyIndex('backendAddressPools')]]"
+                    }
+                }
+            }
+        ]
     },
     "resources": [
         {
