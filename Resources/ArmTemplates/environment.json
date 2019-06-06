@@ -47,7 +47,7 @@
                 "name": "subnets",
                 "count": "[length(variables('allSubnets'))]",
                 "input": {
-                    "id": "[variables('allSubnets')[copyIndex('subnets')]]",
+                    "name": "[variables('allSubnets')[copyIndex('subnets')]]",
                     "properties": {
                         "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex('subnets'), '.0/24')]"
                     }
