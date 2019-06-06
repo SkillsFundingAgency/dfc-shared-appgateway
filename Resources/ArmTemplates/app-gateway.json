@@ -55,7 +55,14 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Set the private IP address for application gateway (public IP address generated if empty)"
+                "description": "Set the private IP address for application gateway (public IP address only generated if empty)"
+            }
+        },
+        "publicDnsLabel": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Set DNS label on public IP address for application gateway"
             }
         },
         "httpFrontendPort": {
@@ -193,7 +200,10 @@
                 "name": "[if(contains(parameters('appGatewayTier'),'v2'), 'Standard', 'Basic')]"
             },
             "properties": {
-                "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]"
+                "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('publicDnsLabel')]"
+                }
             }
         },
         {
