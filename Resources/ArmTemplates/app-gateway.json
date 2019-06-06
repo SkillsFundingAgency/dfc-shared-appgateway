@@ -32,11 +32,11 @@
         },
         "capacity": {
             "type": "int",
-            "minValue": 1,
+            "minValue": 2,
             "maxValue": 75,
             "defaultValue": 2,
             "metadata": {
-                "description": "Name of the application gateway resource"
+                "description": "Number of instances of the app gateway running"
             }
         },
         "privateIpAddress": {
