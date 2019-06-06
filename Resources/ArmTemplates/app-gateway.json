@@ -158,7 +158,7 @@
         "copy": [
             {
                 "name": "backendAddressPools",
-                "count": "[parameters('backendIPAddresses')]",
+                "count": "[length(parameters('backendIPAddresses'))]",
                 "input": {
                     "name": "[concat('appGatewayBackendPool',copyIndex('backendAddressPools'))]",
                     "properties": {
