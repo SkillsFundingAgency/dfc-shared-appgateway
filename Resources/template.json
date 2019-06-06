@@ -17,7 +17,6 @@
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-754_ArmTemplate/Resources/ArmTemplates/",
-        "environmentPrefix": "[concat(parameters('resourcePrefix'),'-vnet')]",
         "appGatewayName": "[concat(parameters('resourcePrefix'),'-ag')]"
     },
     "resources": [
@@ -33,7 +32,7 @@
                 },
                 "parameters": {
                     "virtualNetworkPrefix": {
-                        "value": "[variables('environmentPrefix')]"
+                        "value": "[parameters('resourcePrefix')]"
                     },
                     "virtualNetworkAddressPrefix": {
                         "value": "[parameters('virtualNetworkAddressPrefix')]"

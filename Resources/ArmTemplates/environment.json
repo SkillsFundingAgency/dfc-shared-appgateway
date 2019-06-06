@@ -37,7 +37,24 @@
         "defaultSubnets": [
             "default"
         ],
-        "allRoutedSubnets": "[union(variables('defaultSubnets'), parameters('virtualNetworkRoutedSubnets'))]"
+        "allSubnets": "[union(variables('defaultSubnets'), parameters('virtualNetworkRoutedSubnets'), parameters('virtualNetworkNonRoutedSubnets'))]",
+        "numRoutedSubnets": "[add(length(variables('defaultSubnets')), length(parameters('virtualNetworkRoutedSubnets')))]",
+        "routeTable": {
+            "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
+        },
+        "copy": [
+            {
+                "name": "subnets",
+                "count": "[variables('allSubnets')]",
+                "input": {
+                    "id": "[variables('allSubnets')[copyIndex('subnets')]]",
+                    "properties": {
+                        "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex('subnets'), '.0/24')]",
+                        "routeTable": "[if(greaterOrEquals(copyIndex('subnets'),variables('numRoutedSubnets')), json('null'), variables('routeTable'))]"
+                    }
+                }
+            }
+        ]
     },
     "resources": [
         {
@@ -288,45 +305,8 @@
                     "addressPrefixes": [
                         "[variables('localIpAddressRange')]"
                     ]
-                }
-            }
-        },
-        {
-            "name": "[concat(variables('virtualNetworkName'), '/', variables('allRoutedSubnets')[copyIndex()])]",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2018-08-01",
-            "dependsOn": [
-                "[variables('virtualNetworkName')]"
-            ],
-            "copy": {
-                "name": "subnetcopy",
-                "count": "[length(variables('allRoutedSubnets'))]",
-                "mode": "Serial",
-                "batchSize": 1
-            },
-            "properties": {
-                "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex(), '.0/24')]",
-                "routeTable": {
-                    "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
-                }
-            }
-        },
-        {
-            "name": "[concat(variables('virtualNetworkName'), '/', parameters('virtualNetworkNonRoutedSubnets')[copyIndex()])]",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2018-08-01",
-            "dependsOn": [
-                "subnetcopy"
-            ],
-            "condition": "[greater(length(parameters('virtualNetworkNonRoutedSubnets')), 0)]",
-            "copy": {
-                "name": "nonroutedcopy",
-                "count": "[length(parameters('virtualNetworkNonRoutedSubnets'))]",
-                "mode": "Serial",
-                "batchSize": 1
-            },
-            "properties": {
-                "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex(128), '.0/24')]"
+                },
+                "subnets": "[variables('subnets')]"
             }
         }
     ],
