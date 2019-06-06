@@ -202,7 +202,7 @@
             "properties": {
                 "publicIPAllocationMethod": "[if(contains(parameters('appGatewayTier'),'v2'), 'Static', 'Dynamic')]",
                 "dnsSettings": {
-                    "domainNameLabel": "[parameters('publicDnsLabel')]"
+                    "domainNameLabel": "[if(equals(length(parameters('routingRules')),0), json('null'), parameters('publicDnsLabel'))]"
                 }
             }
         },
