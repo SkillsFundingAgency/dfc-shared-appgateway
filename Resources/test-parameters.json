@@ -17,7 +17,7 @@
         "appGatewayRules": {
             "value": [ {
                 "name": "myrule",
-                "pool": "mypool",
+                "backend": "mypool",
                 "paths": [ "/dummy/*" ]
             } ]
         }

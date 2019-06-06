@@ -20,7 +20,7 @@
         "appGatewayRules": {
             "value": [ {
                 "name": "defaultUrlMapping",
-                "pool": "oldBackend",
+                "backend": "oldBackend",
                 "paths": [ "/other/*" ]
             } ]
         }
