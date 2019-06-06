@@ -259,7 +259,7 @@
                         "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
                       },
                       "backendAddressPool": {
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/backendAddressPools/appGatewayBackendPool')]"
+                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/backendAddressPools/appGatewayBackendPool0')]"
                       },
                       "backendHttpSettings": {
                         "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
