@@ -7,6 +7,22 @@
         },
         "virtualNetworkAddressPrefix": {
             "value": "__networkPrefix__"
+        },
+        "appGatewayPools": {
+            "value": [ {
+                "name": "defaultBackend",
+                "fqdn": "__liveBackend__"
+            }, {
+                "name": "oldBackend",
+                "fqdn": "__bauBackend__"
+            } ]
+        },
+        "appGatewayRules": {
+            "value": [ {
+                "name": "defaultUrlMapping",
+                "pool": "oldBackend",
+                "paths": [ "/other/*" ]
+            } ]
         }
     }
 }

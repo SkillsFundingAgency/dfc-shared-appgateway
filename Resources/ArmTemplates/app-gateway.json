@@ -30,6 +30,18 @@
                 "description": "Name of the application gateway resource"
             }
         },
+        "backendPools": {
+            "type": "array",
+            "metadata": {
+                "description": "back end pool ip addresses"
+            }
+        },
+        "routingRules": {
+            "type": "array",
+            "metadata": {
+                "description": "routing"
+            }
+        },
         "capacity": {
             "type": "int",
             "minValue": 2,
@@ -78,13 +90,6 @@
                 "description": "application gateway back end protocol"
             }
         },
-        "backendIPAddresses": {
-            "type": "array",
-            "defaultValue": [],
-            "metadata": {
-                "description": "back end pool ip addresses"
-            }
-        },
         "cookieBasedAffinity": {
             "type": "string",
             "allowedValues": [
@@ -94,17 +99,6 @@
             "defaultValue": "Disabled",
             "metadata": {
                 "description": "cookie based affinity"
-            }
-        },
-        "routingType": {
-            "type": "string",
-            "allowedValues": [
-                "Basic",
-                "PathBasedRouting"
-            ],
-            "defaultValue": "Basic",
-            "metadata": {
-                "description": "basic or path based routing"
             }
         },
         "keyVaultName": {
@@ -158,15 +152,31 @@
         "copy": [
             {
                 "name": "backendAddressPools",
-                "count": "[length(parameters('backendIPAddresses'))]",
+                "count": "[length(parameters('backendPools'))]",
                 "input": {
-                    "name": "[concat('appGatewayBackendPool',copyIndex('backendAddressPools'))]",
+                    "name": "[parameters('backendPools')[copyIndex('backendAddressPools')].name]",
                     "properties": {
                       "BackendAddresses": [
                           {
-                            "fqdn": "[parameters('backendIPAddresses')[copyIndex('backendAddressPools')]]"
+                            "fqdn": "[parameters('backendPools')[copyIndex('backendAddressPools')].fqdn]"
                           }
                       ]
+                    }
+                }
+            },
+            {
+                "name": "urlPathRules",
+                "count": "[length(parameters('routingRules'))]",
+                "input": {
+                    "name": "[parameters('routingRules')[copyIndex('urlPathMaps')].name]",
+                    "properties": {
+                        "backendAddressPool": {
+                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', parameters('appGatewayName'), parameters('routingRules')[copyIndex('urlPathMaps')].backend)]"
+                        },
+                        "paths": "[parameters('routingRules')[copyIndex('urlPathMaps')].paths]",
+                        "backendHttpSettings": {
+                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
+                        }
                     }
                 }
             }
@@ -250,19 +260,30 @@
                     }
                   }
                 ],
+                "urlPathMaps": [
+                    {
+                        "name": "default-path-map",
+                        "properties": {
+                            "defaultBackendAddressPool": {
+                                "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', parameters('appGatewayName'), parameters('backendPools')[0].name)]"
+                            },
+                            "defaultBackendHttpSettings": {
+                                "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
+                            },
+                            "pathRules": "[variables('urlPathRules')]"
+                        }
+                    }
+                ],
                 "requestRoutingRules": [
                   {
                     "Name": "defaultRoutingRule",
                     "properties": {
-                      "RuleType": "[parameters('routingType')]",
+                      "RuleType": "PathBasedRouting",
                       "httpListener": {
                         "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
                       },
-                      "backendAddressPool": {
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/backendAddressPools/appGatewayBackendPool0')]"
-                      },
-                      "backendHttpSettings": {
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+                      "urlPathMap": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
                       }
                     }
                   }

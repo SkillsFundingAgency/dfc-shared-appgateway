@@ -7,6 +7,19 @@
         },
         "virtualNetworkAddressPrefix": {
             "value": "10.10"
+        },
+        "appGatewayPools": {
+            "value": [ {
+                "name": "mypool",
+                "fqdn": "foo.example.net"
+            } ]
+        },
+        "appGatewayRules": {
+            "value": [ {
+                "name": "myrule",
+                "pool": "mypool",
+                "paths": [ "/dummy/*" ]
+            } ]
         }
     }
 }
