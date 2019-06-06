@@ -168,12 +168,12 @@
                 "name": "urlPathRules",
                 "count": "[length(parameters('routingRules'))]",
                 "input": {
-                    "name": "[parameters('routingRules')[copyIndex('urlPathMaps')].name]",
+                    "name": "[parameters('routingRules')[copyIndex('urlPathRules')].name]",
                     "properties": {
                         "backendAddressPool": {
-                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', parameters('appGatewayName'), parameters('routingRules')[copyIndex('urlPathMaps')].backend)]"
+                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', parameters('appGatewayName'), parameters('routingRules')[copyIndex('urlPathRules')].backend)]"
                         },
-                        "paths": "[parameters('routingRules')[copyIndex('urlPathMaps')].paths]",
+                        "paths": "[parameters('routingRules')[copyIndex('urlPathRules')].paths]",
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                         }
