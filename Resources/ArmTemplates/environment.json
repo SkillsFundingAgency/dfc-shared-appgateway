@@ -49,7 +49,8 @@
                 "input": {
                     "name": "[variables('allSubnets')[copyIndex('subnets')]]",
                     "properties": {
-                        "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex('subnets'), '.0/24')]"
+                        "addressPrefix": "[concat(parameters('virtualNetworkAddressPrefix'), '.', copyIndex('subnets'), '.0/24')]",
+                        "routeTable": "[if(less(copyIndex('subnets'), variables('numRoutedSubnets')), variables('routeTable'), json('null'))]"
                     }
                 }
             }
