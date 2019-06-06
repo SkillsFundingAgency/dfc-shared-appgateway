@@ -45,7 +45,7 @@
         "copy": [
             {
                 "name": "subnets",
-                "count": "[variables('allSubnets')]",
+                "count": "[length(variables('allSubnets'))]",
                 "input": {
                     "id": "[variables('allSubnets')[copyIndex('subnets')]]",
                     "properties": {
