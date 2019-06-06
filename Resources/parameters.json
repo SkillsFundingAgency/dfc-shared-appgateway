@@ -21,8 +21,16 @@
             "value": [ {
                 "name": "defaultUrlMapping",
                 "backend": "oldBackend",
-                "paths": [ "/other/*" ]
+                "paths": [
+                    "/skills-health-check/*",
+                    "/ResourcePackages/*",
+                    "/your-account/*",
+                    "/home/signout"
+                ]
             } ]
+        },
+        "publicDnsLabel": {
+            "value": "__publicDnsLabel__"
         }
     }
 }

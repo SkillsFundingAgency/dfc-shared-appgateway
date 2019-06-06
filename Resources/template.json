@@ -34,6 +34,13 @@
             "metadata": {
                 "description": "Number of instances of the app gateway running"
             }
+        },
+        "publicDnsLabel": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Set DNS label on public IP address for application gateway"
+            }
         }
     },
     "variables": {
@@ -89,6 +96,9 @@
                     },
                     "capacity": {
                         "value": "[parameters('capacity')]"
+                    },
+                    "publicDnsLabel": {
+                        "value": "[parameters('publicDnsLabel')]"
                     },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"
