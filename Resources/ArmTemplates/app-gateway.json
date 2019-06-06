@@ -162,7 +162,11 @@
                 "input": {
                     "name": "[concat('appGatewayBackendPool',copyIndex('backendAddressPools'))]",
                     "properties": {
-                      "BackendAddresses": "[parameters('backendIPAddresses')[copyIndex('backendAddressPools')]]"
+                      "BackendAddresses": [
+                          {
+                            "fqdn": "[parameters('backendIPAddresses')[copyIndex('backendAddressPools')]]"
+                          }
+                      ]
                     }
                 }
             }
@@ -220,14 +224,7 @@
                         }
                     }
                 ],
-                "backendAddressPools": [
-                  {
-                    "name": "appGatewayBackendPool",
-                    "properties": {
-                      "BackendAddresses": "[parameters('backendIPAddresses')]"
-                    }
-                  }
-                ],
+                "backendAddressPools": "[variables('backendAddressPools')]",
                 "backendHttpSettingsCollection": [
                   {
                     "name": "appGatewayBackendHttpSettings",
