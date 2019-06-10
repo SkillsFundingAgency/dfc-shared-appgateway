@@ -51,9 +51,6 @@
             "apiVersion": "2017-05-10",
             "name": "sharedAppGateway",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "sharedNetworkEnvironment"
-            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

@@ -7,11 +7,6 @@ resources:
     endpoint: 'GitHub (ESFA)'
     ref: refs/tags/v1.2.1
 
-trigger:
-  branches:
-    include:
-    - master
-
 pr:
   branches:
     include:
