@@ -2,13 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "resourcePrefix": {
+        "appGatewayName": {
             "type": "string",
             "metadata": {
                 "description": "The name of new Azure VNet where you can deploy Azure Sql Managed Instances and the resources that use them"
             }
         },
-        "virtualNetworkAddressPrefix": {
+        "appGatewaySubnetRef": {
             "type": "string",
             "metadata": {
                 "description": "First 2 octects of VNet Private IP address range (VNet prefix)"
@@ -44,33 +44,9 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-754_ArmTemplate/Resources/ArmTemplates/",
-        "appGatewayName": "[concat(parameters('resourcePrefix'),'-ag')]"
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-754_ArmTemplate/Resources/ArmTemplates/"
     },
     "resources": [
-        {
-            "apiVersion": "2017-05-10",
-            "name": "sharedNetworkEnvironment",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'environment.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "virtualNetworkPrefix": {
-                        "value": "[parameters('resourcePrefix')]"
-                    },
-                    "virtualNetworkAddressPrefix": {
-                        "value": "[parameters('virtualNetworkAddressPrefix')]"
-                    },
-                    "virtualNetworkNonRoutedSubnets": {
-                        "value": [ "appgateway" ]
-                    }
-                }
-            }
-        },
         {
             "apiVersion": "2017-05-10",
             "name": "sharedAppGateway",
@@ -81,15 +57,15 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-gateway.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'),'app-gateway-rewrite.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "appGatewayName": {
-                        "value": "[variables('appGatewayName')]"
+                        "value": "[parameters('appGatewayName')]"
                     },
                     "subnetRef": {
-                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', reference('sharedNetworkEnvironment').outputs.virtualNetworkName.value, 'appgateway')]"
+                        "value": "[parameters('appGatewaySubnetRef')]"
                     },
                     "appGatewayTier": {
                         "value": "Standard_v2"

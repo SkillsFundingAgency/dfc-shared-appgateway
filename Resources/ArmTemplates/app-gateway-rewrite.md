@@ -1,6 +1,6 @@
-# Application Gateway
+# Application Gateway (with rewrites)
 
-Adds an application gateway
+Adds an application gateway with rewrite rules
 
 ## parameters
 

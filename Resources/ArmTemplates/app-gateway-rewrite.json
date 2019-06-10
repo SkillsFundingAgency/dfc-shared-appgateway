@@ -17,15 +17,10 @@
         "appGatewayTier": {
             "type": "string",
             "allowedValues": [
-                "Standard_Small",
-                "Standard_Medium",
-                "Standard_Large",
-                "WAF_Medium",
-                "WAF_Large",
                 "Standard_v2",
                 "WAF_v2"
             ],
-            "defaultValue": "Standard_Small",
+            "defaultValue": "Standard_v2",
             "metadata": {
                 "description": "Application gateway tier"
             }
@@ -131,15 +126,6 @@
         }
     },
     "variables": {
-        "tier": {
-            "Standard_Small": "Standard",
-            "Standard_Medium": "Standard",
-            "Standard_Large": "Standard",
-            "WAF_Medium": "WAF",
-            "WAF_Large": "WAF",
-            "Standard_v2": "Standard_v2",
-            "WAF_v2": "WAF_v2"
-        },
         "frontendIpType": "[if(equals(length(parameters('privateIpAddress')),0),'public','private')]",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "publicIPAddressProperties": {
@@ -223,7 +209,7 @@
             "properties": {
                 "sku": {
                     "name": "[parameters('appGatewayTier')]",
-                    "tier": "[variables('tier')[parameters('appGatewayTier')]]",
+                    "tier": "[parameters('appGatewayTier')]",
                     "capacity": "[parameters('capacity')]"
                 },
                 "gatewayIPConfigurations": [
