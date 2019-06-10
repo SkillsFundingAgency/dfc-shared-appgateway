@@ -2,11 +2,11 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "resourcePrefix": {
-            "value": "__AzurePrefix__"
+        "appGatewayName": {
+            "value": "__appGatewayName__"
         },
-        "virtualNetworkAddressPrefix": {
-            "value": "__networkPrefix__"
+        "appGatewaySubnetRef": {
+            "value": "__subnetResourceId__"
         },
         "appGatewayPools": {
             "value": [ {
