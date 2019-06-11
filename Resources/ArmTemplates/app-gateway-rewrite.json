@@ -67,7 +67,7 @@
                 "description": "Http frontend port."
             }
         },
-        "httpFrontendPortHttps": {
+        "httpsFrontendPort": {
             "type": "int",
             "defaultValue": 443,
             "metadata": {
