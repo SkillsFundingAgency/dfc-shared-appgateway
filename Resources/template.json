@@ -85,12 +85,6 @@
                     },
                     "publicDnsLabel": {
                         "value": "[parameters('publicDnsLabel')]"
-                    },
-                    "keyVaultName" : {
-                        "value": "[parameters('keyVaultName')]"
-                    },
-                    "keyVaultSecretName": {
-                        "value": "[parameters('keyVaultSecretName')]"
                     }
                 }
             }
@@ -129,6 +123,12 @@
                     },
                     "routingRules": {
                         "value": "[parameters('appGatewayRules')]"
+                    },
+                    "keyVaultName" : {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "keyVaultSecretName": {
+                        "value": "[parameters('keyVaultSecretName')]"
                     }
                 }
             }
