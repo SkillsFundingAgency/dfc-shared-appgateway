@@ -131,6 +131,7 @@
         }
     },
     "variables": {
+        "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-umi')]",
         "tier": {
             "Standard_Small": "Standard",
             "Standard_Medium": "Standard",
@@ -153,6 +154,19 @@
                     "id": "[parameters('subnetRef')]"
                 }
             }
+        },
+        "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
+        "noSslCerts": [],
+        "sslCerts": [
+            {
+                "name": "default-ssl-certificate",
+                "properties": {
+                    "keyVaultSecretId": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/secrets/', parameters('KeyVaultSecretName'))]"
+                }
+            }
+        ],
+        "sslCertificate": {
+            "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', parameters('appGatewayName'), 'default-ssl-certificate')]"
         },
         "copy": [
             {
