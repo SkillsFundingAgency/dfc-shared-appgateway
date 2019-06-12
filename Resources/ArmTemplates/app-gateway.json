@@ -259,7 +259,7 @@
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
                       },
                       "FrontendPort": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/', if(variables('useSslCerts'), 'default-frontend-https-port', 'default-frontend-http-port'))]"
                       },
                       "Protocol": "[if(variables('useSslCerts'), 'Https', 'Http')]",
                       "SslCertificate": "[if(variables('useSslCerts'), variables('sslCertificate'), json('null'))]"

@@ -41,6 +41,20 @@
             "metadata": {
                 "description": "Set DNS label on public IP address for application gateway"
             }
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the key vault where the SSL certificate is (for SSL connections only)"
+            }
+        },
+        "keyVaultSecretName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the certificate/secret stored in key vault (for SSL connections only)"
+            }
         }
     },
     "variables": {
@@ -71,6 +85,12 @@
                     },
                     "publicDnsLabel": {
                         "value": "[parameters('publicDnsLabel')]"
+                    },
+                    "keyVaultName" : {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "keyVaultSecretName": {
+                        "value": "[parameters('keyVaultSecretName')]"
                     }
                 }
             }
