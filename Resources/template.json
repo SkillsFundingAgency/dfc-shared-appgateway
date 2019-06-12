@@ -100,6 +100,7 @@
             "apiVersion": "2017-05-10",
             "name": "keyvaultAppGatewayAccessPolicy",
             "type": "Microsoft.Resources/deployments",
+            "condition": "[greater(length(parameters('keyVaultName')),0)]",
             "dependsOn": [
                 "[variables('userAssignedIdentityName')]"
             ],
