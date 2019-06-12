@@ -121,13 +121,6 @@
             "metadata": {
                 "description": "The name of the certificate/secret stored in key vault."
             }
-        },
-        "userAssignedIdentityName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The name of the user assigned identity."
-            }
         }
     },
     "variables": {
@@ -154,6 +147,16 @@
                 }
             }
         },
+        "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0),greater(length(parameters('keyVaultSecretName')),0))]",
+        "noSslCerts": [],
+        "sslCerts": [
+            {
+                "name": "default-ssl-certificate",
+                "properties": {
+                    "keyVaultSecretId": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/secrets/', parameters('KeyVaultSecretName'))]"
+                }
+            }
+        ],
         "copy": [
             {
                 "name": "backendAddressPools",
@@ -198,6 +201,10 @@
                     "name": "[parameters('appGatewayTier')]",
                     "tier": "[variables('tier')[parameters('appGatewayTier')]]",
                     "capacity": "[parameters('capacity')]"
+                },
+                "sslPolicy": {
+                    "policyType": "Predefined",
+                    "policyName": "AppGwSslPolicy20170401S"
                 },
                 "gatewayIPConfigurations": [
                     {
@@ -248,9 +255,9 @@
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
                       },
                       "FrontendPort": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
                       },
-                      "Protocol": "Https",
+                      "Protocol": "Http",
                       "SslCertificate": null
                     }
                   }
