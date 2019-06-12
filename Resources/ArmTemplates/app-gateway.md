@@ -72,14 +72,15 @@ privateIpAddress: (optional) string
 
 Private IP address to allocate to the application gateway.
 If not specified, a public IP address will be created instead.
+The private IP address must be in the range specified by the subnet.
 
-publicDnsLabel: (optional) string
+publicIpAddressId: (optional) string
 
-Creates a DNS "A record" that starts with the specified label and resolves to this public IP address with the Azure-provided DNS servers.
-Does not create a DNS record in Azure if not provided.
+Public IP address reference ID.
+Does not allocate a public IP address if not specified.
 
-As an example, if the publicDnsLabel mysite is passed in and the resource is created in West Europe then this will create a DNS entry
-`mysite.westeurope.cloudapp.azure.com`.
+If you have the name of the public IP address resource you can get the ID with the following function
+`resourceId('Microsoft.Network/publicIPAddresses', 'publicIPAddressName')`.
 
 httpFrontendPort: (optional) int
 
