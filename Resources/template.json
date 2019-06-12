@@ -78,7 +78,7 @@
                     "ipAddressName": {
                         "value": "[variables('publicIPAddressName')]"
                     },
-                    "servicePrincipalObjectId": {
+                    "ipAddressSku": {
                         "value": "Standard"
                     },
                     "allocationMethod": {
