@@ -1,0 +1,25 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appGatewayName": {
+            "value": "dfc-foo-shared-ag"
+        },
+        "appGatewaySubnetRef": {
+            "value": "10.10"
+        },
+        "appGatewayPools": {
+            "value": [ {
+                "name": "mypool",
+                "fqdn": "foo.example.net"
+            } ]
+        },
+        "appGatewayRules": {
+            "value": [ {
+                "name": "myrule",
+                "backend": "mypool",
+                "paths": [ "/dummy/*" ]
+            } ]
+        }
+    }
+}
