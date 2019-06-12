@@ -157,6 +157,9 @@
                 }
             }
         ],
+        "sslCertificate": {
+            "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', parameters('appGatewayName'), 'default-ssl-certificate')]"
+        },
         "copy": [
             {
                 "name": "backendAddressPools",
@@ -206,6 +209,7 @@
                     "policyType": "Predefined",
                     "policyName": "AppGwSslPolicy20170401S"
                 },
+                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('noSslCerts'))]",
                 "gatewayIPConfigurations": [
                     {
                         "name": "appGatewayIpConfig",
@@ -257,8 +261,8 @@
                       "FrontendPort": {
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
                       },
-                      "Protocol": "Http",
-                      "SslCertificate": null
+                      "Protocol": "[if(variables('useSslCerts'), 'Https', 'Http')]",
+                      "SslCertificate": "[if(variables('useSslCerts'), variables('sslCertificate'), json('null'))]"
                     }
                   }
                 ],
