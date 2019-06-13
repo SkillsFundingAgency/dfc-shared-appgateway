@@ -120,3 +120,15 @@ userAssignedIdentityName: (optional) string
 
 Name of assigned identity with secret read access to the key vault.
 Will only add SSL options if keyVaultName, keyVaultSecretName and userAssignedIdentityName are supplied.
+
+This can be created in ARM with a Microsoft.ManagedIdentity/userAssignedIdentities resource.
+An example
+
+```json
+{
+    "name": "myidentity",
+    "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+    "apiVersion": "2018-11-30",
+    "location": "[resourceGroup().location]"
+}
+```

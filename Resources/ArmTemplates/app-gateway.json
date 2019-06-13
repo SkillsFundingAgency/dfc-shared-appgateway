@@ -314,7 +314,7 @@
                     }
                   }
                 ],
-                "httpListeners": "[if(variables('useSslCerts'), union(variables('httpListener'), variables('httpsListener')), variables('httpListener   '))]",
+                "httpListeners": "[if(variables('useSslCerts'), union(variables('httpListener'), variables('httpsListener')), variables('httpListener'))]",
                 "urlPathMaps": [
                     {
                         "name": "default-path-map",
