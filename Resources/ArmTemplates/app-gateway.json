@@ -289,25 +289,19 @@
                     }
                 ],
                 "requestRoutingRules": [
-                  {
-                    "Name": "defaultRoutingRule",
-                    "properties": {
-                      "RuleType": "PathBasedRouting",
-                      "httpListener": {
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
-                      },
-                      "urlPathMap": {
-                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
-                      }
+                    {
+                        "Name": "defaultRoutingRule",
+                        "properties": {
+                            "RuleType": "PathBasedRouting",
+                            "httpListener": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
+                            },
+                            "urlPathMap": {
+                                "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
+                            }
+                        }
                     }
-                  }
                 ]
-            },
-            "identity": {
-                "type": "UserAssigned",
-                "userAssignedIdentities": {
-                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]": {}
-                }
             }
         }       
     ]
