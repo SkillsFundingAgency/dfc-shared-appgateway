@@ -260,16 +260,16 @@
                 ],
                 "httpListeners": [
                   {
-                    "name": "appGatewayHttpListener",
+                    "name": "appGatewayHttpsListener",
                     "properties": {
                       "FrontendIpConfiguration": {
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
                       },
                       "FrontendPort": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
                       },
                       "Protocol": "Http",
-                      "SslCertificate": null
+                      "SslCertificate": "[variables('sslCertificate')]"
                     }
                   }
                 ],
