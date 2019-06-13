@@ -217,7 +217,6 @@
                     "policyType": "Predefined",
                     "policyName": "AppGwSslPolicy20170401S"
                 },
-                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('noSslCerts'))]",
                 "gatewayIPConfigurations": [
                     {
                         "name": "appGatewayIpConfig",
