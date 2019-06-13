@@ -164,33 +164,37 @@
                 }
             }
         ],
-        "httpListener": {
-            "name": "appGatewayHttpListener",
-            "properties": {
-                "FrontendIpConfiguration": {
-                    "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
-                },
-                "FrontendPort": {
-                    "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
-                },
-                "Protocol": "Http"
+        "httpListener": [
+            {
+                "name": "appGatewayHttpListener",
+                "properties": {
+                    "FrontendIpConfiguration": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                    },
+                    "FrontendPort": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
+                    },
+                    "Protocol": "Http"
+                }
             }
-        },
-        "httpsListener": {
-            "name": "appGatewayHttpsListener",
-            "properties": {
-                "FrontendIpConfiguration": {
-                    "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
-                },
-                "FrontendPort": {
-                    "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
-                },
-                "SslCertificate": {
-                    "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', parameters('appGatewayName'), 'default-ssl-certificate')]"
-                },
-                "Protocol": "Https"
+        ],
+        "httpsListener": [
+            {
+                "name": "appGatewayHttpsListener",
+                "properties": {
+                    "FrontendIpConfiguration": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                    },
+                    "FrontendPort": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
+                    },
+                    "SslCertificate": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', parameters('appGatewayName'), 'default-ssl-certificate')]"
+                    },
+                    "Protocol": "Https"
+                }
             }
-        },
+        ],
         "copy": [
             {
                 "name": "backendAddressPools",
