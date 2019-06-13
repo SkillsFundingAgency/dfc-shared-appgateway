@@ -14,7 +14,7 @@
                 "fqdn": "foo.example.net"
             } ]
         },
-        "appGatewayRules": {
+        "appGatewayRouting": {
             "value": [ {
                 "name": "myrule",
                 "backend": "mypool",
