@@ -211,7 +211,7 @@
         ],
         "httpsRouting": [
             {
-                "Name": "defaultHttpRoutingRule",
+                "Name": "defaultHttpsRoutingRule",
                 "properties": {
                     "RuleType": "PathBasedRouting",
                     "httpListener": {
