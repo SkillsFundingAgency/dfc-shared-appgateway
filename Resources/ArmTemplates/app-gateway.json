@@ -268,7 +268,7 @@
                       "FrontendPort": {
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
                       },
-                      "Protocol": "Http",
+                      "Protocol": "Https",
                       "SslCertificate": "[variables('sslCertificate')]"
                     }
                   }
@@ -293,7 +293,7 @@
                         "properties": {
                             "RuleType": "PathBasedRouting",
                             "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpsListener')]"
                             },
                             "urlPathMap": {
                                 "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
