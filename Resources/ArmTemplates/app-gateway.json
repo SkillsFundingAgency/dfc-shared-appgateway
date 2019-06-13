@@ -219,7 +219,7 @@
                 "identity": {
                     "type": "UserAssigned",
                     "userAssignedIdentities": {
-                        "[parameters('userAssignedIdentityName')]": {}
+                        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]": {}
                     }
                 },    
                 "sslCertificates": [
