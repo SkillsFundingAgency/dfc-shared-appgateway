@@ -163,7 +163,7 @@
                         "value": "[parameters('keyVaultSecretName')]"
                     },
                     "userAssignedIdentityName": {
-                        "value": "[variables('userAssignedIdentityName')]"
+                        "value": "[reference(variables('userAssignedIdentityName')).principalId]"
                     }
                 }
             }

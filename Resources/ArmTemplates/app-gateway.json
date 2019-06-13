@@ -131,7 +131,6 @@
         }
     },
     "variables": {
-        "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-umi')]",
         "tier": {
             "Standard_Small": "Standard",
             "Standard_Medium": "Standard",
@@ -220,7 +219,7 @@
                 "identity": {
                     "type": "UserAssigned",
                     "userAssignedIdentities": {
-                        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]": {}
+                        "[parameters('userAssignedIdentityName')]": {}
                     }
                 },    
                 "sslCertificates": [
