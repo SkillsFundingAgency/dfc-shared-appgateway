@@ -41,12 +41,27 @@
             "metadata": {
                 "description": "Set DNS label on public IP address for application gateway"
             }
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the key vault."
+            }
+        },
+        "keyVaultSecretName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the certificate/secret stored in key vault."
+            }
         }
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
         "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
-        "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]"
+        "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
+        "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]"
     },
     "resources": [
         {
@@ -76,10 +91,41 @@
             }
         },
         {
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "name": "[variables('userAssignedIdentityName')]",
+            "apiVersion": "2018-11-30",
+            "location": "[resourceGroup().location]"
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "keyvaultAppGatewayAccessPolicy",
+            "type": "Microsoft.Resources/deployments",
+            "condition": "[greater(length(parameters('keyVaultName')),0)]",
+            "dependsOn": [
+                "[variables('userAssignedIdentityName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'KeyVault/keyvault-access-policy.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "servicePrincipalObjectId": {
+                        "value": "[reference(variables('userAssignedIdentityName')).principalId]"
+                    }
+                }
+            }
+        },
+        {
             "apiVersion": "2017-05-10",
             "name": "sharedAppGateway",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
+                "keyvaultAppGatewayAccessPolicy",
                 "sharedAppGatewayIp"
             ],
             "properties": {
@@ -107,8 +153,20 @@
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"
                     },
+                    "backendPort": {
+                        "value": 443
+                    },
                     "routingRules": {
                         "value": "[parameters('appGatewayRules')]"
+                    },
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "keyVaultSecretName": {
+                        "value": "[parameters('keyVaultSecretName')]"
+                    },
+                    "userAssignedIdentityName": {
+                        "value": "[variables('userAssignedIdentityName')]"
                     }
                 }
             }

@@ -154,6 +154,75 @@
                 }
             }
         },
+        "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
+        "noSslCerts": [],
+        "sslCerts": [
+            {
+                "name": "default-ssl-certificate",
+                "properties": {
+                    "keyVaultSecretId": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/secrets/', parameters('KeyVaultSecretName'))]"
+                }
+            }
+        ],
+        "httpListener": [
+            {
+                "name": "appGatewayHttpListener",
+                "properties": {
+                    "FrontendIpConfiguration": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                    },
+                    "FrontendPort": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
+                    },
+                    "Protocol": "Http"
+                }
+            }
+        ],
+        "httpsListener": [
+            {
+                "name": "appGatewayHttpsListener",
+                "properties": {
+                    "FrontendIpConfiguration": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                    },
+                    "FrontendPort": {
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
+                    },
+                    "SslCertificate": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', parameters('appGatewayName'), 'default-ssl-certificate')]"
+                    },
+                    "Protocol": "Https"
+                }
+            }
+        ],
+        "httpRouting": [
+            {
+                "Name": "defaultHttpRoutingRule",
+                "properties": {
+                    "RuleType": "PathBasedRouting",
+                    "httpListener": {
+                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
+                    },
+                    "urlPathMap": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
+                    }
+                }
+            }
+        ],
+        "httpsRouting": [
+            {
+                "Name": "defaultHttpsRoutingRule",
+                "properties": {
+                    "RuleType": "PathBasedRouting",
+                    "httpListener": {
+                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpsListener')]"
+                    },
+                    "urlPathMap": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
+                    }
+                }
+            }
+        ],
         "copy": [
             {
                 "name": "backendAddressPools",
@@ -199,6 +268,11 @@
                     "tier": "[variables('tier')[parameters('appGatewayTier')]]",
                     "capacity": "[parameters('capacity')]"
                 },
+                "sslPolicy": {
+                    "policyType": "Predefined",
+                    "policyName": "AppGwSslPolicy20170401S"
+                },
+                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('noSslCerts'))]",
                 "gatewayIPConfigurations": [
                     {
                         "name": "appGatewayIpConfig",
@@ -240,21 +314,7 @@
                     }
                   }
                 ],
-                "httpListeners": [
-                  {
-                    "name": "appGatewayHttpListener",
-                    "properties": {
-                      "FrontendIpConfiguration": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
-                      },
-                      "FrontendPort": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
-                      },
-                      "Protocol": "Http",
-                      "SslCertificate": null
-                    }
-                  }
-                ],
+                "httpListeners": "[if(variables('useSslCerts'), union(variables('httpListener'), variables('httpsListener')), variables('httpListener'))]",
                 "urlPathMaps": [
                     {
                         "name": "default-path-map",
@@ -269,21 +329,14 @@
                         }
                     }
                 ],
-                "requestRoutingRules": [
-                  {
-                    "Name": "defaultRoutingRule",
-                    "properties": {
-                      "RuleType": "PathBasedRouting",
-                      "httpListener": {
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
-                      },
-                      "urlPathMap": {
-                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
-                      }
-                    }
-                  }
-                ]
-            }   
+                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]": {}
+                }
+            }
         }       
     ]
 }

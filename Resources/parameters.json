@@ -31,6 +31,12 @@
         },
         "publicDnsLabel": {
             "value": "__publicDnsLabel__"
+        },
+        "keyVaultName": {
+            "value": "__keyVaultName__"
+        },
+        "keyVaultSecretName": {
+            "value": "__keyVaultSecretName__"
         }
     }
 }
