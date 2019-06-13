@@ -224,12 +224,6 @@
                     }
                 },    
                 "sslCertificates": [
-                    {
-                        "name": "default-ssl-certificate",
-                        "properties": {
-                            "keyVaultSecretId": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/secrets/', parameters('KeyVaultSecretName'))]"
-                        }
-                    }
                 ],
                 "gatewayIPConfigurations": [
                     {
