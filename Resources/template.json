@@ -20,10 +20,16 @@
                 "description": "Array of objects describing the backend pools for the app gateway to use"
             }
         },
-        "appGatewayRules": {
+        "appGatewayRouting": {
             "type": "array",
             "metadata": {
                 "description": "Array of objects describing the rules for routing traffic"
+            }
+        },
+        "appGatewayRewrites": {
+            "type": "array",
+            "metadata": {
+                "description": "Array of objects describing the rewrite rules"
             }
         },
         "capacity": {
@@ -160,7 +166,10 @@
                         "value": "Https"
                     },
                     "routingRules": {
-                        "value": "[parameters('appGatewayRules')]"
+                        "value": "[parameters('appGatewayRouting')]"
+                    },
+                    "rewriteRules": {
+                        "value": "[parameters('appGatewayRewrites')]"
                     },
                     "keyVaultName": {
                         "value": "[parameters('keyVaultName')]"

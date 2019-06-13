@@ -37,6 +37,12 @@
                 "description": "routing"
             }
         },
+        "rewriteRules": {
+            "type": "array",
+            "metadata": {
+                "description": "routing"
+            }
+        },
         "capacity": {
             "type": "int",
             "minValue": 2,

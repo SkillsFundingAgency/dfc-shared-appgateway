@@ -17,7 +17,7 @@
                 "fqdn": "__bauBackend__"
             } ]
         },
-        "appGatewayRules": {
+        "appGatewayRouting": {
             "value": [ {
                 "name": "defaultUrlMapping",
                 "backend": "oldBackend",
@@ -28,6 +28,9 @@
                     "/home/signout"
                 ]
             } ]
+        },
+        "appGatewayRewrites": {
+            "value": []
         },
         "publicDnsLabel": {
             "value": "__publicDnsLabel__"

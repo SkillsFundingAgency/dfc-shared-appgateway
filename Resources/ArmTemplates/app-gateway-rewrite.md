@@ -46,7 +46,7 @@ A list of routing rules describing which paths should be routed to which backend
 If the path does not match any rule provided it will go to the default backend pool,
 which is the first backend specified (see above).
 
-Each backend is specified by an object consisting of
+Each routing rule is specified by an object consisting of
 
 * name: the name the backend pool resource
 * backend: the name of the backend to route to (as specified in the previous parameter, see above)
@@ -59,6 +59,21 @@ An example of a valid object
     "name": "routingRule",
     "backend": "backendName",
     "paths": [ "/myapp/*" ]
+}
+```
+
+rewriteRules: (required) array of object
+
+A list of rewrite rules ...
+
+Each rewrite rule is specified by an object consisting of
+
+*tbc
+An example of a valid object
+
+```json
+{
+    "name": "rewriteRule"
 }
 ```
 

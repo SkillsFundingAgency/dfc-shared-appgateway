@@ -20,6 +20,9 @@
                 "backend": "mypool",
                 "paths": [ "/dummy/*" ]
             } ]
+        },
+        "appGatewayRewrites": {
+            "value": []
         }
     }
 }
