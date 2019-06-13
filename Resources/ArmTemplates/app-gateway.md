@@ -71,15 +71,14 @@ Defaults to 2 if not supplied.
 privateIpAddress: (optional) string
 
 Private IP address to allocate to the application gateway.
-If not specified, a public IP address will be created instead.
+If not specified, no private IP address will be assigned to the app gateway.
+At least one of privateIpAddress or publicIpAddressId must be supplied.
 
-publicDnsLabel: (optional) string
+publicIpAddressId: (optional) string
 
-Creates a DNS "A record" that starts with the specified label and resolves to this public IP address with the Azure-provided DNS servers.
-Does not create a DNS record in Azure if not provided.
-
-As an example, if the publicDnsLabel mysite is passed in and the resource is created in West Europe then this will create a DNS entry
-`mysite.westeurope.cloudapp.azure.com`.
+An ID of a public IP address resource.
+If not specified, no public IP address will be assigned to the app gateway.
+At least one of privateIpAddress or publicIpAddressId must be supplied.
 
 httpFrontendPort: (optional) int
 
@@ -107,6 +106,17 @@ cookieBasedAffinity: (optional) string
 Enables or disables cookie based affinity.
 Defaults to disabled
 
-keyVaultName, keyVaultSecretName & userAssignedIdentityName: (optional) string
+keyVaultName: (optional) string
 
-Not yet used. Will be used to set the SSL certificate.
+Name of key vault to get the SSL certificate from.
+Will only add SSL options if keyVaultName, keyVaultSecretName and userAssignedIdentityName are supplied.
+
+keyVaultSecretName: (optional) string
+
+Name of secret in key vault containing the SSL certificate.
+Will only add SSL options if keyVaultName, keyVaultSecretName and userAssignedIdentityName are supplied.
+
+userAssignedIdentityName: (optional) string
+
+Name of assigned identity with secret read access to the key vault.
+Will only add SSL options if keyVaultName, keyVaultSecretName and userAssignedIdentityName are supplied.

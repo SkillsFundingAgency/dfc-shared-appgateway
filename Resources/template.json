@@ -59,7 +59,7 @@
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
-        "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-872_ssl/Resources/ArmTemplates/",
+        "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]"
     },
@@ -152,6 +152,9 @@
                     },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"
+                    },
+                    "backendPort": {
+                        "value": 443
                     },
                     "routingRules": {
                         "value": "[parameters('appGatewayRules')]"
