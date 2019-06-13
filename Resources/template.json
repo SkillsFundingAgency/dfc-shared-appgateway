@@ -156,6 +156,9 @@
                     "backendPort": {
                         "value": 443
                     },
+                    "backendProtocol": {
+                        "value": "https"
+                    },
                     "routingRules": {
                         "value": "[parameters('appGatewayRules')]"
                     },
