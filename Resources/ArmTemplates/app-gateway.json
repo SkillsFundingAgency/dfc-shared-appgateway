@@ -195,6 +195,34 @@
                 }
             }
         ],
+        "httpRouting": [
+            {
+                "Name": "defaultHttpRoutingRule",
+                "properties": {
+                    "RuleType": "PathBasedRouting",
+                    "httpListener": {
+                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpListener')]"
+                    },
+                    "urlPathMap": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
+                    }
+                }
+            }
+        ],
+        "httpsRouting": [
+            {
+                "Name": "defaultHttpRoutingRule",
+                "properties": {
+                    "RuleType": "PathBasedRouting",
+                    "httpListener": {
+                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpsListener')]"
+                    },
+                    "urlPathMap": {
+                        "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
+                    }
+                }
+            }
+        ],
         "copy": [
             {
                 "name": "backendAddressPools",
@@ -286,7 +314,7 @@
                     }
                   }
                 ],
-                "httpListeners": "[if(variables('useSslCerts'), union(variables('httpsListener'), variables('httpListener')), variables('httpListener'))]",
+                "httpListeners": "[if(variables('useSslCerts'), union(variables('httpListener'), variables('httpsListener')), variables('httpListener'))]",
                 "urlPathMaps": [
                     {
                         "name": "default-path-map",
@@ -301,20 +329,7 @@
                         }
                     }
                 ],
-                "requestRoutingRules": [
-                    {
-                        "Name": "defaultRoutingRule",
-                        "properties": {
-                            "RuleType": "PathBasedRouting",
-                            "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/httpListeners/appGatewayHttpsListener')]"
-                            },
-                            "urlPathMap": {
-                                "id": "[resourceId('Microsoft.Network/applicationGateways/urlPathMaps', parameters('appGatewayName'), 'default-path-map')]"
-                            }
-                        }
-                    }
-                ]
+                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]"
             },
             "identity": {
                 "type": "UserAssigned",
