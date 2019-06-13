@@ -44,6 +44,7 @@
         },
         "keyVaultName": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "The name of the key vault."
             }
