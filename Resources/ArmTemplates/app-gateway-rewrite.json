@@ -255,7 +255,7 @@
                     "properties": {
                         "rewriteRules": [ {
                             "name": "[concat('Rule', copyIndex('rewriterules'))]",
-                            "actionSet": "[parameters('rewriteRules')[copyIndex('rewriterules')].rules]"
+                            "actionSet": "[parameters('rewriteRules')[copyIndex('rewriterules')].rule]"
                         } ]
                     }
                 }

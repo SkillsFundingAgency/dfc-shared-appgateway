@@ -24,7 +24,7 @@
         "appGatewayRewrites": {
             "value": [ {
                 "name": "RWR1",
-                "rules": {
+                "rule": {
                     "requestHeaderConfigurations": [ {
                         "headerName": "Accept-Charset",
                         "headerValue": "utf-8"
