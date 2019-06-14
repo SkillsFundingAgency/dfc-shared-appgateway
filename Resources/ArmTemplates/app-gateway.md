@@ -64,12 +64,14 @@ An example of a valid object
 
 rewriteRules: (optional) array of object
 
-A list of rewrite rules which will be applied.
+A list of rewrite rules which will be applied to all URL paths.
 If not specified, no rewrite rules will be specified.
+This is only valid with v2 tiers.
 
 Each rewrite rule is specified by an object consisting of
 
 * name: the name the rewrite rule set
+* ruleSequence: an integer specifying the order to run the rules (lowest to highest)
 * actionSet: an array of objects specifying actionSet of the rule
 
 An example of a valid object
@@ -77,11 +79,13 @@ An example of a valid object
 ```json
 {
     "name": "rewriteRule",
+    "ruleSequence": 100,
     "actionSet": { ... }
 }
 ```
 
 See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayRewriteRuleActionSet
+for rule settings via the actionSet object.
 
 capacity: (optional) int
 
@@ -121,6 +125,10 @@ backendProtocol: (optional) string
 The protocol to access the backend pools over.
 Must be either Http or Https.
 Defaults to http if not specified.
+
+probe: (optional) object
+
+Configures a probe for the backend
 
 cookieBasedAffinity: (optional) string
 

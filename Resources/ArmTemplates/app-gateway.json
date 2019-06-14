@@ -17,6 +17,11 @@
         "appGatewayTier": {
             "type": "string",
             "allowedValues": [
+                "Standard_Small",
+                "Standard_Medium",
+                "Standard_Large",
+                "WAF_Medium",
+                "WAF_Large",
                 "Standard_v2",
                 "WAF_v2"
             ],
@@ -133,6 +138,15 @@
         }
     },
     "variables": {
+        "tier": {
+            "Standard_Small": "Standard",
+            "Standard_Medium": "Standard",
+            "Standard_Large": "Standard",
+            "WAF_Medium": "WAF",
+            "WAF_Large": "WAF",
+            "Standard_v2": "Standard_v2",
+            "WAF_v2": "WAF_v2"
+        },
         "frontendIp": {
             "public": {
                 "PublicIPAddress": {
@@ -147,7 +161,7 @@
                 }
             }
         },
-        "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
+        "useSslCerts": "[and(not(empty(parameters('keyVaultName'))), not(empty(parameters('keyVaultSecretName'))), not(empty(parameters('userAssignedIdentityName'))))]",
         "blankArray": [],
         "sslCerts": [
             {
@@ -256,7 +270,7 @@
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                         },
-                        "rewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
+                        "rewriteRuleSet": "[if(not(empty(parameters('rewriteRules'))), variables('rewriteRuleSetsId'), json('null'))]"
                     }
                 }
             }
@@ -292,7 +306,7 @@
                 "frontendIPConfigurations": [
                     {
                         "name": "appGatewayFrontendIP",
-                        "properties": "[if(and(greater(length(parameters('privateIpAddress')),0),greater(length(parameters('publicIpAddressId')),0)), union(variables('frontendIp').public,variables('frontendIp').private), if(greater(length(parameters('privateIpAddress')),0), variables('frontendIp').private, if(greater(length(parameters('publicIpAddressId')),0), variables('frontendIp').public, json('null'))))]"
+                        "properties": "[if(and(not(empty(parameters('privateIpAddress'))), not(empty(parameters('publicIpAddressId')))), union(variables('frontendIp').public,variables('frontendIp').private), if(not(empty(parameters('privateIpAddress'))), variables('frontendIp').private, if(not(empty(parameters('publicIpAddressId'))), variables('frontendIp').public, json('null'))))]"
                     }
                 ],
                 "frontendPorts": [
@@ -309,6 +323,7 @@
                         }
                     }
                 ],
+                "probes": [],
                 "backendAddressPools": "[variables('backendAddressPools')]",
                 "backendHttpSettingsCollection": [
                   {
@@ -332,12 +347,12 @@
                                 "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                             },
                             "pathRules": "[variables('urlPathRules')]",
-                            "defaultRewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
+                            "defaultRewriteRuleSet": "[if(not(empty(parameters('rewriteRules'))), variables('rewriteRuleSetsId'), json('null'))]"
                         }
                     }
                 ],
                 "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
-                "rewriteRuleSets": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSets'), variables('blankArray'))]"
+                "rewriteRuleSets": "[if(not(empty(parameters('rewriteRules'))), variables('rewriteRuleSets'), variables('blankArray'))]"
             },
             "identity": {
                 "type": "UserAssigned",
