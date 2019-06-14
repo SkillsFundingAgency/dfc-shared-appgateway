@@ -243,9 +243,7 @@
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                         },
-                        "rewriteRuleSet": {
-                            "id": "[resourceId('Microsoft.Network/applicationGateways/rewriteRuleSets', parameters('appGatewayName'), 'defaultRewriteRulesSet')]"
-                        }
+                        "rewriteRuleSet": null
                     }
                 }
             }
