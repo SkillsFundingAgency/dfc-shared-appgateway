@@ -32,15 +32,29 @@
         "appGatewayRewrites": {
             "value": [
                 {
-                    "name": "charset",
+                    "name": "Location_dev-beta.nationalcareersservice.org.uk",
                     "actionSet": {
-                        "requestHeaderConfigurations": [ {
-                            "headerName": "Accept-Charset",
-                            "headerValue": "utf-8"
-                        } ],
                         "responseHeaderConfigurations": [ {
-                            "headerName": "Content-Type",
-                            "headerValue": "text/html; charset=utf-8"
+                            "headerName": "Location",
+                            "headerValue": "{http_resp_Location_1}://dev-ag.nationalcareersservice.org.uk{http_resp_Location_2}"
+                        } ]
+                    }
+                },
+                {
+                    "name": "Location_dev.nationalcareersservice.org.uk",
+                    "actionSet": {
+                        "responseHeaderConfigurations": [ {
+                            "headerName": "Location",
+                            "headerValue": "https://dev-ag.nationalcareersservice.org.uk{http_resp_Location_2}"
+                        } ]
+                    }
+                },
+                {
+                    "name": "Location_azurewebsites.net",
+                    "actionSet": {
+                        "responseHeaderConfigurations": [ {
+                            "headerName": "Location",
+                            "headerValue": "{http_resp_Location_1}://dev-ag.nationalcareersservice.org.uk{http_resp_Location_2}"
                         } ]
                     }
                 }
