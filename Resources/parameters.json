@@ -30,7 +30,19 @@
             } ]
         },
         "appGatewayRewrites": {
-            "value": []
+            "value": [ {
+                "name": "RWR1",
+                "rule": {
+                    "requestHeaderConfigurations": [ {
+                        "headerName": "Accept-Charset",
+                        "headerValue": "utf-8"
+                    } ],
+                    "responseHeaderConfigurations": [ {
+                        "headerName": "Content-Type",
+                        "headerValue": "text/html; charset=utf-8"
+                    } ]
+                }
+            } ]
         },
         "publicDnsLabel": {
             "value": "__publicDnsLabel__"

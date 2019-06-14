@@ -68,7 +68,9 @@ A list of rewrite rules ...
 
 Each rewrite rule is specified by an object consisting of
 
-*tbc
+* name: the name the rewrite rule set
+* rules: an array of objects specifying actionSet of the rule
+
 An example of a valid object
 
 ```json
