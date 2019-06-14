@@ -17,15 +17,10 @@
         "appGatewayTier": {
             "type": "string",
             "allowedValues": [
-                "Standard_Small",
-                "Standard_Medium",
-                "Standard_Large",
-                "WAF_Medium",
-                "WAF_Large",
                 "Standard_v2",
                 "WAF_v2"
             ],
-            "defaultValue": "Standard_Small",
+            "defaultValue": "Standard_v2",
             "metadata": {
                 "description": "Application gateway tier"
             }
@@ -38,6 +33,13 @@
         },
         "routingRules": {
             "type": "array",
+            "metadata": {
+                "description": "routing"
+            }
+        },
+        "rewriteRules": {
+            "type": "array",
+            "defaultValue": [],
             "metadata": {
                 "description": "routing"
             }
@@ -131,15 +133,6 @@
         }
     },
     "variables": {
-        "tier": {
-            "Standard_Small": "Standard",
-            "Standard_Medium": "Standard",
-            "Standard_Large": "Standard",
-            "WAF_Medium": "WAF",
-            "WAF_Large": "WAF",
-            "Standard_v2": "Standard_v2",
-            "WAF_v2": "WAF_v2"
-        },
         "frontendIp": {
             "public": {
                 "PublicIPAddress": {
@@ -155,7 +148,7 @@
             }
         },
         "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
-        "noSslCerts": [],
+        "blankArray": [],
         "sslCerts": [
             {
                 "name": "default-ssl-certificate",
@@ -223,6 +216,18 @@
                 }
             }
         ],
+        "rewriteRuleSets": [
+            {
+                "name": "defaultRewriteRulesSet",
+                "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
+                "properties": {
+                    "rewriteRules": "[parameters('rewriteRules')]"
+                }
+            }
+        ],
+        "rewriteRuleSetsId": {
+            "id": "[resourceId('Microsoft.Network/applicationGateways/rewriteRuleSets', parameters('appGatewayName'), 'defaultRewriteRulesSet')]"
+        },
         "copy": [
             {
                 "name": "backendAddressPools",
@@ -250,7 +255,8 @@
                         "paths": "[parameters('routingRules')[copyIndex('urlPathRules')].paths]",
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
-                        }
+                        },
+                        "rewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
                     }
                 }
             }
@@ -265,14 +271,14 @@
             "properties": {
                 "sku": {
                     "name": "[parameters('appGatewayTier')]",
-                    "tier": "[variables('tier')[parameters('appGatewayTier')]]",
+                    "tier": "[parameters('appGatewayTier')]",
                     "capacity": "[parameters('capacity')]"
                 },
                 "sslPolicy": {
                     "policyType": "Predefined",
                     "policyName": "AppGwSslPolicy20170401S"
                 },
-                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('noSslCerts'))]",
+                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('blankArray'))]",
                 "gatewayIPConfigurations": [
                     {
                         "name": "appGatewayIpConfig",
@@ -329,7 +335,8 @@
                         }
                     }
                 ],
-                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]"
+                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
+                "rewriteRuleSets": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSets'), variables('blankArray'))]"
             },
             "identity": {
                 "type": "UserAssigned",

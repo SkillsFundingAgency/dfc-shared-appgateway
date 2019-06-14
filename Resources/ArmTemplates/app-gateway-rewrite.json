@@ -17,10 +17,15 @@
         "appGatewayTier": {
             "type": "string",
             "allowedValues": [
+                "Standard_Small",
+                "Standard_Medium",
+                "Standard_Large",
+                "WAF_Medium",
+                "WAF_Large",
                 "Standard_v2",
                 "WAF_v2"
             ],
-            "defaultValue": "Standard_v2",
+            "defaultValue": "Standard_Small",
             "metadata": {
                 "description": "Application gateway tier"
             }
@@ -32,12 +37,6 @@
             }
         },
         "routingRules": {
-            "type": "array",
-            "metadata": {
-                "description": "routing"
-            }
-        },
-        "rewriteRules": {
             "type": "array",
             "metadata": {
                 "description": "routing"
@@ -132,6 +131,15 @@
         }
     },
     "variables": {
+        "tier": {
+            "Standard_Small": "Standard",
+            "Standard_Medium": "Standard",
+            "Standard_Large": "Standard",
+            "WAF_Medium": "WAF",
+            "WAF_Large": "WAF",
+            "Standard_v2": "Standard_v2",
+            "WAF_v2": "WAF_v2"
+        },
         "frontendIp": {
             "public": {
                 "PublicIPAddress": {
@@ -242,8 +250,7 @@
                         "paths": "[parameters('routingRules')[copyIndex('urlPathRules')].paths]",
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
-                        },
-                        "rewriteRuleSet": null
+                        }
                     }
                 }
             }
@@ -258,7 +265,7 @@
             "properties": {
                 "sku": {
                     "name": "[parameters('appGatewayTier')]",
-                    "tier": "[parameters('appGatewayTier')]",
+                    "tier": "[variables('tier')[parameters('appGatewayTier')]]",
                     "capacity": "[parameters('capacity')]"
                 },
                 "sslPolicy": {
@@ -322,16 +329,7 @@
                         }
                     }
                 ],
-                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
-                "rewriteRuleSets": [
-                    {
-                        "name": "defaultRewriteRulesSet",
-                        "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
-                        "properties": {
-                            "rewriteRules": "[parameters('rewriteRules')]"
-                        }
-                    }
-                ]
+                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]"
             },
             "identity": {
                 "type": "UserAssigned",

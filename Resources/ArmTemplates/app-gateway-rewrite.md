@@ -62,23 +62,25 @@ An example of a valid object
 }
 ```
 
-rewriteRules: (required) array of object
+rewriteRules: (optional) array of object
 
 A list of rewrite rules ...
 
 Each rewrite rule is specified by an object consisting of
 
 * name: the name the rewrite rule set
-* rule: an array of objects specifying actionSet of the rule
+* actionSet: an array of objects specifying actionSet of the rule
 
 An example of a valid object
 
 ```json
 {
     "name": "rewriteRule",
-    "rule": { ... }
+    "actionSet": { ... }
 }
 ```
+
+See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayRewriteRuleActionSet
 
 capacity: (optional) int
 
