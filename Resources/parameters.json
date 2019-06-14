@@ -30,11 +30,10 @@
             } ]
         },
         "appGatewayRewrites": {
-            "value": [ {
-                "name": "RWR1",
-                "rules": [ {
-                    "name": "Charset",
-                    "actionSet": {
+            "value": [
+                {
+                    "name": "charset",
+                    "rule": {
                         "requestHeaderConfigurations": [ {
                             "headerName": "Accept-Charset",
                             "headerValue": "utf-8"
@@ -44,8 +43,8 @@
                             "headerValue": "text/html; charset=utf-8"
                         } ]
                     }
-                } ]
-            } ]
+                }
+            ]
         },
         "publicDnsLabel": {
             "value": "__publicDnsLabel__"

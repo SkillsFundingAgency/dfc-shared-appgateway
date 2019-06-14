@@ -242,6 +242,9 @@
                         "paths": "[parameters('routingRules')[copyIndex('urlPathRules')].paths]",
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
+                        },
+                        "rewriteRuleSet": {
+                            "id": "[resourceId('Microsoft.Network/applicationGateways/rewriteRuleSets', parameters('appGatewayName'), 'defaultRewriteRulesSet')]"
                         }
                     }
                 }
@@ -251,9 +254,7 @@
                 "count": "[length(parameters('rewriteRules'))]",
                 "input": {
                     "name": "[parameters('rewriteRules')[copyIndex('rewriteRules')].name]",
-                    "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
-                    "properties": {
-                        "rewriteRules": "[parameters('rewriteRules')[copyIndex('rewriteRules')].rules]"
+                    "actionSet": "[parameters('rewriteRules')[copyIndex('rewriteRules')].rule]"
                     }
                 }
             }
@@ -333,7 +334,15 @@
                     }
                 ],
                 "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
-                "rewriteRuleSets": "[variables('rewriteRules')]"
+                "rewriteRuleSets": [
+                    {
+                        "name": "defaultRewriteRulesSet",
+                        "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
+                        "properties": {
+                            "rewriteRule": "[variables('rewriteRules')]"
+                        }
+                    }
+                ]
             },
             "identity": {
                 "type": "UserAssigned",
