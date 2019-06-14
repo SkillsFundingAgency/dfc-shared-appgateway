@@ -247,15 +247,15 @@
                 }
             },
             {
-                "name": "rewriterules",
+                "name": "rewriteRules",
                 "count": "[length(parameters('rewriteRules'))]",
                 "input": {
-                    "name": "[parameters('rewriteRules')[copyIndex('rewriterules')].name]",
+                    "name": "[parameters('rewriteRules')[copyIndex('rewriteRules')].name]",
                     "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
                     "properties": {
                         "rewriteRules": [ {
                             "name": "[concat('Rule', copyIndex('rewriterules'))]",
-                            "actionSet": "[parameters('rewriteRules')[copyIndex('rewriterules')].rule]"
+                            "actionSet": "[parameters('rewriteRules')[copyIndex('rewriteRules')].rule]"
                         } ]
                     }
                 }
@@ -335,7 +335,8 @@
                         }
                     }
                 ],
-                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]"
+                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
+                "rewriteRuleSets": "[variables('rewriteRules')]"
             },
             "identity": {
                 "type": "UserAssigned",
