@@ -33,6 +33,7 @@
             "value": [
                 {
                     "name": "Location_dev-beta.nationalcareersservice.org.uk",
+                    "ruleSequence": 10,
                     "actionSet": {
                         "responseHeaderConfigurations": [ {
                             "headerName": "Location",
@@ -42,6 +43,7 @@
                 },
                 {
                     "name": "Location_dev.nationalcareersservice.org.uk",
+                    "ruleSequence": 20,
                     "actionSet": {
                         "responseHeaderConfigurations": [ {
                             "headerName": "Location",
@@ -51,6 +53,7 @@
                 },
                 {
                     "name": "Location_azurewebsites.net",
+                    "ruleSequence": 30,
                     "actionSet": {
                         "responseHeaderConfigurations": [ {
                             "headerName": "Location",
