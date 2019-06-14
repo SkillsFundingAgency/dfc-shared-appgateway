@@ -248,15 +248,6 @@
                         }
                     }
                 }
-            },
-            {
-                "name": "rewriteRules",
-                "count": "[length(parameters('rewriteRules'))]",
-                "input": {
-                    "name": "[parameters('rewriteRules')[copyIndex('rewriteRules')].name]",
-                    "actionSet": "[parameters('rewriteRules')[copyIndex('rewriteRules')].rule]"
-                    }
-                }
             }
         ]
     },
@@ -339,7 +330,7 @@
                         "name": "defaultRewriteRulesSet",
                         "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
                         "properties": {
-                            "rewriteRule": "[variables('rewriteRules')]"
+                            "rewriteRules": "[parameters('rewriteRules')]"
                         }
                     }
                 ]
