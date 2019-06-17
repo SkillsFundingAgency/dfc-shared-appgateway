@@ -14,13 +14,6 @@
                 "description": "First 2 octects of VNet Private IP address range (VNet prefix)"
             }
         },
-        "appBackendProbes": {
-            "type": "array",
-            "defaultValue": [],
-            "metadata": {
-                "description": "Array of objects describing the back end pool probes used by appGatewayPools"
-            }
-        },
         "appGatewayPools": {
             "type": "array",
             "metadata": {
@@ -162,9 +155,6 @@
                     },
                     "publicIpAddressId": {
                         "value": "[reference('sharedAppGatewayIp').outputs.publicIpAddressId.value]"
-                    },
-                    "backendProbes": {
-                        "value": "[parameters('appBackendProbes')]"
                     },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"

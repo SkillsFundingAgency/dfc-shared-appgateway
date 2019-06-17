@@ -21,13 +21,15 @@ Application gateway type and instance size combined
 
 Must be one of Standard_Small (default if none supplied), Standard_Medium, Standard_Large, WAF_Medium, WAF_Large, Standard_v2 or WAF_v2
 
-backendProbes: (optional) array of object
+useCustomProbe: (optional) boolean
 
-Array of backend probes used for the back end pools.
-Does not create any probes if not specified.
+Use a custom probe. Defaults to false (no custom probe).
 
+customProbeProperties: (optional) object
+
+Override default probe properties or set additional custom probe properties.
 See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayProbe
-for the structure of the object to create.
+for options.
 
 backendPools: (required) array of object
 

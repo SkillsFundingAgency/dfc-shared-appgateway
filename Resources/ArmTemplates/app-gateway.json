@@ -30,17 +30,24 @@
                 "description": "Application gateway tier"
             }
         },
-        "backendProbes": {
-            "type": "array",
-            "defaultValue": [],
-            "metadata": {
-                "description": "back end pool probes"
-            }
-        },
         "backendPools": {
             "type": "array",
             "metadata": {
                 "description": "back end pool ip addresses"
+            }
+        },
+        "useCustomProbe": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Use a custom probe"
+            }
+        },
+        "customProbeProperties": {
+            "type": "object",
+            "defaultValue": {},
+            "metadata": {
+                "description": "Override or set additional custom probe properties"
             }
         },
         "routingRules": {
@@ -237,6 +244,25 @@
                 }
             }
         ],
+        "defaultProbeSettings": {
+            "protocol": "[parameters('backendProtocol')]",
+            "path": "/",
+            "interval": 30,
+            "timeout": 30,
+            "unhealthyThreshold": 3,
+            "minServers": 0,
+            "pickHostNameFromBackendHttpSettings": true
+        },
+        "probes": [
+            {
+                "name": "standardcustomProbeProperties",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": "[union(variables('defaultProbeSettings'), parameters('customProbeProperties'))]"
+            }
+        ],
+        "probeId": {
+            "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/standardcustomProbeProperties')]"
+        },
         "rewriteRuleSets": [
             {
                 "name": "defaultRewriteRulesSet",
@@ -330,7 +356,7 @@
                         }
                     }
                 ],
-                "probes": "[parameters('backendProbes')]",
+                "probes": "[if(parameters('useCustomProbe'), variables('probes'), variables('blankArray'))]",
                 "backendAddressPools": "[variables('backendAddressPools')]",
                 "backendHttpSettingsCollection": [
                   {
@@ -339,7 +365,7 @@
                       "Port": "[parameters('backendPort')]",
                       "Protocol": "[parameters('backendProtocol')]",
                       "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]",
-                      "probe": "[json('null')]"
+                      "probe": "[if(parameters('useCustomProbe'), variables('probeId'), json('null'))]"
                     }
                   }
                 ],
