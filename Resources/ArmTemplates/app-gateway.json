@@ -30,6 +30,13 @@
                 "description": "Application gateway tier"
             }
         },
+        "backendProbes": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "back end pool probes"
+            }
+        },
         "backendPools": {
             "type": "array",
             "metadata": {
@@ -323,7 +330,7 @@
                         }
                     }
                 ],
-                "probes": [],
+                "probes": "[parameters('backendProbes')]",
                 "backendAddressPools": "[variables('backendAddressPools')]",
                 "backendHttpSettingsCollection": [
                   {
