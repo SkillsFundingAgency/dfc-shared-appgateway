@@ -65,7 +65,7 @@
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
-        "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-848_rewriterules/Resources/ArmTemplates/",
+        "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]"
     },
@@ -158,6 +158,13 @@
                     },
                     "useCustomProbe": {
                         "value": true
+                    },
+                    "customProbeProperties": {
+                        "match": {
+                            "statusCodes": [
+                                "200-399"
+                            ]
+                        }
                     },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"

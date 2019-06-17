@@ -250,7 +250,6 @@
             "interval": 30,
             "timeout": 30,
             "unhealthyThreshold": 3,
-            "minServers": 0,
             "pickHostNameFromBackendHttpSettings": true
         },
         "probes": [
