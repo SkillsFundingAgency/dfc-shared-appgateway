@@ -338,7 +338,8 @@
                     "properties": {
                       "Port": "[parameters('backendPort')]",
                       "Protocol": "[parameters('backendProtocol')]",
-                      "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]"
+                      "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]",
+                      "probe": "[json('null')]"
                     }
                   }
                 ],
