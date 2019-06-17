@@ -8,6 +8,29 @@
         "appGatewaySubnetRef": {
             "value": "__subnetResourceId__"
         },
+        "backendProbes": {
+            "value": [
+                {
+                    "name": "standardBackendProbe",
+                    "type": "Microsoft.Network/applicationGateways/probes",
+                    "properties": {
+                        "provisioningState": "Succeeded",
+                        "protocol": "Https",
+                        "path": "/",
+                        "interval": 30,
+                        "timeout": 30,
+                        "unhealthyThreshold": 3,
+                        "pickHostNameFromBackendHttpSettings": true,
+                        "minServers": 0,
+                        "match": {
+                            "statusCodes": [
+                                "200-399"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
         "appGatewayPools": {
             "value": [ {
                 "name": "defaultBackend",

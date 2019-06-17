@@ -20,7 +20,15 @@ appGatewayTier: (optional) string
 Application gateway type and instance size combined
 
 Must be one of Standard_Small (default if none supplied), Standard_Medium, Standard_Large, WAF_Medium, WAF_Large, Standard_v2 or WAF_v2
-                
+
+backendProbes: (optional) array of object
+
+Array of backend probes used for the back end pools.
+Does not create any probes if not specified.
+
+See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayProbe
+for the structure of the object to create.
+
 backendPools: (required) array of object
 
 A list of backend pools to create.
@@ -71,15 +79,17 @@ This is only valid with v2 tiers.
 Each rewrite rule is specified by an object consisting of
 
 * name: the name the rewrite rule set
-* ruleSequence: an integer specifying the order to run the rules (lowest to highest)
+* ruleSequence: an integer specifying the order to run the rules (lowest to highest) - defaults to 100 if not specified
+* conditions: an array of objects specifying the conditions that need to be met for the rule to be applied - rules are run unconditionally if not specified
 * actionSet: an array of objects specifying actionSet of the rule
 
-An example of a valid object
+An example of a valid object. Only name and actionSet are required.
 
 ```json
 {
     "name": "rewriteRule",
     "ruleSequence": 100,
+    "conditions": { ... }, 
     "actionSet": { ... }
 }
 ```
