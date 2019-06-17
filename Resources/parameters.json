@@ -8,13 +8,12 @@
         "appGatewaySubnetRef": {
             "value": "__subnetResourceId__"
         },
-        "backendProbes": {
+        "appBackendProbes": {
             "value": [
                 {
                     "name": "standardBackendProbe",
                     "type": "Microsoft.Network/applicationGateways/probes",
                     "properties": {
-                        "provisioningState": "Succeeded",
                         "protocol": "Https",
                         "path": "/",
                         "interval": 30,
