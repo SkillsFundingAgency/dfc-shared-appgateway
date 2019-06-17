@@ -156,6 +156,9 @@
                     "publicIpAddressId": {
                         "value": "[reference('sharedAppGatewayIp').outputs.publicIpAddressId.value]"
                     },
+                    "useCustomProbe": {
+                        "value": true
+                    },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"
                     },
