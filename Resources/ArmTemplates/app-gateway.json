@@ -365,6 +365,7 @@
                       "Port": "[parameters('backendPort')]",
                       "Protocol": "[parameters('backendProtocol')]",
                       "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]",
+                      "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
                       "probe": "[if(parameters('useCustomProbe'), variables('probeId'), json('null'))]"
                     }
                   }
