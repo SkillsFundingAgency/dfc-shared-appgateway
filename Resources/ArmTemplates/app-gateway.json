@@ -175,7 +175,7 @@
                 }
             }
         },
-        "useSslCerts": "[and(not(empty(parameters('keyVaultName'))), not(empty(parameters('keyVaultSecretName'))), not(empty(parameters('userAssignedIdentityName'))))]",
+        "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
         "blankArray": [],
         "sslCerts": [
             {
@@ -302,7 +302,7 @@
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                         },
-                        "rewriteRuleSet": "[if(not(empty(parameters('rewriteRules'))), variables('rewriteRuleSetsId'), json('null'))]"
+                        "rewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
                     }
                 }
             }
@@ -338,7 +338,7 @@
                 "frontendIPConfigurations": [
                     {
                         "name": "appGatewayFrontendIP",
-                        "properties": "[if(and(not(empty(parameters('privateIpAddress'))), not(empty(parameters('publicIpAddressId')))), union(variables('frontendIp').public,variables('frontendIp').private), if(not(empty(parameters('privateIpAddress'))), variables('frontendIp').private, if(not(empty(parameters('publicIpAddressId'))), variables('frontendIp').public, json('null'))))]"
+                        "properties": "[if(and(greater(length(parameters('privateIpAddress')),0),greater(length(parameters('publicIpAddressId')),0)), union(variables('frontendIp').public,variables('frontendIp').private), if(greater(length(parameters('privateIpAddress')),0), variables('frontendIp').private, if(greater(length(parameters('publicIpAddressId')),0), variables('frontendIp').public, json('null'))))]"
                     }
                 ],
                 "frontendPorts": [
@@ -381,12 +381,12 @@
                                 "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                             },
                             "pathRules": "[variables('urlPathRules')]",
-                            "defaultRewriteRuleSet": "[if(not(empty(parameters('rewriteRules'))), variables('rewriteRuleSetsId'), json('null'))]"
+                            "defaultRewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
                         }
                     }
                 ],
                 "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
-                "rewriteRuleSets": "[if(not(empty(parameters('rewriteRules'))), variables('rewriteRuleSets'), variables('blankArray'))]"
+                "rewriteRuleSets": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSets'), variables('blankArray'))]"
             },
             "identity": {
                 "type": "UserAssigned",
