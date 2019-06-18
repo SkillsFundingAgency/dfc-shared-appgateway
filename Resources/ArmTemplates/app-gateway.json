@@ -36,8 +36,29 @@
                 "description": "back end pool ip addresses"
             }
         },
+        "useCustomProbe": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Use a custom probe"
+            }
+        },
+        "customProbeProperties": {
+            "type": "object",
+            "defaultValue": {},
+            "metadata": {
+                "description": "Override or set additional custom probe properties"
+            }
+        },
         "routingRules": {
             "type": "array",
+            "metadata": {
+                "description": "routing"
+            }
+        },
+        "rewriteRules": {
+            "type": "array",
+            "defaultValue": [],
             "metadata": {
                 "description": "routing"
             }
@@ -155,7 +176,7 @@
             }
         },
         "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
-        "noSslCerts": [],
+        "blankArray": [],
         "sslCerts": [
             {
                 "name": "default-ssl-certificate",
@@ -223,6 +244,36 @@
                 }
             }
         ],
+        "defaultProbeSettings": {
+            "protocol": "[parameters('backendProtocol')]",
+            "path": "/",
+            "interval": 30,
+            "timeout": 30,
+            "unhealthyThreshold": 3,
+            "pickHostNameFromBackendHttpSettings": true
+        },
+        "probes": [
+            {
+                "name": "standardcustomProbeProperties",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": "[union(variables('defaultProbeSettings'), parameters('customProbeProperties'))]"
+            }
+        ],
+        "probeId": {
+            "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/standardcustomProbeProperties')]"
+        },
+        "rewriteRuleSets": [
+            {
+                "name": "defaultRewriteRulesSet",
+                "type": "Microsoft.Network/applicationGateways/rewriteRuleSets",
+                "properties": {
+                    "rewriteRules": "[parameters('rewriteRules')]"
+                }
+            }
+        ],
+        "rewriteRuleSetsId": {
+            "id": "[resourceId('Microsoft.Network/applicationGateways/rewriteRuleSets', parameters('appGatewayName'), 'defaultRewriteRulesSet')]"
+        },
         "copy": [
             {
                 "name": "backendAddressPools",
@@ -250,7 +301,8 @@
                         "paths": "[parameters('routingRules')[copyIndex('urlPathRules')].paths]",
                         "backendHttpSettings": {
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
-                        }
+                        },
+                        "rewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
                     }
                 }
             }
@@ -260,7 +312,7 @@
         {
             "name": "[parameters('appGatewayName')]",
             "type": "Microsoft.Network/applicationGateways",
-            "apiVersion": "2018-10-01",
+            "apiVersion": "2019-04-01",
             "location": "[resourceGroup().location]",
             "properties": {
                 "sku": {
@@ -272,7 +324,7 @@
                     "policyType": "Predefined",
                     "policyName": "AppGwSslPolicy20170401S"
                 },
-                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('noSslCerts'))]",
+                "sslCertificates": "[if(variables('useSslCerts'), variables('sslCerts'), variables('blankArray'))]",
                 "gatewayIPConfigurations": [
                     {
                         "name": "appGatewayIpConfig",
@@ -303,6 +355,7 @@
                         }
                     }
                 ],
+                "probes": "[if(parameters('useCustomProbe'), variables('probes'), variables('blankArray'))]",
                 "backendAddressPools": "[variables('backendAddressPools')]",
                 "backendHttpSettingsCollection": [
                   {
@@ -310,7 +363,9 @@
                     "properties": {
                       "Port": "[parameters('backendPort')]",
                       "Protocol": "[parameters('backendProtocol')]",
-                      "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]"
+                      "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]",
+                      "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
+                      "probe": "[if(parameters('useCustomProbe'), variables('probeId'), json('null'))]"
                     }
                   }
                 ],
@@ -325,11 +380,13 @@
                             "defaultBackendHttpSettings": {
                                 "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                             },
-                            "pathRules": "[variables('urlPathRules')]"
+                            "pathRules": "[variables('urlPathRules')]",
+                            "defaultRewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
                         }
                     }
                 ],
-                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]"
+                "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
+                "rewriteRuleSets": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSets'), variables('blankArray'))]"
             },
             "identity": {
                 "type": "UserAssigned",

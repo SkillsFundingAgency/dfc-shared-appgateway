@@ -20,7 +20,17 @@ appGatewayTier: (optional) string
 Application gateway type and instance size combined
 
 Must be one of Standard_Small (default if none supplied), Standard_Medium, Standard_Large, WAF_Medium, WAF_Large, Standard_v2 or WAF_v2
-                
+
+useCustomProbe: (optional) boolean
+
+Use a custom probe. Defaults to false (no custom probe).
+
+customProbeProperties: (optional) object
+
+Override default probe properties or set additional custom probe properties.
+See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayProbe
+for options.
+
 backendPools: (required) array of object
 
 A list of backend pools to create.
@@ -62,6 +72,33 @@ An example of a valid object
 }
 ```
 
+rewriteRules: (optional) array of object
+
+A list of rewrite rules which will be applied to all URL paths.
+If not specified, no rewrite rules will be specified.
+This is only valid with v2 tiers.
+
+Each rewrite rule is specified by an object consisting of
+
+* name: the name the rewrite rule set
+* ruleSequence: an integer specifying the order to run the rules (lowest to highest) - defaults to 100 if not specified
+* conditions: an array of objects specifying the conditions that need to be met for the rule to be applied - rules are run unconditionally if not specified
+* actionSet: an array of objects specifying actionSet of the rule
+
+An example of a valid object. Only name and actionSet are required.
+
+```json
+{
+    "name": "rewriteRule",
+    "ruleSequence": 100,
+    "conditions": { ... }, 
+    "actionSet": { ... }
+}
+```
+
+See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayRewriteRuleActionSet
+for rule settings via the actionSet object.
+
 capacity: (optional) int
 
 Number of instances of the application gateway to run.
@@ -100,6 +137,10 @@ backendProtocol: (optional) string
 The protocol to access the backend pools over.
 Must be either Http or Https.
 Defaults to http if not specified.
+
+probe: (optional) object
+
+Configures a probe for the backend
 
 cookieBasedAffinity: (optional) string
 
