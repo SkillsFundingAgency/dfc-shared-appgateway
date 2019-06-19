@@ -160,10 +160,12 @@
                         "value": true
                     },
                     "customProbeProperties": {
-                        "match": {
-                            "statusCodes": [
-                                "200-399"
-                            ]
+                        "value": {
+                            "match": {
+                                "statusCodes": [
+                                    "200-399"
+                                ]
+                            }
                         }
                     },
                     "backendPools": {
