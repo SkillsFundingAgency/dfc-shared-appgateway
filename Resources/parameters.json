@@ -17,6 +17,13 @@
                 "fqdn": "__bauBackend__"
             } ]
         },
+        "backendHttpSettings": {
+            "value": [ {
+                "name": "myHttpSetting",
+                "port": 443,
+                "protocol": "Https"
+            } ]
+        },
         "appGatewayRouting": {
             "value": [ {
                 "name": "defaultUrlMapping",

@@ -100,6 +100,12 @@
                 "description": "Https frontend port."
             }
         },
+        "backendHttpSettings": {
+            "type": "array",
+            "metadata": {
+                "description": "A"
+            }
+        },
         "backendPort": {
             "type": "int",
             "defaultValue": 80,
@@ -245,22 +251,32 @@
             }
         ],
         "defaultProbeSettings": {
-            "protocol": "[parameters('backendProtocol')]",
             "path": "/",
             "interval": 30,
             "timeout": 30,
             "unhealthyThreshold": 3,
             "pickHostNameFromBackendHttpSettings": true
         },
+        "defaultProbeHttp": {
+            "protocol": "Http"
+        },
+        "defaultProbeHttps": {
+            "protocol": "Https"
+        },
         "probes": [
             {
-                "name": "standardcustomProbeProperties",
+                "name": "httpProbe",
                 "type": "Microsoft.Network/applicationGateways/probes",
-                "properties": "[union(variables('defaultProbeSettings'), parameters('customProbeProperties'))]"
+                "properties": "[union(variables('defaultProbeSettings'), variables('defaultProbeHttp'), parameters('customProbeProperties'))]"
+            },
+            {
+                "name": "httpsProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": "[union(variables('defaultProbeSettings'), variables('defaultProbeHttps'), parameters('customProbeProperties'))]"
             }
         ],
         "probeId": {
-            "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/standardcustomProbeProperties')]"
+            "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/httpsProbe')]"
         },
         "rewriteRuleSets": [
             {
@@ -303,6 +319,19 @@
                             "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
                         },
                         "rewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
+                    }
+                }
+            },
+            {
+                "name": "backendHttpSettings",
+                "count": "[length(parameters('backendHttpSettings'))]",
+                "input": {
+                    "name": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].name]",
+                    "properties": {
+                        "Port": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].port]",
+                        "Protocol": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol]",
+                        "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
+                        "probe": "[if(parameters('useCustomProbe'), variables('probeId'), json('null'))]"
                     }
                 }
             }
