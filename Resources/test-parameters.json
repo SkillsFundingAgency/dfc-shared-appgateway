@@ -14,10 +14,18 @@
                 "fqdn": "foo.example.net"
             } ]
         },
+        "appGatewayPoolHttpSettings": {
+            "value": [ {
+                "name": "myHttpSetting",
+                "port": 80,
+                "protocol": "Http"
+            } ]
+        },
         "appGatewayRouting": {
             "value": [ {
                 "name": "myrule",
-                "backend": "mypool",
+                "backendPool": "mypool",
+                "backendHttp": "myHttpSetting",
                 "paths": [ "/dummy/*" ]
             } ]
         },

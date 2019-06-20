@@ -17,20 +17,39 @@
                 "fqdn": "__bauBackend__"
             } ]
         },
+        "appGatewayPoolHttpSettings": {
+            "value": [ {
+                "name": "defaultHttpSettings",
+                "port": 443,
+                "protocol": "Https"
+            },{
+                "name": "aysHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "backendPath": "/skills-health-check/"
+            } ]
+        },
         "appGatewayRouting": {
             "value": [ {
-                "name": "defaultUrlMapping",
-                "backend": "oldBackend",
+                "name": "oldBackendDefault",
+                "backendPool": "oldBackend",
+                "backendHttp": "defaultHttpSettings",
                 "paths": [
                     "/skills-health-check/*",
                     "/ResourcePackages/*",
                     "/your-account/*",
                     "/home/signout*",
                     "/course-directory/*",
-                    "/assess-your-skills/skills-health-check/*",
                     "/about-us/*",
                     "/WebResource.axd*",
                     "/ScriptResource.axd*"
+                ]
+            },{
+                "name": "oldBackendAssessSkills",
+                "backendPool": "oldBackend",
+                "backendHttp": "aysHttpSettings",
+                "paths": [
+                    "/assess-your-skills/skills-health-check/*"
                 ]
             } ]
         },

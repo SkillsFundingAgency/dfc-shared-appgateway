@@ -50,6 +50,30 @@ An example of a valid object
 }
 ```
 
+backendHttpSettings: (required) array of object
+
+A list of settings for connecting to the back end application(s).
+The first setting in the array is used for the default routing rule.
+
+Each backend setting is specified by an object consisting of
+
+* name: the name the backend setting
+* port: port
+* protocol: protocol
+* backendPath: override the backend path (optional)
+* authCerts: array of authentication certificates (optional)
+* rootCerts: array of trusted root certificates (optional)
+
+An example of a valid object
+
+```json
+{
+    "name": "httpSettingName",
+    "port": 443,
+    "protocol": "Https"
+}
+```
+
 routingRules: (required) array of object
 
 A list of routing rules describing which paths should be routed to which backend pool.
@@ -59,7 +83,8 @@ which is the first backend specified (see above).
 Each backend is specified by an object consisting of
 
 * name: the name the backend pool resource
-* backend: the name of the backend to route to (as specified in the previous parameter, see above)
+* backendPool: the name of the backend to route to (as specified in a previous parameter, see above)
+* backendHttp: the name of the backend http settings to use (as specified in the previous parameter, see above)
 * paths: an array of paths, usually wildcarded, to route to the backend
 
 An example of a valid object
@@ -67,7 +92,8 @@ An example of a valid object
 ```json
 {
     "name": "routingRule",
-    "backend": "backendName",
+    "backendPool": "backendName",
+    "backendHttp": "httpSettingName",
     "paths": [ "/myapp/*" ]
 }
 ```
@@ -127,25 +153,9 @@ httpsFrontendPort: (optional) int
 The port the application gateway is accessible on via HTTP.
 Defaults to port 443 if not specified.
 
-backendPort: (optional) int
-
-The backend port to access the backend pools over.
-Defaults to port 80 if not specified.
-
-backendProtocol: (optional) string
-
-The protocol to access the backend pools over.
-Must be either Http or Https.
-Defaults to http if not specified.
-
 probe: (optional) object
 
 Configures a probe for the backend
-
-cookieBasedAffinity: (optional) string
-
-Enables or disables cookie based affinity.
-Defaults to disabled
 
 keyVaultName: (optional) string
 

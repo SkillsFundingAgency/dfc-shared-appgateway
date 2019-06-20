@@ -20,6 +20,12 @@
                 "description": "Array of objects describing the backend pools for the app gateway to use"
             }
         },
+        "appGatewayPoolHttpSettings": {
+            "type": "array",
+            "metadata": {
+                "description": "Http settings for access backend pools"
+            }
+        },
         "appGatewayRouting": {
             "type": "array",
             "metadata": {
@@ -171,11 +177,8 @@
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"
                     },
-                    "backendPort": {
-                        "value": 443
-                    },
-                    "backendProtocol": {
-                        "value": "Https"
+                    "backendHttpSettings": {
+                        "value": "[parameters('appGatewayPoolHttpSettings')]"
                     },
                     "routingRules": {
                         "value": "[parameters('appGatewayRouting')]"
