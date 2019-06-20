@@ -19,16 +19,21 @@
         },
         "appGatewayPoolHttpSettings": {
             "value": [ {
-                "name": "myHttpSetting",
+                "name": "myHttpSettings",
                 "port": 443,
                 "protocol": "Https"
+            },{
+                "name": "aysHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "backendPath": "/skills-health-check/"
             } ]
         },
         "appGatewayRouting": {
             "value": [ {
                 "name": "oldBackendDefault",
                 "backendPool": "oldBackend",
-                "backendHttp": "myHttpSetting",
+                "backendHttp": "myHttpSettings",
                 "paths": [
                     "/skills-health-check/*",
                     "/ResourcePackages/*",
@@ -42,7 +47,7 @@
             },{
                 "name": "oldBackendAssessSkills",
                 "backendPool": "oldBackend",
-                "backendHttp": "myHttpSetting",
+                "backendHttp": "aysHttpSettings",
                 "paths": [
                     "/assess-your-skills/skills-health-check/*"
                 ]

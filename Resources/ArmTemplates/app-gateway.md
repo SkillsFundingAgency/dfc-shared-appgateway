@@ -60,6 +60,9 @@ Each backend setting is specified by an object consisting of
 * name: the name the backend setting
 * port: port
 * protocol: protocol
+* backendPath: override the backend path (optional)
+* authCerts: array of authentication certificates (optional)
+* rootCerts: array of trusted root certificates (optional)
 
 An example of a valid object
 
@@ -150,25 +153,9 @@ httpsFrontendPort: (optional) int
 The port the application gateway is accessible on via HTTP.
 Defaults to port 443 if not specified.
 
-backendPort: (optional) int
-
-The backend port to access the backend pools over.
-Defaults to port 80 if not specified.
-
-backendProtocol: (optional) string
-
-The protocol to access the backend pools over.
-Must be either Http or Https.
-Defaults to http if not specified.
-
 probe: (optional) object
 
 Configures a probe for the backend
-
-cookieBasedAffinity: (optional) string
-
-Enables or disables cookie based affinity.
-Defaults to disabled
 
 keyVaultName: (optional) string
 

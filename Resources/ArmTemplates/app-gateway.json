@@ -106,35 +106,6 @@
                 "description": "Http settings for access backend pools"
             }
         },
-        "backendPort": {
-            "type": "int",
-            "defaultValue": 80,
-            "metadata": {
-                "description": "application gateway back end port"
-            }
-        },
-        "backendProtocol": {
-            "type": "string",
-            "allowedValues": [
-                "Http",
-                "Https"
-            ],
-            "defaultValue": "Http",
-            "metadata": {
-                "description": "application gateway back end protocol"
-            }
-        },
-        "cookieBasedAffinity": {
-            "type": "string",
-            "allowedValues": [
-                "Enabled",
-                "Disabled"
-            ],
-            "defaultValue": "Disabled",
-            "metadata": {
-                "description": "cookie based affinity"
-            }
-        },
         "keyVaultName": {
             "type": "string",
             "defaultValue": "",
@@ -331,8 +302,11 @@
                 "input": {
                     "name": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].name]",
                     "properties": {
-                        "Port": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].port]",
-                        "Protocol": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol]",
+                        "port": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].port]",
+                        "protocol": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol]",
+                        "path": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'backendPath'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].backendPath, json('null'))]",
+                        "authenticationCertificates": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'authCerts'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].authCerts, variables('blankArray'))]",
+                        "trustedRootCertificates": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'rootCerts'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].rootCerts, variables('blankArray'))]",
                         "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
                         "probe": "[if(parameters('useCustomProbe'), if(equals(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol, 'Https'), variables('httpsProbeId'), variables('httpProbeId')), json('null'))]"
                     }

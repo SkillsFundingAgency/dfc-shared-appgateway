@@ -177,12 +177,6 @@
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"
                     },
-                    "backendPort": {
-                        "value": 443
-                    },
-                    "backendProtocol": {
-                        "value": "Https"
-                    },
                     "backendHttpSettings": {
                         "value": "[parameters('appGatewayPoolHttpSettings')]"
                     },
