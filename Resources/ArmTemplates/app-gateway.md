@@ -53,6 +53,7 @@ An example of a valid object
 backendHttpSettings: (required) array of object
 
 A list of settings for connecting to the back end application(s).
+The first setting in the array is used for the default routing rule.
 
 Each backend setting is specified by an object consisting of
 
