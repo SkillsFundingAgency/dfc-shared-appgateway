@@ -64,7 +64,7 @@ An example of a valid object
 
 ```json
 {
-    "name": "routingRule",
+    "name": "httpSettingName",
     "port": 443,
     "protocol": "Https"
 }
@@ -79,7 +79,8 @@ which is the first backend specified (see above).
 Each backend is specified by an object consisting of
 
 * name: the name the backend pool resource
-* backend: the name of the backend to route to (as specified in the previous parameter, see above)
+* backendPool: the name of the backend to route to (as specified in a previous parameter, see above)
+* backendHttp: the name of the backend http settings to use (as specified in the previous parameter, see above)
 * paths: an array of paths, usually wildcarded, to route to the backend
 
 An example of a valid object
@@ -87,7 +88,8 @@ An example of a valid object
 ```json
 {
     "name": "routingRule",
-    "backend": "backendName",
+    "backendPool": "backendName",
+    "backendHttp": "httpSettingName",
     "paths": [ "/myapp/*" ]
 }
 ```

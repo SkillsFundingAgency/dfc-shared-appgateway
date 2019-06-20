@@ -315,11 +315,11 @@
                     "name": "[parameters('routingRules')[copyIndex('urlPathRules')].name]",
                     "properties": {
                         "backendAddressPool": {
-                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', parameters('appGatewayName'), parameters('routingRules')[copyIndex('urlPathRules')].backend)]"
+                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', parameters('appGatewayName'), parameters('routingRules')[copyIndex('urlPathRules')].backendPool)]"
                         },
                         "paths": "[parameters('routingRules')[copyIndex('urlPathRules')].paths]",
                         "backendHttpSettings": {
-                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), 'appGatewayBackendHttpSettings')]"
+                            "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', parameters('appGatewayName'), parameters('routingRules')[copyIndex('urlPathRules')].backendHttp)]"
                         },
                         "rewriteRuleSet": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSetsId'), json('null'))]"
                     }

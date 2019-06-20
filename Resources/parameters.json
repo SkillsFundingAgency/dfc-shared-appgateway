@@ -27,17 +27,24 @@
         "appGatewayRouting": {
             "value": [ {
                 "name": "defaultUrlMapping",
-                "backend": "oldBackend",
+                "backendPool": "oldBackend",
+                "backendHttp": "myHttpSetting",
                 "paths": [
                     "/skills-health-check/*",
                     "/ResourcePackages/*",
                     "/your-account/*",
                     "/home/signout*",
                     "/course-directory/*",
-                    "/assess-your-skills/skills-health-check/*",
                     "/about-us/*",
                     "/WebResource.axd*",
                     "/ScriptResource.axd*"
+                ]
+            },{
+                "name": "defaultUrlMapping",
+                "backendPool": "oldBackend",
+                "backendHttp": "myHttpSetting",
+                "paths": [
+                    "/assess-your-skills/skills-health-check/*"
                 ]
             } ]
         },

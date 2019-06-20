@@ -24,7 +24,8 @@
         "appGatewayRouting": {
             "value": [ {
                 "name": "myrule",
-                "backend": "mypool",
+                "backendPool": "mypool",
+                "backendHttp": "myHttpSetting",
                 "paths": [ "/dummy/*" ]
             } ]
         },
