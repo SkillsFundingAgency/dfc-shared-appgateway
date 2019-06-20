@@ -275,7 +275,10 @@
                 "properties": "[union(variables('defaultProbeSettings'), variables('defaultProbeHttps'), parameters('customProbeProperties'))]"
             }
         ],
-        "probeId": {
+        "httpProbeId": {
+            "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/httpProbe')]"
+        },
+        "httpsProbeId": {
             "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/httpsProbe')]"
         },
         "rewriteRuleSets": [
@@ -331,7 +334,7 @@
                         "Port": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].port]",
                         "Protocol": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol]",
                         "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
-                        "probe": "[if(parameters('useCustomProbe'), variables('probeId'), json('null'))]"
+                        "probe": "[if(parameters('useCustomProbe'), if(equals(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol, 'Https'), variables('httpsProbeId'), variables('httpProbeId')), json('null'))]"
                     }
                 }
             }
@@ -386,18 +389,7 @@
                 ],
                 "probes": "[if(parameters('useCustomProbe'), variables('probes'), variables('blankArray'))]",
                 "backendAddressPools": "[variables('backendAddressPools')]",
-                "backendHttpSettingsCollection": [
-                  {
-                    "name": "appGatewayBackendHttpSettings",
-                    "properties": {
-                      "Port": "[parameters('backendPort')]",
-                      "Protocol": "[parameters('backendProtocol')]",
-                      "CookieBasedAffinity": "[parameters('cookieBasedAffinity')]",
-                      "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
-                      "probe": "[if(parameters('useCustomProbe'), variables('probeId'), json('null'))]"
-                    }
-                  }
-                ],
+                "backendHttpSettingsCollection": "[variables('backendHttpSettings')]",
                 "httpListeners": "[if(variables('useSslCerts'), union(variables('httpListener'), variables('httpsListener')), variables('httpListener'))]",
                 "urlPathMaps": [
                     {
