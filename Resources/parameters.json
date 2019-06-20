@@ -19,7 +19,7 @@
         },
         "appGatewayPoolHttpSettings": {
             "value": [ {
-                "name": "myHttpSettings",
+                "name": "defaultHttpSettings",
                 "port": 443,
                 "protocol": "Https"
             },{
@@ -33,7 +33,7 @@
             "value": [ {
                 "name": "oldBackendDefault",
                 "backendPool": "oldBackend",
-                "backendHttp": "myHttpSettings",
+                "backendHttp": "defaultHttpSettings",
                 "paths": [
                     "/skills-health-check/*",
                     "/ResourcePackages/*",
