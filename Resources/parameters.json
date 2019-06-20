@@ -26,7 +26,7 @@
         },
         "appGatewayRouting": {
             "value": [ {
-                "name": "defaultUrlMapping",
+                "name": "oldBackendDefault",
                 "backendPool": "oldBackend",
                 "backendHttp": "myHttpSetting",
                 "paths": [
@@ -40,7 +40,7 @@
                     "/ScriptResource.axd*"
                 ]
             },{
-                "name": "defaultUrlMapping",
+                "name": "oldBackendAssessSkills",
                 "backendPool": "oldBackend",
                 "backendHttp": "myHttpSetting",
                 "paths": [
