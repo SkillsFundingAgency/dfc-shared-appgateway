@@ -103,7 +103,7 @@
         "backendHttpSettings": {
             "type": "array",
             "metadata": {
-                "description": "A"
+                "description": "Http settings for access backend pools"
             }
         },
         "backendPort": {
