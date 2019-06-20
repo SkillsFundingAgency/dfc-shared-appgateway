@@ -17,7 +17,7 @@
                 "fqdn": "__bauBackend__"
             } ]
         },
-        "backendHttpSettings": {
+        "appGatewayPoolHttpSettings": {
             "value": [ {
                 "name": "myHttpSetting",
                 "port": 443,

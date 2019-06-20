@@ -14,7 +14,7 @@
                 "fqdn": "foo.example.net"
             } ]
         },
-        "backendHttpSettings": {
+        "appGatewayPoolHttpSettings": {
             "value": [ {
                 "name": "myHttpSetting",
                 "port": 80,
