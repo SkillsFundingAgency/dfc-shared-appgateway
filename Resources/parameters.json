@@ -37,12 +37,12 @@
         "appGatewayRewrites": {
             "value": [
                 {
-                    "name": "Location_dev-beta.nationalcareersservice.org.uk",
+                    "name": "Location___liveFqdn__",
                     "ruleSequence": 10,
                     "conditions": [
                         {
                             "variable": "http_resp_Location",
-                            "pattern": "(https?):\\/\\/dev-beta\\.nationalcareersservice\\.org\\.uk(.*)$",
+                            "pattern": "(https?):\\/\\/__liveFqdnEscaped__(.*)$",
                             "ignoreCase": true,
                             "negate": false
                         }
@@ -51,18 +51,18 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "Location",
-                                "headerValue": "{http_resp_Location_1}://dev-ag.nationalcareersservice.org.uk{http_resp_Location_2}"
+                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__{http_resp_Location_2}"
                             }
                         ]
                     }
                 },
                 {
-                    "name": "Location_dev.nationalcareersservice.org.uk",
+                    "name": "Location___bauBackend__",
                     "ruleSequence": 20,
                     "conditions": [
                         {
                             "variable": "http_resp_Location",
-                            "pattern": "(https?):\\/\\/dev\\.nationalcareersservice\\.org\\.uk(.*)$",
+                            "pattern": "(https?):\\/\\/__bauBackendEscaped__(.*)$",
                             "ignoreCase": true,
                             "negate": false
                         }
@@ -71,7 +71,7 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "Location",
-                                "headerValue": "https://dev-ag.nationalcareersservice.org.uk{http_resp_Location_2}"
+                                "headerValue": "https://__appGatewayFqdn__{http_resp_Location_2}"
                             }
                         ]
                     }
@@ -91,7 +91,7 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "Location",
-                                "headerValue": "{http_resp_Location_1}://dev-ag.nationalcareersservice.org.uk{http_resp_Location_2}"
+                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__{http_resp_Location_2}"
                             }
                         ]
                     }
@@ -111,7 +111,7 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "Location",
-                                "headerValue": "{http_resp_Location_1}redirect_uri=https%3a%2f%2fdev-ag.nationalcareersservice.org.uk{http_resp_Location_3}"
+                                "headerValue": "{http_resp_Location_1}redirect_uri=https%3a%2f%2f__appGatewayFqdn__{http_resp_Location_3}"
                             }
                         ]
                     }
@@ -131,7 +131,7 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "Set-Cookie",
-                                "headerValue": "{http_resp_Set-Cookie_1}Domain=dev-ag.nationalcareersservice.org.uk{http_resp_Set-Cookie_3}"
+                                "headerValue": "{http_resp_Set-Cookie_1}Domain=__appGatewayFqdn__{http_resp_Set-Cookie_3}"
                             }
                         ]
                     }
@@ -142,7 +142,7 @@
                     "conditions": [
                         {
                             "variable": "http_resp_X-Content-Security-Policy",
-                            "pattern": "(.*)dfc-beta-dev-01-web\\.azurewebsites\\.net:443(.*)",
+                            "pattern": "(.*)__liveBackendEscaped__:443(.*)",
                             "ignoreCase": true,
                             "negate": false
                         }
@@ -151,7 +151,7 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "X-Content-Security-Policy",
-                                "headerValue": "{http_resp_X-Content-Security-Policy_1}dev-ag.nationalcareersservice.org.uk{http_resp_X-Content-Security-Policy_2}"
+                                "headerValue": "{http_resp_X-Content-Security-Policy_1}__appGatewayFqdn__{http_resp_X-Content-Security-Policy_2}"
                             }
                         ]
                     }
@@ -171,7 +171,7 @@
                         "responseHeaderConfigurations": [
                             {
                                 "headerName": "Content-Security-Policy",
-                                "headerValue": "{http_resp_Content-Security-Policy_1}dev-ag.nationalcareersservice.org.uk{http_resp_Content-Security-Policy_2}"
+                                "headerValue": "{http_resp_Content-Security-Policy_1}__appGatewayFqdn__{http_resp_Content-Security-Policy_2}"
                             }
                         ]
                     }
