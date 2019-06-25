@@ -54,6 +54,13 @@
                 "description": "Set DNS label on public IP address for application gateway"
             }
         },
+        "privateIPAddress": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Private IP address for application gateway"
+            }
+        },
         "keyVaultName": {
             "type": "string",
             "defaultValue": "",
@@ -71,7 +78,7 @@
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
-        "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
+        "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-967_privateip/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]"
     },
@@ -80,6 +87,7 @@
             "apiVersion": "2017-05-10",
             "name": "sharedAppGatewayIp",
             "type": "Microsoft.Resources/deployments",
+            "condition": "[greater(length(parameters('publicDnsLabel')),0)]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -161,6 +169,9 @@
                     },
                     "publicIpAddressId": {
                         "value": "[reference('sharedAppGatewayIp').outputs.publicIpAddressId.value]"
+                    },
+                    "privateIpAddress": {
+                        "value": "[parameters('privateIPAddress')]"
                     },
                     "useCustomProbe": {
                         "value": true
