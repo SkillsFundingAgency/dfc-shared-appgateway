@@ -148,7 +148,7 @@
             "dependsOn": [
                 "keyvaultAppGatewayAccessPolicy",
                 "[variables('dependencyPublic')]"
-            ],"[if(greater(length(parameters('publicDnsLabel')),0), variables('dependencyPublic'), variables('dependencyPrivate'))]",
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
