@@ -81,13 +81,7 @@
         "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-967_privateip/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]",
-        "dependencyPublic": [
-            "keyvaultAppGatewayAccessPolicy",
-            "sharedAppGatewayIp"
-        ],
-        "dependencyPrivate": [
-            "keyvaultAppGatewayAccessPolicy"
-        ]
+        "dependencyPublic": "[if(equals(length(parameters('publicDnsLabel')),0), 'keyvaultAppGatewayAccessPolicy', 'sharedAppGatewayIp')]",
     },
     "resources": [
         {
@@ -151,7 +145,10 @@
             "apiVersion": "2017-05-10",
             "name": "sharedAppGateway",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn": "[if(greater(length(parameters('publicDnsLabel')),0), variables('dependencyPublic'), variables('dependencyPrivate'))]",
+            "dependsOn": [
+                "keyvaultAppGatewayAccessPolicy",
+                "[variables('dependencyPublic')]"
+            ],"[if(greater(length(parameters('publicDnsLabel')),0), variables('dependencyPublic'), variables('dependencyPrivate'))]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
