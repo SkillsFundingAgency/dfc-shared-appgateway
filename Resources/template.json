@@ -81,7 +81,7 @@
         "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-967_privateip/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]",
-        "dependencyPublic": "[if(equals(length(parameters('publicDnsLabel')),0), 'keyvaultAppGatewayAccessPolicy', 'sharedAppGatewayIp')]",
+        "dependencyPublic": "[if(equals(length(parameters('publicDnsLabel')),0), 'keyvaultAppGatewayAccessPolicy', 'sharedAppGatewayIp')]"
     },
     "resources": [
         {
