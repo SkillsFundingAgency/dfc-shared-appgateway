@@ -170,7 +170,7 @@
                         "value": "[parameters('capacity')]"
                     },
                     "publicIpAddressId": {
-                        "value": "[if(variables('keyvaultInUse'), reference('sharedAppGatewayIp','2017-05-10').outputs.publicIpAddressId.value, '')]"
+                        "value": "[if(variables('publicIpInUse'), reference('sharedAppGatewayIp','2017-05-10').outputs.publicIpAddressId.value, '')]"
                     },
                     "privateIpAddress": {
                         "value": "[parameters('privateIPAddress')]"
