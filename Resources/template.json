@@ -81,15 +81,13 @@
         "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/NCSD-967_privateip/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]",
-        "keyvaultInUse": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0))]",
-        "publicIpInUse": "[greater(length(parameters('publicDnsLabel')),0)]"
+        "keyvaultInUse": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0))]"
     },
     "resources": [
         {
             "apiVersion": "2017-05-10",
             "name": "sharedAppGatewayIp",
             "type": "Microsoft.Resources/deployments",
-            "condition": "[variables('publicIpInUse')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -116,6 +114,7 @@
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "name": "[variables('userAssignedIdentityName')]",
             "apiVersion": "2018-11-30",
+            "condition": "[variables('keyvaultInUse')]",
             "location": "[resourceGroup().location]"
         },
         {
@@ -137,7 +136,7 @@
                         "value": "[parameters('keyVaultName')]"
                     },
                     "servicePrincipalObjectId": {
-                        "value": "[reference(variables('userAssignedIdentityName')).principalId]"
+                        "value": "[reference(variables('userAssignedIdentityName'),'2018-11-30').principalId]"
                     }
                 }
             }
@@ -147,8 +146,8 @@
             "name": "sharedAppGateway",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[if(variables('keyvaultInUse'), 'keyvaultAppGatewayAccessPolicy', variables('userAssignedIdentityName'))]",
-                "[if(variables('publicIpInUse'), 'sharedAppGatewayIp', variables('userAssignedIdentityName'))]"
+                "[if(variables('keyvaultInUse'), 'keyvaultAppGatewayAccessPolicy', 'sharedAppGatewayIp')]",
+                "sharedAppGatewayIp"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -170,7 +169,7 @@
                         "value": "[parameters('capacity')]"
                     },
                     "publicIpAddressId": {
-                        "value": ""
+                        "value": "[reference('sharedAppGatewayIp').outputs.publicIpAddressId.value]"
                     },
                     "privateIpAddress": {
                         "value": "[parameters('privateIPAddress')]"
