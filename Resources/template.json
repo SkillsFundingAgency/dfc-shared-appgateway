@@ -82,15 +82,7 @@
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]",
         "keyvaultInUse": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0))]",
-        "publicIpInUse": "[greater(length(parameters('publicDnsLabel')),0)]",
-        "blankArray": [],
-        "keyvaultDependsOn": [
-            "keyvaultAppGatewayAccessPolicy"
-        ],
-        "publicIpDependsOn": [
-            "sharedAppGatewayIp"
-        ],
-        "appGatewayDependsOn": "[if(and(variables('keyvaultInUse'),variables('publicIpInUse')), union(variables('keyvaultDependsOn'),variables('publicIpDependsOn')), if(variables('keyvaultInUse'), variables('keyvaultDependsOn'), if(variables('publicIpInUse'), variables('publicIpDependsOn'), variables('blankArray'))))]"
+        "publicIpInUse": "[greater(length(parameters('publicDnsLabel')),0)]"
     },
     "resources": [
         {
@@ -124,8 +116,7 @@
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "name": "[variables('userAssignedIdentityName')]",
             "apiVersion": "2018-11-30",
-            "location": "[resourceGroup().location]",
-            "condition": "[variables('keyvaultInUse')]"
+            "location": "[resourceGroup().location]"
         },
         {
             "apiVersion": "2017-05-10",
@@ -155,7 +146,10 @@
             "apiVersion": "2017-05-10",
             "name": "sharedAppGateway",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn": "[variables('appGatewayDependsOn')]",
+            "dependsOn": [
+                "[if(variables('keyvaultInUse'), 'keyvaultAppGatewayAccessPolicy', variables('userAssignedIdentityName'))]",
+                "[if(variables('publicIpInUse'), 'sharedAppGatewayIp', variables('userAssignedIdentityName'))]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
