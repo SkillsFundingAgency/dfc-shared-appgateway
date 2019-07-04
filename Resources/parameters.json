@@ -197,6 +197,9 @@
                 }
             ]
         },
+        "privateIPAddress": {
+            "value": "__privateIPAddress__"
+        },
         "publicDnsLabel": {
             "value": "__publicDnsLabel__"
         },
