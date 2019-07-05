@@ -147,9 +147,6 @@
             "private": {
                 "privateIpAddress": "[parameters('privateIpAddress')]",
                 "privateIpAllocationMethod": "Static",
-                "subnet": {
-                    "id": "[parameters('subnetRef')]"
-                }
             }
         },
         "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",

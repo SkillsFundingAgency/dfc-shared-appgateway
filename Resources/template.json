@@ -169,7 +169,7 @@
                         "value": "[parameters('capacity')]"
                     },
                     "publicIpAddressId": {
-                        "value": "[if(empty(parameters('publicDnsLabel')), '', reference('sharedAppGatewayIp').outputs.publicIpAddressId.value)]"
+                        "value": "[reference('sharedAppGatewayIp').outputs.publicIpAddressId.value]"
                     },
                     "privateIpAddress": {
                         "value": "[parameters('privateIPAddress')]"
