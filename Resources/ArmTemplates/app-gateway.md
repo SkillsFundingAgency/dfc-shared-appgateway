@@ -153,10 +153,6 @@ httpsFrontendPort: (optional) int
 The port the application gateway is accessible on via HTTP.
 Defaults to port 443 if not specified.
 
-probe: (optional) object
-
-Configures a probe for the backend
-
 keyVaultName: (optional) string
 
 Name of key vault to get the SSL certificate from.

@@ -139,18 +139,28 @@
             "WAF_v2": "WAF_v2"
         },
         "frontendIp": {
-            "public": {
-                "PublicIPAddress": {
-                    "id": "[parameters('publicIpAddressId')]"
+            "public": [
+                {
+                    "name": "appGatewayPublicFrontendIp",
+                    "properties": {
+                        "PublicIPAddress": {
+                            "id": "[parameters('publicIpAddressId')]"
+                        }
+                    }
                 }
-            },
-            "private": {
-                "privateIpAddress": "[parameters('privateIpAddress')]",
-                "privateIpAllocationMethod": "Static",
-                "subnet": {
-                    "id": "[parameters('subnetRef')]"
+            ],
+            "private": [
+                {
+                    "name": "appGatewayPrivateFrontendIp",
+                    "properties": {
+                        "privateIpAddress": "[parameters('privateIpAddress')]",
+                        "privateIpAllocationMethod": "Static",
+                        "subnet": {
+                            "id": "[parameters('subnetRef')]"
+                        }
+                    }
                 }
-            }
+            ]
         },
         "useSslCerts": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0), greater(length(parameters('userAssignedIdentityName')),0))]",
         "blankArray": [],
@@ -167,7 +177,7 @@
                 "name": "appGatewayHttpListener",
                 "properties": {
                     "FrontendIpConfiguration": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/', if(greater(length(parameters('privateIpAddress')),0), 'appGatewayPrivateFrontendIp', 'appGatewayPublicFrontendIp'))]"
                     },
                     "FrontendPort": {
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
@@ -181,7 +191,7 @@
                 "name": "appGatewayHttpsListener",
                 "properties": {
                     "FrontendIpConfiguration": {
-                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                        "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendIPConfigurations/', if(greater(length(parameters('privateIpAddress')),0), 'appGatewayPrivateFrontendIp', 'appGatewayPublicFrontendIp'))]"
                     },
                     "FrontendPort": {
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-https-port')]"
@@ -341,12 +351,7 @@
                         }
                     }
                 ],
-                "frontendIPConfigurations": [
-                    {
-                        "name": "appGatewayFrontendIP",
-                        "properties": "[if(and(greater(length(parameters('privateIpAddress')),0),greater(length(parameters('publicIpAddressId')),0)), union(variables('frontendIp').public,variables('frontendIp').private), if(greater(length(parameters('privateIpAddress')),0), variables('frontendIp').private, if(greater(length(parameters('publicIpAddressId')),0), variables('frontendIp').public, json('null'))))]"
-                    }
-                ],
+                "frontendIPConfigurations": "[if(and(greater(length(parameters('privateIpAddress')),0),greater(length(parameters('publicIpAddressId')),0)), union(variables('frontendIp').public,variables('frontendIp').private), if(greater(length(parameters('privateIpAddress')),0), variables('frontendIp').private, if(greater(length(parameters('publicIpAddressId')),0), variables('frontendIp').public, variables('blankArray'))))]",
                 "frontendPorts": [
                     {
                         "name": "default-frontend-http-port",

@@ -6,7 +6,7 @@
             "value": "dfc-foo-bar-ag"
         },
         "appGatewaySubnetRef": {
-            "value": "/subscriptions/12345678-1234-5678-9abc-123456789abc/resourceGroups/dfc-foo-bar-rg/providers/Microsoft.Network/virtualNetworks/dfc-foo-bar-vnet/subnets/appgateway"
+            "value": "/subscriptions/962cae10-2950-412a-93e3-d8ae92b17896/resourceGroups/dfc-foo-bar-rg/providers/Microsoft.Network/virtualNetworks/dfc-foo-bar-vnet/subnets/appgateway"
         },
         "appGatewayPools": {
             "value": [ {
@@ -45,6 +45,9 @@
                     }
                 }
             ]
+        },
+        "publicDnsLabel": {
+            "value": "foobarag"
         }
     }
 }
