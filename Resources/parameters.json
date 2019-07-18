@@ -49,7 +49,7 @@
                 "backendPool": "oldBackend",
                 "backendHttp": "aysHttpSettings",
                 "paths": [
-                    "/assess-your-skills/skills-health-check/*"
+                    "/skills-assessment/skills-health-check/*"
                 ]
             } ]
         },
