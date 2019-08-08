@@ -8,6 +8,9 @@
         "appGatewaySubnetRef": {
             "value": "__subnetResourceId__"
         },
+        "capacity": {
+            "value": "__appGatewayCapacity__"
+        },
         "appGatewayPools": {
             "value": [ {
                 "name": "defaultBackend",
