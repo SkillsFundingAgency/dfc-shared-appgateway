@@ -74,6 +74,13 @@
             "metadata": {
                 "description": "The name of the certificate/secret stored in key vault."
             }
+        },
+        "EnableMetricAlerts": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Enable alerting and metrics for the application gateway."
+            }
         }
     },
     "variables": {
@@ -240,6 +247,9 @@
                 "parameters": {
                     "actionGroupName": {
                         "value": "[variables('ActionGroupName')]"
+                    },
+                    "enabled": {
+                        "value": "[parameters('EnableMetricAlerts')]"
                     }
                 }
             }
@@ -255,6 +265,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "enabled": {
+                        "value": "[parameters('EnableMetricAlerts')]"
+                    },
                     "alertName": {
                         "value": "[concat(parameters('appGatewayName'), '-metric-', tolower(variables('appGatewayMetricsToAlertUpon')[copyIndex()].MetricName))]"
                     },
