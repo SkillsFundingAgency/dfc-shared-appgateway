@@ -211,6 +211,9 @@
         },
         "keyVaultSecretName": {
             "value": "__keyVaultSecretName__"
+        },
+        "EnableMetricAlerts": {
+            "value": __EnableMetricAlerts__
         }
     }
 }

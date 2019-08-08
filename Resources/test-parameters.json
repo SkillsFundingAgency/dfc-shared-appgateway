@@ -48,6 +48,9 @@
         },
         "publicDnsLabel": {
             "value": "foobarag"
+        },
+        "EnableMetricAlerts": {
+            "value": false
         }
     }
 }
