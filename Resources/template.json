@@ -94,7 +94,7 @@
             {
                 "MetricName": "CapacityUnits",
                 "Operator": "GreaterThan",
-                "Threshold": "[string(div(parameters('capacity'), 2))]",
+                "Threshold": "[string(mul(parameters('capacity'), 5))]",
                 "TimeWindow": "PT5M",
                 "Aggregation": "Average"
             }
