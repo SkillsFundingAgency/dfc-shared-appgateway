@@ -9,7 +9,7 @@
             "value": "__subnetResourceId__"
         },
         "capacity": {
-            "value": "__appGatewayCapacity__"
+            "value": __appGatewayCapacity__
         },
         "appGatewayPools": {
             "value": [ {
