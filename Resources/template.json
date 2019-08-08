@@ -81,7 +81,24 @@
         "localDeploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-shared-appgateway/master/Resources/ArmTemplates/",
         "publicIPAddressName": "[concat(parameters('appGatewayName'), '-ip')]",
         "userAssignedIdentityName": "[concat(parameters('appGatewayName'), '-uim')]",
-        "keyvaultInUse": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0))]"
+        "keyvaultInUse": "[and(greater(length(parameters('keyVaultName')),0), greater(length(parameters('keyVaultSecretName')),0))]",
+        "actionGroupName": "[concat(parameters('appGatewayName'), '-actgrp')]",
+        "appGatewayMetricsToAlertUpon": [
+            {
+                "MetricName": "UnhealthyHostCount",
+                "Operator": "GreaterThan",
+                "Threshold": "0",
+                "TimeWindow": "PT5M",
+                "Aggregation": "Average"
+            },
+            {
+                "MetricName": "CapacityUnits",
+                "Operator": "GreaterThan",
+                "Threshold": "[div(parameters('capacity'), 2)]",
+                "TimeWindow": "PT5M",
+                "Aggregation": "Average"
+            }
+        ]
     },
     "resources": [
         {
@@ -209,6 +226,75 @@
                     }
                 }
             }
+        },
+        {
+            "name": "[variables('ActionGroupName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'Application-Insights/action-groups.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "actionGroupName": {
+                        "value": "[variables('ActionGroupName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat(parameters('appGatewayName'), '-metric-', tolower(variables('appGatewayMetricsToAlertUpon')[copyIndex()].MetricName))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'Application-Insights/metric-alerts.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "alertName": {
+                        "value": "[concat(parameters('appGatewayName'), '-metric-', tolower(variables('appGatewayMetricsToAlertUpon')[copyIndex()].MetricName))]"
+                    },
+                    "alertSeverity": {
+                        "value": 3
+                    },
+                    "metricName": {
+                        "value": "[variables('appGatewayMetricsToAlertUpon')[copyIndex()].MetricName]"
+                    },
+                    "operator": {
+                        "value": "[variables('appGatewayMetricsToAlertUpon')[copyIndex()].Operator]"
+                    },
+                    "threshold": {
+                        "value": "[variables('appGatewayMetricsToAlertUpon')[copyIndex()].Threshold]"
+                    },
+                    "aggregation": {
+                        "value": "[variables('appGatewayMetricsToAlertUpon')[copyIndex()].Aggregation]"
+                    },
+                    "windowSize": {
+                        "value": "[variables('appGatewayMetricsToAlertUpon')[copyIndex()].TimeWindow]"
+                    },
+                    "evaluationFrequency": {
+                        "value": "PT1M"
+                    },
+                    "actionGroupName": {
+                        "value": "[variables('ActionGroupName')]"
+                    },
+                    "resourceId": {
+                        "value": "[resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName'))]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "AppGatewayAlertMetricsCopy",
+                "count": "[length(variables('appGatewayMetricsToAlertUpon'))]"
+            },
+            "dependsOn": [
+                "[variables('ActionGroupName')]",
+                "sharedAppGateway"
+            ]
         }
     ],
     "outputs": {
