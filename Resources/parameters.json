@@ -214,6 +214,15 @@
         },
         "EnableMetricAlerts": {
             "value": __EnableMetricAlerts__
+        },
+        "logStorageAccountId": {
+            "value": "__logStorageAccountId__"
+        },
+        "logWorkspaceId": {
+            "value": "__logWorkspaceId__"
+        },
+        "logRetention": {
+            "value": __logRetention__
         }
     }
 }
