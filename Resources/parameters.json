@@ -38,7 +38,6 @@
                 "backendPool": "oldBackend",
                 "backendHttp": "defaultHttpSettings",
                 "paths": [
-                    "/skills-health-check/*",
                     "/ResourcePackages/*",
                     "/your-account/*",
                     "/home/signout*",
