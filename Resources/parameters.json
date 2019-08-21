@@ -16,8 +16,8 @@
                 "name": "defaultBackend",
                 "fqdn": "__liveBackend__"
             }, {
-                "name": "oldBackend",
-                "fqdn": "__bauBackend__"
+                "name": "bauBackend",
+                "fqdn": "__bauBackendIP__"
             } ]
         },
         "appGatewayPoolHttpSettings": {
@@ -25,6 +25,10 @@
                 "name": "defaultHttpSettings",
                 "port": 443,
                 "protocol": "Https"
+            },{
+                "name": "bauHttpSettings",
+                "port": 80,
+                "protocol": "Http"
             },{
                 "name": "aysHttpSettings",
                 "port": 443,
@@ -34,9 +38,9 @@
         },
         "appGatewayRouting": {
             "value": [ {
-                "name": "oldBackendDefault",
-                "backendPool": "oldBackend",
-                "backendHttp": "defaultHttpSettings",
+                "name": "bauBackendDefault",
+                "backendPool": "bauBackend",
+                "backendHttp": "bauHttpSettings",
                 "paths": [
                     "/ResourcePackages/*",
                     "/your-account/*",
@@ -47,8 +51,8 @@
                     "/ScriptResource.axd*"
                 ]
             },{
-                "name": "oldBackendAssessSkills",
-                "backendPool": "oldBackend",
+                "name": "bauBackendAssessSkills",
+                "backendPool": "bauBackend",
                 "backendHttp": "aysHttpSettings",
                 "paths": [
                     "/skills-assessment/skills-health-check/*"
@@ -138,8 +142,28 @@
                     }
                 },
                 {
-                    "name": "CookieResponse",
+                    "name": "Location_bauIP",
                     "ruleSequence": 50,
+                    "conditions": [
+                        {
+                            "variable": "http_resp_Location",
+                            "pattern": "(https?):\\/\\/__bauBackendIP__\\/(.*)$",
+                            "ignoreCase": true,
+                            "negate": false
+                        }
+                    ],
+                    "actionSet": {
+                        "responseHeaderConfigurations": [
+                            {
+                                "headerName": "Location",
+                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__/{http_resp_Location_2}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "CookieResponse",
+                    "ruleSequence": 100,
                     "conditions": [
                         {
                             "variable": "http_resp_Set-Cookie",
@@ -159,7 +183,7 @@
                 },
                 {
                     "name": "X-Content-Security-Policy-Rewrite",
-                    "ruleSequence": 60,
+                    "ruleSequence": 200,
                     "conditions": [
                         {
                             "variable": "http_resp_X-Content-Security-Policy",
@@ -179,7 +203,7 @@
                 },
                 {
                     "name": "Content-Security-Policy-Rewrite",
-                    "ruleSequence": 70,
+                    "ruleSequence": 210,
                     "conditions": [
                         {
                             "variable": "http_resp_Content-Security-Policy",
