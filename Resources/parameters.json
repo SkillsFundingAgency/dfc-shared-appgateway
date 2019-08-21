@@ -44,12 +44,11 @@
                 "backendPool": "bauBackend",
                 "backendHttp": "bauHttpSettings",
                 "paths": [
-                    "/skills-health-check/*",
+                    "/skills-health-check*",
                     "/ResourcePackages/*",
-                    "/your-account/*",
+                    "/your-account*",
                     "/home/signout*",
                     "/course-directory/*",
-                    "/about-us/*",
                     "/WebResource.axd*",
                     "/ScriptResource.axd*"
                 ]
@@ -58,7 +57,7 @@
                 "backendPool": "bauBackend",
                 "backendHttp": "aysHttpSettings",
                 "paths": [
-                    "/skills-assessment/skills-health-check/*"
+                    "/skills-assessment/skills-health-check*"
                 ]
             } ]
         },
