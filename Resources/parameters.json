@@ -29,13 +29,13 @@
                 "name": "bauHttpSettings",
                 "port": 80,
                 "protocol": "Http",
-                "hostname": "__appGatewayFqdn__"
+                "hostnameFromBackendAddress": false
             },{
                 "name": "aysHttpSettings",
                 "port": 80,
                 "protocol": "Http",
                 "backendPath": "/skills-health-check/",
-                "hostname": "__appGatewayFqdn__"
+                "hostnameFromBackendAddress": false
             } ]
         },
         "appGatewayRouting": {
