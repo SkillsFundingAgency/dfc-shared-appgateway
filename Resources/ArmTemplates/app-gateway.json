@@ -340,7 +340,8 @@
                         "path": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'backendPath'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].backendPath, json('null'))]",
                         "authenticationCertificates": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'authCerts'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].authCerts, variables('blankArray'))]",
                         "trustedRootCertificates": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'rootCerts'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].rootCerts, variables('blankArray'))]",
-                        "pickHostNameFromBackendAddress": "[if(parameters('useCustomProbe'), json('true'), json('false'))]",
+                        "pickHostNameFromBackendAddress": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'hostnameFromBackendAddress'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].hostnameFromBackendAddress, json('true'))]",
+                        "hostName":"[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'hostname'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].hostname, json('null'))]",
                         "probe": "[if(parameters('useCustomProbe'), if(equals(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol, 'Https'), variables('httpsProbeId'), variables('httpProbeId')), json('null'))]"
                     }
                 }
