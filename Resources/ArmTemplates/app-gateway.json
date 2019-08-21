@@ -126,9 +126,32 @@
             "metadata": {
                 "description": "The name of the user assigned identity."
             }
+        },
+        "logStorageAccountId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Storage account to archive logs to (leave blank to disable)"
+            }
+        },
+        "logWorkspaceId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Log analytics workspace to send logs to (leave blank to disable)"
+            }
+        },
+        "logRetention": {
+            "type": "int",
+            "defaultValue": 0,
+            "metadata": {
+                "description": "Number of days to retain the log files for (set to 0 to disable retention policy)"
+            }
         }
     },
     "variables": {
+        "logDiagnosticEnabled": "[or(not(empty(parameters('logStorageAccountId'))),not(empty(parameters('logWorkspaceId'))))]",
+        "logRetentionEnabled": "[if(equals(parameters('logRetention'),0), json('false'), json('true'))]",
         "tier": {
             "Standard_Small": "Standard",
             "Standard_Medium": "Standard",
@@ -322,7 +345,16 @@
                     }
                 }
             }
-        ]
+        ],
+        "userIdentity": {
+            "type": "UserAssigned",
+            "userAssignedIdentities": {
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]": {}
+            }
+        },
+        "systemIdentity": {
+            "type": "SystemAssigned"
+        }
     },
     "resources": [
         {
@@ -388,12 +420,59 @@
                 "requestRoutingRules": "[if(variables('useSslCerts'), union(variables('httpRouting'), variables('httpsRouting')), variables('httpRouting'))]",
                 "rewriteRuleSets": "[if(greater(length(parameters('rewriteRules')),0), variables('rewriteRuleSets'), variables('blankArray'))]"
             },
-            "identity": {
-                "type": "UserAssigned",
-                "userAssignedIdentities": {
-                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]": {}
+            "resources": [
+                {
+                    "type": "providers/diagnosticSettings",
+                    "name": "[concat('Microsoft.Insights/', parameters('appGatewayName'), '-ds')]",
+                    "apiVersion": "2017-05-01-preview",
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/applicationGateways/',parameters('appGatewayName'))]"
+                    ],
+                    "condition": "[variables('logDiagnosticEnabled')]",
+                    "properties": {
+                        "name": "[concat(parameters('appGatewayName'), '-diagnositics')]",
+                        "storageAccountId": "[if(empty(parameters('logStorageAccountId')), json('null'), parameters('logStorageAccountId'))]",
+                        "workspaceId": "[if(empty(parameters('logWorkspaceId')), json('null'), parameters('logWorkspaceId'))]",
+                        "logs": [ 
+                            {
+                                "category": "ApplicationGatewayAccessLog",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                    "days": "[parameters('logRetention')]",
+                                    "enabled": "[variables('logRetentionEnabled')]"
+                                }
+                            },
+                            {
+                                "category": "ApplicationGatewayPerformanceLog",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                    "days": "[parameters('logRetention')]",
+                                    "enabled": "[variables('logRetentionEnabled')]"
+                                }
+                            },
+                            {
+                                "category": "ApplicationGatewayFirewallLog",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                    "days": "[parameters('logRetention')]",
+                                    "enabled": "[variables('logRetentionEnabled')]"
+                                }
+                            }
+                        ],
+                        "metrics": [
+                            {
+                                "category": "AllMetrics",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                    "days": "[parameters('logRetention')]",
+                                    "enabled": "[variables('logRetentionEnabled')]"
+                                }
+                            }
+                        ]
+                    }
                 }
-            }
-        }       
+            ],
+            "identity": "[if(greater(length(parameters('userAssignedIdentityName')),0), variables('userIdentity'), variables('systemIdentity'))]"
+        }
     ]
 }
