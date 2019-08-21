@@ -81,6 +81,27 @@
             "metadata": {
                 "description": "Enable alerting and metrics for the application gateway."
             }
+        },
+        "logStorageAccountId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Storage account to archive logs to (leave blank to disable)"
+            }
+        },
+        "logWorkspaceId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Log analytics workspace to send logs to (leave blank to disable)"
+            }
+        },
+        "logRetention": {
+            "type": "int",
+            "defaultValue": 0,
+            "metadata": {
+                "description": "Number of days to retain the log files for (set to 0 to disable retention policy)"
+            }
         }
     },
     "variables": {
@@ -230,6 +251,15 @@
                     },
                     "userAssignedIdentityName": {
                         "value": "[variables('userAssignedIdentityName')]"
+                    },
+                    "logStorageAccountId": {
+                        "value": "[parameters('logStorageAccountId')]"
+                    },
+                    "logWorkspaceId": {
+                        "value": "[parameters('logWorkspaceId')]"
+                    },
+                    "logRetention": {
+                        "value": "[parameters('logRetention')]"
                     }
                 }
             }

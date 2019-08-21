@@ -179,3 +179,21 @@ An example
     "location": "[resourceGroup().location]"
 }
 ```
+
+logStorageAccountId: (optional) string
+
+Storage account Id to archive logs to.
+Will not achive logs if no storage account is specified.
+Either this or logWorkspaceId needs to be specified in order to enable diagnostics.
+
+logWorkspaceId: (optional) string
+
+Op Insight Workspace (OMS) Id to send all logs to.
+Will not send logs to a workspace if no workspace is specified.
+Either this or logStorageAccountId needs to be specified in order to enable diagnostics.
+
+logRetention: (optional) int
+
+Number of days to retain logs for.
+Defaults to 0 - retention policy disabled.
+Only used if diagnostics is enabled.
