@@ -165,6 +165,26 @@
                     }
                 },
                 {
+                    "name": "Location_bau_skills",
+                    "ruleSequence": 60,
+                    "conditions": [
+                        {
+                            "variable": "http_resp_Location",
+                            "pattern": "(https?):\\/\\/[^\\/]+\\/skills-health-check\\/(.*)$",
+                            "ignoreCase": true,
+                            "negate": false
+                        }
+                    ],
+                    "actionSet": {
+                        "responseHeaderConfigurations": [
+                            {
+                                "headerName": "Location",
+                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__/skills-assessment/skills-health-check/{http_resp_Location_2}"
+                            }
+                        ]
+                    }
+                },
+                {
                     "name": "CookieResponse",
                     "ruleSequence": 100,
                     "conditions": [
