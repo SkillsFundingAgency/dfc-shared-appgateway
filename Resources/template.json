@@ -226,9 +226,6 @@
                     "privateIpAddress": {
                         "value": "[parameters('privateIPAddress')]"
                     },
-                    "useCustomProbe": {
-                        "value": true
-                    },
                     "customProbes": {
                         "value": "[parameters('customProbes')]"
                     },
