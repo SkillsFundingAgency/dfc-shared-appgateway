@@ -82,6 +82,7 @@ Each backend setting is specified by an object consisting of
 * port: port
 * protocol: protocol
 * hostnameFromBackendAddress: Select hostname from backend address
+* timeout: set the request timeout (optional)
 * backendPath: override the backend path (optional)
 * probeName: name of probe (optional)
 * authCerts: array of authentication certificates (optional)
