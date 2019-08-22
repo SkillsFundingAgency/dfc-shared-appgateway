@@ -21,15 +21,36 @@ Application gateway type and instance size combined
 
 Must be one of Standard_Small (default if none supplied), Standard_Medium, Standard_Large, WAF_Medium, WAF_Large, Standard_v2 or WAF_v2
 
-useCustomProbe: (optional) boolean
+customProbes: (optional) object
 
-Use a custom probe. Defaults to false (no custom probe).
-
-customProbeProperties: (optional) object
-
-Override default probe properties or set additional custom probe properties.
+Create probes for use in backendHttpSettings.
 See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayProbe
 for options.
+
+An example of a valid object
+
+```json
+[
+    {
+        "name": "myProbe",
+        "type": "Microsoft.Network/applicationGateways/probes",
+        "properties": {
+            "protocol": "Https",
+            "path": "/",
+            "interval": 60,
+            "timeout": 30,
+            "unhealthyThreshold": 3,
+            "pickHostNameFromBackendHttpSettings": true,
+            "minServers": 0,
+            "match": {
+                "statusCodes": [
+                    "200-399"
+                ]
+            }
+        }
+    }
+]
+```
 
 backendPools: (required) array of object
 
@@ -60,7 +81,9 @@ Each backend setting is specified by an object consisting of
 * name: the name the backend setting
 * port: port
 * protocol: protocol
+* hostnameFromBackendAddress: Select hostname from backend address
 * backendPath: override the backend path (optional)
+* probeName: name of probe (optional)
 * authCerts: array of authentication certificates (optional)
 * rootCerts: array of trusted root certificates (optional)
 
@@ -70,7 +93,8 @@ An example of a valid object
 {
     "name": "httpSettingName",
     "port": 443,
-    "protocol": "Https"
+    "protocol": "Https",
+    "hostnameFromBackendAddress": true
 }
 ```
 
