@@ -81,8 +81,8 @@ Each backend setting is specified by an object consisting of
 * name: the name the backend setting
 * port: port
 * protocol: protocol
+* hostnameFromBackendAddress: Select hostname from backend address
 * backendPath: override the backend path (optional)
-* hostnameFromBackendAddress: Select hostname from backend address (optional)
 * probeName: name of probe (optional)
 * authCerts: array of authentication certificates (optional)
 * rootCerts: array of trusted root certificates (optional)
@@ -93,7 +93,8 @@ An example of a valid object
 {
     "name": "httpSettingName",
     "port": 443,
-    "protocol": "Https"
+    "protocol": "Https",
+    "hostnameFromBackendAddress": true
 }
 ```
 

@@ -299,10 +299,10 @@
                     "properties": {
                         "port": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].port]",
                         "protocol": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].protocol]",
+                        "pickHostNameFromBackendAddress": "[parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].hostnameFromBackendAddress]",
                         "path": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'backendPath'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].backendPath, json('null'))]",
                         "authenticationCertificates": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'authCerts'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].authCerts, variables('blankArray'))]",
                         "trustedRootCertificates": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'rootCerts'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].rootCerts, variables('blankArray'))]",
-                        "pickHostNameFromBackendAddress": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'hostnameFromBackendAddress'), parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].hostnameFromBackendAddress, json('true'))]",
                         "probe": "[if(contains(parameters('backendHttpSettings')[copyIndex('backendHttpSettings')],'probeName'), json(concat('{ \"id\": \"', concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/probes/', parameters('backendHttpSettings')[copyIndex('backendHttpSettings')].probeName), '\"}')), json('null'))]"
                     }
                 }

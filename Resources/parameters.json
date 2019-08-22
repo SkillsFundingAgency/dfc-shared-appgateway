@@ -22,7 +22,7 @@
         },
         "customProbes": {
             "value": [ {
-                "name": "appGatewayBetaProbe",
+                "name": "appServiceProbe",
                 "type": "Microsoft.Network/applicationGateways/probes",
                 "properties": {
                     "protocol": "Https",
@@ -39,15 +39,16 @@
                     }
                 }
             },{
-                "name": "appGatewayBAUProbe",
+                "name": "bauProbe",
                 "type": "Microsoft.Network/applicationGateways/probes",
                 "properties": {
-                    "protocol": "Https",
+                    "protocol": "Http",
+                    "host": "dev-direct.nationalcareersservice.org.uk",
                     "path": "/",
-                    "interval": 60,
+                    "interval": 30,
                     "timeout": 30,
                     "unhealthyThreshold": 3,
-                    "pickHostNameFromBackendHttpSettings": true,
+                    "pickHostNameFromBackendHttpSettings": false,
                     "minServers": 0,
                     "match": {
                         "statusCodes": [
@@ -61,18 +62,22 @@
             "value": [ {
                 "name": "defaultHttpSettings",
                 "port": 443,
-                "protocol": "Https"
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "appServiceProbe"
             },{
                 "name": "bauHttpSettings",
                 "port": 80,
                 "protocol": "Http",
-                "hostnameFromBackendAddress": false
+                "hostnameFromBackendAddress": false,
+                "probeName": "bauProbe"
             },{
                 "name": "aysHttpSettings",
                 "port": 80,
                 "protocol": "Http",
                 "backendPath": "/skills-health-check/",
-                "hostnameFromBackendAddress": false
+                "hostnameFromBackendAddress": false,
+                "probeName": "bauProbe"
             } ]
         },
         "appGatewayRouting": {
