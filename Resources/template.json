@@ -47,6 +47,13 @@
                 "description": "Number of instances of the app gateway running"
             }
         },
+        "customProbes": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "Optional array of probes to create"
+            }
+        },
         "publicDnsLabel": {
             "type": "string",
             "defaultValue": "",
@@ -219,17 +226,8 @@
                     "privateIpAddress": {
                         "value": "[parameters('privateIPAddress')]"
                     },
-                    "useCustomProbe": {
-                        "value": true
-                    },
-                    "customProbeProperties": {
-                        "value": {
-                            "match": {
-                                "statusCodes": [
-                                    "200-399"
-                                ]
-                            }
-                        }
+                    "customProbes": {
+                        "value": "[parameters('customProbes')]"
                     },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"

@@ -20,22 +20,64 @@
                 "fqdn": "__bauBackendIP__"
             } ]
         },
+        "customProbes": {
+            "value": [ {
+                "name": "appServiceProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            },{
+                "name": "bauProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Http",
+                    "host": "__bauBackend__",
+                    "path": "/",
+                    "interval": 30,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": false,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            } ]
+        },
         "appGatewayPoolHttpSettings": {
             "value": [ {
                 "name": "defaultHttpSettings",
                 "port": 443,
-                "protocol": "Https"
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "appServiceProbe"
             },{
                 "name": "bauHttpSettings",
                 "port": 80,
                 "protocol": "Http",
-                "hostnameFromBackendAddress": false
+                "hostnameFromBackendAddress": false,
+                "probeName": "bauProbe"
             },{
                 "name": "aysHttpSettings",
                 "port": 80,
                 "protocol": "Http",
                 "backendPath": "/skills-health-check/",
-                "hostnameFromBackendAddress": false
+                "hostnameFromBackendAddress": false,
+                "probeName": "bauProbe"
             } ]
         },
         "appGatewayRouting": {
@@ -79,26 +121,6 @@
                             {
                                 "headerName": "Location",
                                 "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__{http_resp_Location_2}"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "name": "Location___bauBackend__",
-                    "ruleSequence": 20,
-                    "conditions": [
-                        {
-                            "variable": "http_resp_Location",
-                            "pattern": "(https?):\\/\\/__bauBackendEscaped__(.*)$",
-                            "ignoreCase": true,
-                            "negate": false
-                        }
-                    ],
-                    "actionSet": {
-                        "responseHeaderConfigurations": [
-                            {
-                                "headerName": "Location",
-                                "headerValue": "https://__appGatewayFqdn__{http_resp_Location_2}"
                             }
                         ]
                     }
