@@ -50,7 +50,9 @@
                     "/home/signout*",
                     "/course-directory/*",
                     "/WebResource.axd*",
-                    "/ScriptResource.axd*"
+                    "/ScriptResource.axd*",
+                    "/alerts/weve-changed-your-email-address",
+                    "/alerts/session-timeout"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
