@@ -52,7 +52,8 @@
                     "/WebResource.axd*",
                     "/ScriptResource.axd*",
                     "/alerts/weve-changed-your-email-address",
-                    "/alerts/session-timeout"
+                    "/alerts/session-timeout",
+                    "/alerts/403"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
