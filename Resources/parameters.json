@@ -44,6 +44,7 @@
                 "backendPool": "bauBackend",
                 "backendHttp": "bauHttpSettings",
                 "paths": [
+                    "/skills-health-check/*",
                     "/ResourcePackages/*",
                     "/your-account/*",
                     "/home/signout*",
