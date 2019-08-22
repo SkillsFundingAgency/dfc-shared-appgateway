@@ -43,7 +43,7 @@
                 "type": "Microsoft.Network/applicationGateways/probes",
                 "properties": {
                     "protocol": "Http",
-                    "host": "dev-direct.nationalcareersservice.org.uk",
+                    "host": "__bauBackend__",
                     "path": "/",
                     "interval": 30,
                     "timeout": 30,
@@ -121,26 +121,6 @@
                             {
                                 "headerName": "Location",
                                 "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__{http_resp_Location_2}"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "name": "Location___bauBackend__",
-                    "ruleSequence": 20,
-                    "conditions": [
-                        {
-                            "variable": "http_resp_Location",
-                            "pattern": "(https?):\\/\\/__bauBackendEscaped__(.*)$",
-                            "ignoreCase": true,
-                            "negate": false
-                        }
-                    ],
-                    "actionSet": {
-                        "responseHeaderConfigurations": [
-                            {
-                                "headerName": "Location",
-                                "headerValue": "https://__appGatewayFqdn__{http_resp_Location_2}"
                             }
                         ]
                     }
