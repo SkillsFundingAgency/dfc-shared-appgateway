@@ -44,12 +44,11 @@
                 "backendPool": "bauBackend",
                 "backendHttp": "bauHttpSettings",
                 "paths": [
-                    "/skills-health-check/*",
+                    "/skills-health-check*",
                     "/ResourcePackages/*",
-                    "/your-account/*",
+                    "/your-account*",
                     "/home/signout*",
                     "/course-directory/*",
-                    "/about-us/*",
                     "/WebResource.axd*",
                     "/ScriptResource.axd*"
                 ]
@@ -58,7 +57,7 @@
                 "backendPool": "bauBackend",
                 "backendHttp": "aysHttpSettings",
                 "paths": [
-                    "/skills-assessment/skills-health-check/*"
+                    "/skills-assessment/skills-health-check*"
                 ]
             } ]
         },
@@ -160,6 +159,26 @@
                             {
                                 "headerName": "Location",
                                 "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__/{http_resp_Location_2}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Location_bau_skills",
+                    "ruleSequence": 60,
+                    "conditions": [
+                        {
+                            "variable": "http_resp_Location",
+                            "pattern": "(https?):\\/\\/[^\\/]+\\/skills-health-check\\/(.*)$",
+                            "ignoreCase": true,
+                            "negate": false
+                        }
+                    ],
+                    "actionSet": {
+                        "responseHeaderConfigurations": [
+                            {
+                                "headerName": "Location",
+                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__/skills-assessment/skills-health-check/{http_resp_Location_2}"
                             }
                         ]
                     }
