@@ -20,6 +20,43 @@
                 "fqdn": "__bauBackendIP__"
             } ]
         },
+        "customProbes": {
+            "value": [ {
+                "name": "appGatewayBetaProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            },{
+                "name": "appGatewayBAUProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            } ]
+        },
         "appGatewayPoolHttpSettings": {
             "value": [ {
                 "name": "defaultHttpSettings",
