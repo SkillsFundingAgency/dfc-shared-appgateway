@@ -54,6 +54,13 @@
                 "description": "Optional array of probes to create"
             }
         },
+        "customErrorPages": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "Optionally set custom error pages"
+            }
+        },
         "publicDnsLabel": {
             "type": "string",
             "defaultValue": "",
@@ -228,6 +235,9 @@
                     },
                     "customProbes": {
                         "value": "[parameters('customProbes')]"
+                    },
+                    "customErrorPages": {
+                        "value": "[parameters('customErrorPages')]"
                     },
                     "backendPools": {
                         "value": "[parameters('appGatewayPools')]"

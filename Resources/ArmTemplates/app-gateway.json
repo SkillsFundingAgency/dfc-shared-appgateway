@@ -36,6 +36,12 @@
                 "description": "back end pool ip addresses"
             }
         },
+        "routingRules": {
+            "type": "array",
+            "metadata": {
+                "description": "routing rules"
+            }
+        },
         "customProbes": {
             "type": "array",
             "defaultValue": [],
@@ -43,10 +49,11 @@
                 "description": "Probes to create"
             }
         },
-        "routingRules": {
+        "customErrorPages": {
             "type": "array",
+            "defaultValue": [],
             "metadata": {
-                "description": "routing"
+                "description": "Optionally set custom error pages"
             }
         },
         "rewriteRules": {
@@ -198,7 +205,8 @@
                     "FrontendPort": {
                         "Id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('appGatewayName')), '/frontendPorts/default-frontend-http-port')]"
                     },
-                    "Protocol": "Http"
+                    "Protocol": "Http",
+                    "customErrorConfigurations": "[parameters('customErrorPages')]"
                 }
             }
         ],
@@ -215,7 +223,8 @@
                     "SslCertificate": {
                         "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', parameters('appGatewayName'), 'default-ssl-certificate')]"
                     },
-                    "Protocol": "Https"
+                    "Protocol": "Https",
+                    "customErrorConfigurations": "[parameters('customErrorPages')]"
                 }
             }
         ],
