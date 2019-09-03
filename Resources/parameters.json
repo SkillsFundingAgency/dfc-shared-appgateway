@@ -90,6 +90,7 @@
                     "/ResourcePackages/*",
                     "/your-account*",
                     "/home/signout*",
+                    "/home/signin*",
                     "/course-directory/*",
                     "/WebResource.axd*",
                     "/ScriptResource.axd*",
