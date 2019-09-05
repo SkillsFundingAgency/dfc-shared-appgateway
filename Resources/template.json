@@ -125,13 +125,6 @@
                 "Threshold": "0",
                 "TimeWindow": "PT5M",
                 "Aggregation": "Average"
-            },
-            {
-                "MetricName": "CapacityUnits",
-                "Operator": "GreaterThan",
-                "Threshold": "[string(mul(parameters('capacity'), 5))]",
-                "TimeWindow": "PT5M",
-                "Aggregation": "Average"
             }
         ]
     },
