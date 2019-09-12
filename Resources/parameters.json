@@ -87,6 +87,7 @@
                 "backendHttp": "bauHttpSettings",
                 "paths": [
                     "/skills-health-check*",
+                    "/startshclink*",
                     "/ResourcePackages/*",
                     "/your-account*",
                     "/home/signout*",
