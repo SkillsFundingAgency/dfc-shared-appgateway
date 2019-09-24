@@ -109,6 +109,13 @@
             "metadata": {
                 "description": "Number of days to retain the log files for (set to 0 to disable retention policy)"
             }
+        },
+        "appGatewayTier": {
+            "type": "string",
+            "defaultValue": "Standard_v2",
+            "metadata": {
+                "description": "Application Gateway SKU, defaults to Standard_v2. Change to WAF_v2 to add WAF functionality"
+            }
         }
     },
     "variables": {
@@ -208,7 +215,7 @@
                         "value": "[parameters('appGatewaySubnetRef')]"
                     },
                     "appGatewayTier": {
-                        "value": "Standard_v2"
+                        "value": "[parameters('appGatewayTier')]"
                     },
                     "capacity": {
                         "value": "[parameters('capacity')]"
