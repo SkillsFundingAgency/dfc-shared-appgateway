@@ -21,13 +21,13 @@ Application gateway type and instance size combined
 
 Must be one of Standard_Small (default if none supplied), Standard_Medium, Standard_Large, WAF_Medium, WAF_Large, Standard_v2 or WAF_v2
 
-customProbes: (optional) object
+customProbes: (optional) array of objects
 
 Create probes for use in backendHttpSettings.
 See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayProbe
 for options.
 
-An example of a valid object
+An example of a valid object array
 
 ```json
 [
@@ -48,6 +48,23 @@ An example of a valid object
                 ]
             }
         }
+    }
+]
+```
+
+customErrorPages: (optional) array of objects
+
+Create probes for use in backendHttpSettings.
+See https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/applicationgateways#ApplicationGatewayCustomError
+for options.
+
+An example of a valid object array
+
+```json
+[
+    {
+        "statusCode": "HttpStatus502",
+        "customErrorPageUrl": "https://my.domain/502.html"
     }
 ]
 ```
