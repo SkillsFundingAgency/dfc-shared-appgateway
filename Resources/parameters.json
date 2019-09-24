@@ -16,6 +16,9 @@
                 "name": "defaultBackend",
                 "fqdn": "__liveBackend__"
             }, {
+                "name": "compBackend",
+                "fqdn": "__compBackend__"
+            }, {
                 "name": "bauBackend",
                 "fqdn": "__bauBackendIP__"
             } ]
@@ -61,6 +64,12 @@
         "appGatewayPoolHttpSettings": {
             "value": [ {
                 "name": "defaultHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "appServiceProbe"
+            },{
+                "name": "compHttpSettings",
                 "port": 443,
                 "protocol": "Https",
                 "hostnameFromBackendAddress": true,
@@ -119,6 +128,26 @@
                         {
                             "variable": "http_resp_Location",
                             "pattern": "(https?):\\/\\/__liveFqdnEscaped__(.*)$",
+                            "ignoreCase": true,
+                            "negate": false
+                        }
+                    ],
+                    "actionSet": {
+                        "responseHeaderConfigurations": [
+                            {
+                                "headerName": "Location",
+                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__{http_resp_Location_2}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Location___compBackend__",
+                    "ruleSequence": 20,
+                    "conditions": [
+                        {
+                            "variable": "http_resp_Location",
+                            "pattern": "(https?):\\/\\/__compBackendEscaped__(.*)$",
                             "ignoreCase": true,
                             "negate": false
                         }
