@@ -117,6 +117,13 @@
                 "paths": [
                     "/skills-assessment/skills-health-check*"
                 ]
+            },{
+                "name": "compUiHelp",
+                "backendPool": "compBackend",
+                "backendHttp": "compHttpSettings",
+                "paths": [
+                    "/help*"
+                ]
             } ]
         },
         "appGatewayRewrites": {
