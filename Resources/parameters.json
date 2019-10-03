@@ -118,11 +118,12 @@
                     "/skills-assessment/skills-health-check*"
                 ]
             },{
-                "name": "compUiHelp",
+                "name": "compUi",
                 "backendPool": "compBackend",
                 "backendHttp": "compHttpSettings",
                 "paths": [
-                    "/help*"
+                    "/app-help*",
+                    "/app-job-profiles*"
                 ]
             } ]
         },
