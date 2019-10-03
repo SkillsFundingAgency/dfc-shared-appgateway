@@ -72,6 +72,7 @@
                 "name": "compHttpSettings",
                 "port": 443,
                 "protocol": "Https",
+                "backendPath": "/",
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
@@ -122,8 +123,7 @@
                 "backendPool": "compBackend",
                 "backendHttp": "compHttpSettings",
                 "paths": [
-                    "/app-help*",
-                    "/app-job-profiles*"
+                    "/app/*"
                 ]
             } ]
         },
