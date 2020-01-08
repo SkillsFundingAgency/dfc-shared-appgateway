@@ -125,6 +125,20 @@
                 "paths": [
                     "/app/*"
                 ]
+            },{
+                "name": "compJp",
+                "backendPool": "compBackend",
+                "backendHttp": "defaultHttpSettings",
+                "paths": [
+                    "/job-profiles/*"
+                ]
+            },{
+                "name": "sflookback",
+                "backendPool": "defaultBackend",
+                "backendHttp": "compHttpSettings",
+                "paths": [
+                    "/sf/*"
+                ]
             } ]
         },
         "appGatewayRewrites": {
