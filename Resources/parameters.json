@@ -145,6 +145,8 @@
                 "backendHttp": "defaultHttpSettings",
                 "paths": [
                     "/job-profiles/*",
+                    "/help/",
+                    "/alerts/",
                     "/discover-your-skills-careers/*"
                 ]
             },{
