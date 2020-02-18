@@ -76,6 +76,13 @@
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
+                "name": "compDysacHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "backendPath": "/discover-your-skills-careers/",
+                "hostnameFromBackendAddress": true,
+                "probeName": "appServiceProbe"
+            },{
                 "name": "bauHttpSettings",
                 "port": 80,
                 "protocol": "Http",
@@ -119,18 +126,28 @@
                     "/skills-assessment/skills-health-check*"
                 ]
             },{
-                "name": "compUi",
+                "name": "compUiapp",
                 "backendPool": "compBackend",
                 "backendHttp": "compHttpSettings",
                 "paths": [
                     "/app/*"
                 ]
             },{
-                "name": "compJp",
+                "name": "compUidysac",
+                "backendPool": "compBackend",
+                "backendHttp": "compDysacHttpSettings",
+                "paths": [
+                    "/skills-assessment/discover-your-skills-careers/*"
+                ]
+            },{
+                "name": "compUi",
                 "backendPool": "compBackend",
                 "backendHttp": "defaultHttpSettings",
                 "paths": [
-                    "/job-profiles/*"
+                    "/job-profiles/*",
+                    "/help/*",
+                    "/alerts/*",
+                    "/discover-your-skills-careers/*"
                 ]
             },{
                 "name": "sflookback",
