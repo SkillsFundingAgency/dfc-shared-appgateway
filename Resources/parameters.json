@@ -147,6 +147,7 @@
                     "/job-profiles/*",
                     "/help/*",
                     "/alerts/*",
+                    "/matchskills/*",
                     "/discover-your-skills-careers/*"
                 ]
             },{
