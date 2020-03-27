@@ -137,7 +137,7 @@
                 "backendPool": "compBackend",
                 "backendHttp": "compDysacHttpSettings",
                 "paths": [
-                    "/skills-assessment/discover-your-skills-careers/*"
+                    "/skills-assessment/discover-your-skills-careers/*",
                     "/skills-assessment/discover-your-skills-careers"
                 ]
             },{
@@ -153,7 +153,7 @@
                     "/alerts/*",
                     "/matchskills",
                     "/matchskills/*",
-                    "/discover-your-skills-careers"
+                    "/discover-your-skills-careers",
                     "/discover-your-skills-careers/*"
                 ]
             },{
