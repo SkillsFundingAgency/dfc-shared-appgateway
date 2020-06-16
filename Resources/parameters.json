@@ -154,7 +154,9 @@
                     "/matchskills",
                     "/matchskills/*",
                     "/discover-your-skills-careers",
-                    "/discover-your-skills-careers/*"
+                    "/discover-your-skills-careers/*",
+                    "/your-account",
+                    "/your-account/*"
                 ]
             },{
                 "name": "sflookback",
