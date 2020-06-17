@@ -108,7 +108,7 @@
                     "/account*",
                     "/startshclink*",
                     "/ResourcePackages/*",
-                    "/your-account*",
+                    "/bau/your-account*",
                     "/home/signout*",
                     "/home/signin*",
                     "/course-directory/*",
