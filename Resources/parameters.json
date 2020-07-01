@@ -79,7 +79,7 @@
                 "name": "compDysacHttpSettings",
                 "port": 443,
                 "protocol": "Https",
-                "backendPath": "/discover-your-skills-careers/",
+                "backendPath": "/discover-your-skills-and-careers/",
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
@@ -137,8 +137,8 @@
                 "backendPool": "compBackend",
                 "backendHttp": "compDysacHttpSettings",
                 "paths": [
-                    "/skills-assessment/discover-your-skills-careers/*",
-                    "/skills-assessment/discover-your-skills-careers"
+                    "/skills-assessment/discover-your-skills-and-careers/*",
+                    "/skills-assessment/discover-your-skills-and-careers"
                 ]
             },{
                 "name": "compUi",
@@ -153,8 +153,8 @@
                     "/alerts/*",
                     "/matchskills",
                     "/matchskills/*",
-                    "/discover-your-skills-careers",
-                    "/discover-your-skills-careers/*",
+                    "/discover-your-skills-and-careers",
+                    "/discover-your-skills-and-careers/*",
                     "/your-account",
                     "/your-account/*"
                 ]
