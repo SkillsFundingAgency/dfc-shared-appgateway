@@ -147,8 +147,6 @@
                 "paths": [
                     "/job-profiles",
                     "/job-profiles/*",
-                    "/help",
-                    "/help/*",
                     "/alerts",
                     "/alerts/*",
                     "/matchskills",
