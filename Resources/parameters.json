@@ -14,10 +14,10 @@
         "appGatewayPools": {
             "value": [ {
                 "name": "defaultBackend",
-                "fqdn": "__liveBackend__"
-            }, {
-                "name": "compBackend",
                 "fqdn": "__compBackend__"
+            }, {
+                "name": "serviceSitefinityBackend",
+                "fqdn": "__liveBackend__"
             }, {
                 "name": "bauBackend",
                 "fqdn": "__bauBackendIP__"
@@ -30,6 +30,23 @@
                 "properties": {
                     "protocol": "Https",
                     "path": "/",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            },{
+                "name": "compuiAppServiceProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/health/ping",
                     "interval": 60,
                     "timeout": 30,
                     "unhealthyThreshold": 3,
@@ -69,19 +86,25 @@
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
-                "name": "compHttpSettings",
+                "name": "trimHttpSettings",
                 "port": 443,
                 "protocol": "Https",
                 "backendPath": "/",
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
+                "name": "compuiHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "compuiAppServiceProbe"
+            },{
                 "name": "compDysacHttpSettings",
                 "port": 443,
                 "protocol": "Https",
                 "backendPath": "/discover-your-skills-and-careers/",
                 "hostnameFromBackendAddress": true,
-                "probeName": "appServiceProbe"
+                "probeName": "compuiAppServiceProbe"
             },{
                 "name": "bauHttpSettings",
                 "port": 80,
@@ -126,39 +149,24 @@
                     "/skills-assessment/skills-health-check*"
                 ]
             },{
-                "name": "compUiapp",
-                "backendPool": "compBackend",
-                "backendHttp": "compHttpSettings",
-                "paths": [
-                    "/app/*"
-                ]
-            },{
                 "name": "compUidysac",
-                "backendPool": "compBackend",
+                "backendPool": "defaultBackend",
                 "backendHttp": "compDysacHttpSettings",
                 "paths": [
                     "/skills-assessment/discover-your-skills-and-careers/*",
                     "/skills-assessment/discover-your-skills-and-careers"
                 ]
             },{
-                "name": "compUi",
-                "backendPool": "compBackend",
+                "name": "serviceSitefinity",
+                "backendPool": "serviceSitefinityBackend",
                 "backendHttp": "defaultHttpSettings",
                 "paths": [
-                    "/job-profiles",
-                    "/job-profiles/*",
-                    "/alerts",
-                    "/alerts/*",
-                    "/matchskills",
-                    "/matchskills/*",
-                    "/discover-your-skills-and-careers",
-                    "/discover-your-skills-and-careers/*",
-                    "/your-account",
-                    "/your-account/*"
+                    "/careers-advice",
+                    "/careers-advice/*"
                 ]
             },{
                 "name": "sflookback",
-                "backendPool": "defaultBackend",
+                "backendPool": "serviceSitefinityBackend",
                 "backendHttp": "compHttpSettings",
                 "paths": [
                     "/sf/*"
