@@ -42,6 +42,23 @@
                     }
                 }
             },{
+                "name": "compuiAppServiceProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/health/ping",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            },{
                 "name": "bauProbe",
                 "type": "Microsoft.Network/applicationGateways/probes",
                 "properties": {
@@ -76,12 +93,18 @@
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
+                "name": "compuiHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "compuiAppServiceProbe"
+            },{	
                 "name": "compDysacHttpSettings",
                 "port": 443,
                 "protocol": "Https",
                 "backendPath": "/discover-your-skills-and-careers/",
                 "hostnameFromBackendAddress": true,
-                "probeName": "appServiceProbe"
+                "probeName": "compuiAppServiceProbe"
             },{
                 "name": "bauHttpSettings",
                 "port": 80,
@@ -128,7 +151,7 @@
             },{
                 "name": "compUiapp",
                 "backendPool": "compBackend",
-                "backendHttp": "compHttpSettings",
+                "backendHttp": "compuiHttpSettings",
                 "paths": [
                     "/app/*"
                 ]
@@ -143,7 +166,7 @@
             },{
                 "name": "compUi",
                 "backendPool": "compBackend",
-                "backendHttp": "defaultHttpSettings",
+                "backendHttp": "compuiHttpSettings",
                 "paths": [
                     "/job-profiles",
                     "/job-profiles/*",
@@ -154,7 +177,11 @@
                     "/discover-your-skills-and-careers",
                     "/discover-your-skills-and-careers/*",
                     "/your-account",
-                    "/your-account/*"
+                    "/your-account/*",
+                    "/find-a-course/the-skills-toolkit",
+                    "/find-a-course/the-skills-toolkit/*",
+                    "/find-a-course/the-skills-toolkit-legal-disclaimer",
+                    "/find-a-course/the-skills-toolkit-legal-disclaimer/*"
                 ]
             },{
                 "name": "sflookback",
