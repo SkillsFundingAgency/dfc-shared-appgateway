@@ -42,6 +42,23 @@
                     }
                 }
             },{
+                "name": "compuiAppServiceProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/health/ping",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            },{
                 "name": "bauProbe",
                 "type": "Microsoft.Network/applicationGateways/probes",
                 "properties": {
@@ -75,6 +92,12 @@
                 "backendPath": "/",
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
+            },{
+                "name": "compuiHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "compuiAppServiceProbe"
             },{
                 "name": "bauHttpSettings",
                 "port": 80,
@@ -128,12 +151,14 @@
             },{
                 "name": "compUi",
                 "backendPool": "compBackend",
-                "backendHttp": "defaultHttpSettings",
+                "backendHttp": "compuiHttpSettings",
                 "paths": [
                     "/job-profiles",
                     "/job-profiles/*",
                     "/alerts",
-                    "/alerts/*"
+                    "/alerts/*",
+                    "/find-a-course/the-skills-toolkit",
+                    "/find-a-course/the-skills-toolkit-legal-disclaimer"
                 ]
             },{
                 "name": "sflookback",
