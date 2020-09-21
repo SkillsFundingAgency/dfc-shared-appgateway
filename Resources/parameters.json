@@ -156,11 +156,7 @@
                     "/job-profiles",
                     "/job-profiles/*",
                     "/alerts",
-                    "/alerts/*",
-                    "/find-a-course/the-skills-toolkit",
-                    "/find-a-course/the-skills-toolkit/*",
-                    "/find-a-course/the-skills-toolkit-legal-disclaimer",
-                    "/find-a-course/the-skills-toolkit-legal-disclaimer/*"
+                    "/alerts/*"
                 ]
             },{
                 "name": "sflookback",
