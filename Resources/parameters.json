@@ -156,13 +156,7 @@
                     "/job-profiles",
                     "/job-profiles/*",
                     "/alerts",
-                    "/alerts/*",
-                    "/find-a-course",
-                    "/find-a-course/*",
-                    "/contact-us",
-                    "/contact-us/*",
-                    "/discover-your-skills-and-careers",
-                    "/discover-your-skills-and-careers/*"
+                    "/alerts/*"
                 ]
             },{
                 "name": "sflookback",
