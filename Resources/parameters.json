@@ -124,7 +124,6 @@
                     "/account*",
                     "/startshclink*",
                     "/ResourcePackages/*",
-                    "/your-account*",
                     "/home/signout*",
                     "/home/signin*",
                     "/course-directory/*",
@@ -156,7 +155,13 @@
                     "/job-profiles",
                     "/job-profiles/*",
                     "/alerts",
-                    "/alerts/*"
+                    "/alerts/*",
+                    "/auth",
+                    "/auth/*",
+                    "/action-plans",
+                    "/action-plans/*",
+                    "/your-account",
+                    "/your-account/*"
                 ]
             },{
                 "name": "sflookback",
