@@ -161,7 +161,9 @@
                     "/action-plans",
                     "/action-plans/*",
                     "/your-account",
-                    "/your-account/*"
+                    "/your-account/*",
+                    "/contact-us",
+                    "/contact-us/*"
                 ]
             },{
                 "name": "sflookback",
