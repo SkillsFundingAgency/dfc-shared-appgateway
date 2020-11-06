@@ -163,7 +163,9 @@
                     "/your-account",
                     "/your-account/*",
                     "/contact-us",
-                    "/contact-us/*"
+                    "/contact-us/*",
+                    "/webchat/chat",
+                    "/webchat/chat/*"
                 ]
             },{
                 "name": "sflookback",
