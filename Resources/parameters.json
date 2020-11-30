@@ -156,12 +156,10 @@
                     "/job-profiles/*",
                     "/alerts",
                     "/alerts/*",
-                    "/auth",
-                    "/auth/*",
-                    "/action-plans",
-                    "/action-plans/*",
-                    "/your-account",
-                    "/your-account/*"
+                    "/contact-us",
+                    "/contact-us/*",
+                    "/webchat/chat",
+                    "/webchat/chat/*"
                 ]
             },{
                 "name": "sflookback",
