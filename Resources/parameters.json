@@ -192,8 +192,8 @@
                     "/contact-us/*",
                     "/webchat/chat",
                     "/webchat/chat/*",
-                    "/api/Ajax/Action",
-                    "/api/Ajax/Action/*"
+                    "/api/Ajax",
+                    "/api/Ajax/*"
                 ]
             },{
                 "name": "sflookback",
