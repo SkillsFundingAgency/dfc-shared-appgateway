@@ -159,7 +159,11 @@
                     "/contact-us",
                     "/contact-us/*",
                     "/webchat/chat",
-                    "/webchat/chat/*"
+                    "/webchat/chat/*",
+                    "/find-a-course",
+                    "/find-a-course/*",
+                    "/api/Ajax",
+                    "/api/Ajax/*"
                 ]
             },{
                 "name": "sflookback",
