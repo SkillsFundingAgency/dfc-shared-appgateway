@@ -163,7 +163,13 @@
                     "/find-a-course",
                     "/find-a-course/*",
                     "/api/Ajax",
-                    "/api/Ajax/*"
+                    "/api/Ajax/*",
+                    "/your-account",
+                    "/your-account/*",
+                    "/auth",
+                    "/auth/*",
+                    "/action-plans",
+                    "/action-plans/*"
                 ]
             },{
                 "name": "sflookback",
