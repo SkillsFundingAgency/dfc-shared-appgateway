@@ -164,6 +164,8 @@
                     "/find-a-course/*",
                     "/api/Ajax",
                     "/api/Ajax/*",
+                    "/about-us",
+                    "/about-us/*",
                     "/your-account",
                     "/your-account/*",
                     "/auth",
