@@ -163,7 +163,9 @@
                     "/find-a-course",
                     "/find-a-course/*",
                     "/api/Ajax",
-                    "/api/Ajax/*"
+                    "/api/Ajax/*",
+                    "/about-us",
+                    "/about-us/*"
                 ]
             },{
                 "name": "sflookback",
