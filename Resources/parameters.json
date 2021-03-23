@@ -195,7 +195,9 @@
                     "/api/Ajax",
                     "/api/Ajax/*",
                     "/about-us",
-                    "/about-us/*"
+                    "/about-us/*",
+                    "/job-groups",
+                    "/job-groups/*"
                 ]
             },{
                 "name": "sflookback",
