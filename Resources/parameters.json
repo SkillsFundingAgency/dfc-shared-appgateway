@@ -165,13 +165,7 @@
                     "/api/Ajax",
                     "/api/Ajax/*",
                     "/about-us",
-                    "/about-us/*",
-                    "/your-account",
-                    "/your-account/*",
-                    "/auth",
-                    "/auth/*",
-                    "/action-plans",
-                    "/action-plans/*"
+                    "/about-us/*"
                 ]
             },{
                 "name": "sflookback",
