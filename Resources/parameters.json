@@ -14,13 +14,16 @@
         "appGatewayPools": {
             "value": [ {
                 "name": "defaultBackend",
-                "fqdn": "__liveBackend__"
+                "fqdn": "__compBackend__"
             }, {
                 "name": "compBackend",
                 "fqdn": "__compBackend__"
             }, {
                 "name": "bauBackend",
                 "fqdn": "__bauBackendIP__"
+            }, {
+                "name": "SitefinityBackend",
+                "fqdn": "__liveBackend__"
             } ]
         },
         "customProbes": {
