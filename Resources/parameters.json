@@ -160,6 +160,13 @@
                 "paths": [
                     "/skills-assessment/skills-health-check*"
                 ]
+            },{
+                "name": "sflookback",
+                "backendPool": "SitefinityBackend",
+                "backendHttp": "SitefinityHttpSettings",
+                "paths": [
+                    "/sf/*"
+                ]
             } ]
         },
         "appGatewayRewrites": {
