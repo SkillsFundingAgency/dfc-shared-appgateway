@@ -89,7 +89,6 @@
                 "name": "SitefinityHttpSettings",
                 "port": 443,
                 "protocol": "Https",
-                "backendPath": "/",
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
@@ -149,9 +148,7 @@
                     "/explore-careers",
                     "/explore-careers/*",
                     "/job-categories",
-                    "/job-categories/*",
-                    "/skills-assessment",
-                    "/skills-assessment/*"
+                    "/job-categories/*"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
