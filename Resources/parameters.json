@@ -167,7 +167,13 @@
                     "/about-us",
                     "/about-us/*",
                     "/job-groups",
-                    "/job-groups/*"
+                    "/job-groups/*",
+                    "/your-account",
+                    "/your-account/*",
+                    "/auth",
+                    "/auth/*",
+                    "/action-plans",
+                    "/action-plans/*"
                 ]
             },{
                 "name": "sflookback",
