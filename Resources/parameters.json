@@ -148,7 +148,9 @@
                     "/explore-careers",
                     "/explore-careers/*",
                     "/job-categories",
-                    "/job-categories/*"
+                    "/job-categories/*",
+                    "/skills-assessment",
+                    "/skills-assessment/*"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
