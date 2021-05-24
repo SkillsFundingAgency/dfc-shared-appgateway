@@ -173,7 +173,9 @@
                     "/auth",
                     "/auth/*",
                     "/action-plans",
-                    "/action-plans/*"
+                    "/action-plans/*",
+                    "/careers-advice",
+                    "/careers-advice/*"
                 ]
             },{
                 "name": "sflookback",
