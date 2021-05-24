@@ -14,13 +14,13 @@
         "appGatewayPools": {
             "value": [ {
                 "name": "defaultBackend",
-                "fqdn": "__liveBackend__"
-            }, {
-                "name": "compBackend",
                 "fqdn": "__compBackend__"
             }, {
                 "name": "bauBackend",
                 "fqdn": "__bauBackendIP__"
+            }, {
+                "name": "SitefinityBackend",
+                "fqdn": "__liveBackend__"
             } ]
         },
         "customProbes": {
@@ -86,10 +86,9 @@
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
-                "name": "compHttpSettings",
+                "name": "SitefinityHttpSettings",
                 "port": 443,
                 "protocol": "Https",
-                "backendPath": "/",
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
@@ -142,6 +141,26 @@
                     "/alerts/403*"
                 ]
             },{
+                "name": "Sitefinity",
+                "backendPool": "SitefinityBackend",
+                "backendHttp": "SitefinityHttpSettings",
+                "paths": [
+                    "/explore-careers",
+                    "/explore-careers/*",
+                    "/job-categories",
+                    "/job-categories/*",
+                    "/skills-assessment",
+                    "/skills-assessment/*",
+                    "/help",
+                    "/help/*",
+                    "/esfa-welcome",
+                    "/esfa-welcome/*",
+                    "/alerts",
+                    "/alerts/*",
+                    "/search-results",
+                    "/search-results/*"
+                ]
+            },{
                 "name": "bauBackendAssessSkills",
                 "backendPool": "bauBackend",
                 "backendHttp": "aysHttpSettings",
@@ -149,62 +168,9 @@
                     "/skills-assessment/skills-health-check*"
                 ]
             },{
-                "name": "compUiapp",
-                "backendPool": "compBackend",
-                "backendHttp": "compuiHttpSettings",
-                "paths": [
-                    "/app/*"
-                ]
-            },{
-                "name": "compUidysac",
-                "backendPool": "compBackend",
-                "backendHttp": "compDysacHttpSettings",
-                "paths": [
-                    "/skills-assessment/discover-your-skills-and-careers/*",
-                    "/skills-assessment/discover-your-skills-and-careers"
-                ]
-            },{
-                "name": "compUi",
-                "backendPool": "compBackend",
-                "backendHttp": "compuiHttpSettings",
-                "paths": [
-                    "/job-profiles",
-                    "/job-profiles/*",
-                    "/alerts",
-                    "/alerts/*",
-                    "/matchskills",
-                    "/matchskills/*",
-                    "/discover-your-skills-and-careers",
-                    "/discover-your-skills-and-careers/*",
-                    "/your-account",
-                    "/your-account/*",
-                    "/auth",
-                    "/auth/*",
-                    "/action-plans",
-                    "/action-plans/*",
-                    "/find-a-course",
-                    "/find-a-course/*",
-                    "/find-a-course/the-skills-toolkit",
-                    "/find-a-course/the-skills-toolkit/*",
-                    "/find-a-course/the-skills-toolkit-legal-disclaimer",
-                    "/find-a-course/the-skills-toolkit-legal-disclaimer/*",
-                    "/contact-us",
-                    "/contact-us/*",
-                    "/webchat/chat",
-                    "/webchat/chat/*",
-                    "/api/Ajax",
-                    "/api/Ajax/*",
-                    "/about-us",
-                    "/about-us/*",
-                    "/job-groups",
-                    "/job-groups/*",
-                    "/careers-advice",
-                    "/careers-advice/*"
-                ]
-            },{
                 "name": "sflookback",
-                "backendPool": "defaultBackend",
-                "backendHttp": "compHttpSettings",
+                "backendPool": "SitefinityBackend",
+                "backendHttp": "SitefinityHttpSettings",
                 "paths": [
                     "/sf/*"
                 ]
