@@ -150,7 +150,15 @@
                     "/job-categories",
                     "/job-categories/*",
                     "/skills-assessment",
-                    "/skills-assessment/*"
+                    "/skills-assessment/*",
+                    "/help",
+                    "/help/*",
+                    "/esfa-welcome",
+                    "/esfa-welcome/*",
+                    "/alerts",
+                    "/alerts/*",
+                    "/search-results",
+                    "/search-results/*"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
