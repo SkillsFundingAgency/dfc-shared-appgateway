@@ -150,6 +150,7 @@
                     "/job-categories/*",
                     "/skills-assessment",
                     "/skills-assessment/*",
+                    "/skills-assessment/skills-health-check*",
                     "/help",
                     "/help/*",
                     "/esfa-welcome",
@@ -166,13 +167,6 @@
                     "/health/servicestatus/*",
                     "/feedback-survey",
                     "/feedback-survey/*"
-                ]
-            },{
-                "name": "bauBackendAssessSkills",
-                "backendPool": "bauBackend",
-                "backendHttp": "aysHttpSettings",
-                "paths": [
-                    "/skills-assessment/skills-health-check*"
                 ]
             },{
                 "name": "sflookback",
