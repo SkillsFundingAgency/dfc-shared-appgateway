@@ -152,7 +152,6 @@
                     "/skills-assessment",
                     "/skills-assessment/*",
                     "/skills-assessment/skills-health-check/home",
-                    "/skills-assessment/skills-health-check/home/*",
                     "/help",
                     "/help/*",
                     "/esfa-welcome",
