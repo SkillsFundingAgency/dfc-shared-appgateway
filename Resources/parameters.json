@@ -114,6 +114,7 @@
                 "name": "aysHttpSettings",
                 "port": 80,
                 "protocol": "Http",
+                "backendPath": "/skills-health-check/",                
                 "hostnameFromBackendAddress": false,
                 "probeName": "bauProbe"
             } ]
@@ -167,6 +168,13 @@
                     "/health/servicestatus/*",
                     "/feedback-survey",
                     "/feedback-survey/*"
+                ]
+            },{
+                "name": "bauBackendAssessSkills",
+                "backendPool": "bauBackend",
+                "backendHttp": "aysHttpSettings",
+                "paths": [
+                    "/skills-assessment/skills-health-check*"
                 ]
             },{
                 "name": "sflookback",
