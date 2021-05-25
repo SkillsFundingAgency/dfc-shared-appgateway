@@ -165,7 +165,9 @@
                     "/api/Ajax",
                     "/api/Ajax/*",
                     "/about-us",
-                    "/about-us/*"
+                    "/about-us/*",
+                    "/careers-advice",
+                    "/careers-advice/*"
                 ]
             },{
                 "name": "sflookback",
