@@ -114,7 +114,7 @@
                 "name": "aysHttpSettings",
                 "port": 80,
                 "protocol": "Http",
-                "backendPath": "/skills-health-check/",
+                "backendPath": "/skills-health-check/",                
                 "hostnameFromBackendAddress": false,
                 "probeName": "bauProbe"
             } ]
@@ -150,7 +150,6 @@
                     "/job-categories",
                     "/job-categories/*",
                     "/skills-assessment",
-                    "/skills-assessment/*",
                     "/help",
                     "/help/*",
                     "/esfa-welcome",
@@ -158,7 +157,15 @@
                     "/alerts",
                     "/alerts/*",
                     "/search-results",
-                    "/search-results/*"
+                    "/search-results/*",
+                    "/searchautocomplete",
+                    "/searchautocomplete/*",
+                    "/jp-feedback-thankyou",
+                    "/jp-feedback-thankyou/*",
+                    "/health/servicestatus",
+                    "/health/servicestatus/*",
+                    "/feedback-survey",
+                    "/feedback-survey/*"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
