@@ -167,7 +167,7 @@
                     "/about-us",
                     "/about-us/*",
                     "/job-groups",
-                    "/job-groups/*"
+                    "/job-groups/*",
                     "/careers-advice",
                     "/careers-advice/*"
                 ]
