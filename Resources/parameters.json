@@ -166,6 +166,8 @@
                     "/api/Ajax/*",
                     "/about-us",
                     "/about-us/*",
+                    "/job-groups",
+                    "/job-groups/*"
                     "/careers-advice",
                     "/careers-advice/*"
                 ]
