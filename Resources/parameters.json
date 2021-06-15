@@ -168,6 +168,8 @@
                     "/about-us/*",
                     "/job-groups",
                     "/job-groups/*"
+                    "/careers-advice",
+                    "/careers-advice/*"
                 ]
             },{
                 "name": "sflookback",
