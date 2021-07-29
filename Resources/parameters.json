@@ -161,7 +161,9 @@
                     "/health/servicestatus",
                     "/health/servicestatus/*",
                     "/feedback-survey",
-                    "/feedback-survey/*"
+                    "/feedback-survey/*",
+                    "/exam-results",
+                    "/exam-results/*"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
