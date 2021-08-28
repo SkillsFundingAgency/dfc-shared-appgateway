@@ -175,7 +175,9 @@
                     "/action-plans",
                     "/action-plans/*",
                     "/help",
-                    "/help/*"
+                    "/help/*",
+                    "/careers-advice",
+                    "/careers-advice/*"
                 ]
             },{
                 "name": "sflookback",
