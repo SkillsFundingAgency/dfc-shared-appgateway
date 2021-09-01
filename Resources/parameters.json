@@ -177,7 +177,9 @@
                     "/help",
                     "/help/*",
                     "/careers-advice",
-                    "/careers-advice/*"
+                    "/careers-advice/*",
+                    "/exam-results",
+                    "/exam-results/*"
                 ]
             },{
                 "name": "sflookback",
