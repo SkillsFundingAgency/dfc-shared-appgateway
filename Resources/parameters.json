@@ -175,12 +175,10 @@
                         "/searchautocomplete/*",
                         "/jp-feedback-thankyou",
                         "/jp-feedback-thankyou/*",
-                        "/health/servicestatus",
-                        "/health/servicestatus/*",
+                        "/health",
+                        "/health/*",
                         "/feedback-survey",
-                        "/feedback-survey/*",
-                        "/exam-results",
-                        "/exam-results/*"
+                        "/feedback-survey/*"
                     ]
                 },
                 {
