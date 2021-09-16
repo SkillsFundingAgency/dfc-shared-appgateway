@@ -178,7 +178,10 @@
                         "/health",
                         "/health/*",
                         "/feedback-survey",
-                        "/feedback-survey/*"
+                        "/feedback-survey/*",
+                        "/sitemap",
+                        "/sitemap/*",
+                        "/robots.txt"
                     ]
                 },
                 {
