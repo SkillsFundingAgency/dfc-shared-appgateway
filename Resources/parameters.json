@@ -163,7 +163,8 @@
                     "/feedback-survey",
                     "/feedback-survey/*",
                     "/sitemap",
-                    "/sitemap/*"
+                    "/sitemap/*",
+                    "/robots.txt"
                 ]
             },{
                 "name": "bauBackendAssessSkills",
