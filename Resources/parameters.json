@@ -263,7 +263,7 @@
                         ]
                     }
                 },
-                {
+                /*{
                     "name": "Location_bauIP",
                     "ruleSequence": 50,
                     "conditions": [
@@ -303,6 +303,7 @@
                         ]
                     }
                 },
+                */
                 {
                     "name": "CookieResponse",
                     "ruleSequence": 100,
