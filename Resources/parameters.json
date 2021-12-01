@@ -141,7 +141,6 @@
                     "backendPool": "bauBackend",
                     "backendHttp": "bauHttpSettings",
                     "paths": [
-                        "/skills-health-check*",
                         "/tools*",
                         "/account*",
                         "/startshclink*",
@@ -284,7 +283,7 @@
                         ]
                     }
                 },
-                {
+                /*{
                     "name": "Location_bauIP",
                     "ruleSequence": 50,
                     "conditions": [
@@ -324,6 +323,7 @@
                         ]
                     }
                 },
+                */
                 {
                     "name": "CookieResponse",
                     "ruleSequence": 100,
