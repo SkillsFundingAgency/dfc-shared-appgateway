@@ -123,14 +123,6 @@
                     "protocol": "Http",
                     "hostnameFromBackendAddress": false,
                     "probeName": "bauProbe"
-                },
-                {
-                    "name": "aysHttpSettings",
-                    "port": 80,
-                    "protocol": "Http",
-                    "backendPath": "/skills-health-check/",
-                    "hostnameFromBackendAddress": false,
-                    "probeName": "bauProbe"
                 }
             ]
         },
@@ -180,14 +172,6 @@
                         "/sitemap",
                         "/sitemap/*",
                         "/robots.txt"
-                    ]
-                },
-                {
-                    "name": "bauBackendAssessSkills",
-                    "backendPool": "bauBackend",
-                    "backendHttp": "aysHttpSettings",
-                    "paths": [
-                        "/skills-assessment/skills-health-check*"
                     ]
                 },
                 {
@@ -302,27 +286,27 @@
                         ]
                     }
                 },
+                */
                 {
-                    "name": "Location_bau_skills",
-                    "ruleSequence": 60,
+                    "name": "New_Rewrite_SHC",
+                    "ruleSequence": 80,
                     "conditions": [
                         {
-                            "variable": "http_resp_Location",
-                            "pattern": "(https?):\\/\\/[^\\/]+\\/skills-health-check\\/(.*)$",
+                            "variable": "var_uri_path",
+                            "pattern": ".*skills-assessment/skills-health-check/(.*)",
                             "ignoreCase": true,
                             "negate": false
                         }
                     ],
                     "actionSet": {
-                        "responseHeaderConfigurations": [
-                            {
-                                "headerName": "Location",
-                                "headerValue": "{http_resp_Location_1}://__appGatewayFqdn__/skills-assessment/skills-health-check/{http_resp_Location_2}"
-                            }
-                        ]
+                        "requestHeaderConfigurations": [],
+                        "responseHeaderConfigurations": [],
+                        "urlConfiguration": {
+                            "modifiedPath": "/skills-health-check/{var_uri_path_1}",
+                            "reroute": false
+                        }
                     }
                 },
-                */
                 {
                     "name": "CookieResponse",
                     "ruleSequence": 100,
