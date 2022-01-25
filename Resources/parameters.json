@@ -137,8 +137,6 @@
                 "backendPool": "SitefinityBackend",
                 "backendHttp": "SitefinityHttpSettings",
                 "paths": [
-                    "/job-categories",
-                    "/job-categories/*",
                     "/esfa-welcome",
                     "/esfa-welcome/*",
                     "/search-results",
