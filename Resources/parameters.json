@@ -139,10 +139,6 @@
                 "paths": [
                     "/esfa-welcome",
                     "/esfa-welcome/*",
-                    "/search-results",
-                    "/search-results/*",
-                    "/searchautocomplete",
-                    "/searchautocomplete/*",
                     "/jp-feedback-thankyou",
                     "/jp-feedback-thankyou/*",
                     "/health",
