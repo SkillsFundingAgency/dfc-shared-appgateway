@@ -366,7 +366,48 @@
                             }
                         ]
                     }
-                }
+                },
+                {
+                                    "name": "JobProfileRewrite1",
+                                    "ruleSequence": 220,
+                                    "conditions": [
+                                        {
+                                            "variable": "var_uri_path",
+                                            "pattern": ".*/job-profiles/(.*)\\((.*)\\)(.*)",
+                                            "ignoreCase": true,
+                                            "negate": false
+                                        }
+                                    ],                                    
+                                    "actionSet": {
+                                        "requestHeaderConfigurations": [],
+                                        "responseHeaderConfigurations": [],
+                                        "urlConfiguration": {
+                                            "modifiedPath": "/job-profiles/{var_uri_path_1}{var_uri_path_2}{var_uri_path_3}",
+                                            "reroute": false
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "JobProfileRewrite2",
+                                    "ruleSequence": 230,
+                                    "conditions": [
+                                        {
+                                            "variable": "var_uri_path",
+                                            "pattern": ".*/job-profiles/(.*)'(.*)",
+                                            "ignoreCase": true,
+                                            "negate": false
+                                        }
+                                    ],                                    
+                                    "actionSet": {
+                                        "requestHeaderConfigurations": [],
+                                        "responseHeaderConfigurations": [],
+                                        "urlConfiguration": {
+                                            "modifiedPath": "/job-profiles/{var_uri_path_1}{var_uri_path_2}",
+                                            "reroute": false
+                                        }
+                                    }
+                                },
+                
             ]
         },
         "privateIPAddress": {
