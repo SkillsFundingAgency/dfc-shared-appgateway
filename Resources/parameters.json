@@ -12,177 +12,151 @@
             "value": __appGatewayCapacity__
         },
         "appGatewayPools": {
-            "value": [
-                {
-                    "name": "defaultBackend",
-                    "fqdn": "__compBackend__"
-                },
-                {
-                    "name": "bauBackend",
-                    "fqdn": "__bauBackendIP__"
-                },
-                {
-                    "name": "SitefinityBackend",
-                    "fqdn": "__liveBackend__"
-                }
-            ]
+            "value": [ {
+                "name": "defaultBackend",
+                "fqdn": "__compBackend__"
+            }, {
+                "name": "bauBackend",
+                "fqdn": "__bauBackendIP__"
+            }, {
+                "name": "SitefinityBackend",
+                "fqdn": "__liveBackend__"
+            } ]
         },
         "customProbes": {
-            "value": [
-                {
-                    "name": "appServiceProbe",
-                    "type": "Microsoft.Network/applicationGateways/probes",
-                    "properties": {
-                        "protocol": "Https",
-                        "path": "/",
-                        "interval": 60,
-                        "timeout": 30,
-                        "unhealthyThreshold": 3,
-                        "pickHostNameFromBackendHttpSettings": true,
-                        "minServers": 0,
-                        "match": {
-                            "statusCodes": [
-                                "200-399"
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "compuiAppServiceProbe",
-                    "type": "Microsoft.Network/applicationGateways/probes",
-                    "properties": {
-                        "protocol": "Https",
-                        "path": "/health/ping",
-                        "interval": 60,
-                        "timeout": 30,
-                        "unhealthyThreshold": 3,
-                        "pickHostNameFromBackendHttpSettings": true,
-                        "minServers": 0,
-                        "match": {
-                            "statusCodes": [
-                                "200-399"
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "bauProbe",
-                    "type": "Microsoft.Network/applicationGateways/probes",
-                    "properties": {
-                        "protocol": "Http",
-                        "host": "__bauBackend__",
-                        "path": "/",
-                        "interval": 30,
-                        "timeout": 30,
-                        "unhealthyThreshold": 3,
-                        "pickHostNameFromBackendHttpSettings": false,
-                        "minServers": 0,
-                        "match": {
-                            "statusCodes": [
-                                "200-399"
-                            ]
-                        }
+            "value": [ {
+                "name": "appServiceProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
                     }
                 }
-            ]
+            },{
+                "name": "compuiAppServiceProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Https",
+                    "path": "/health/ping",
+                    "interval": 60,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": true,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            },{
+                "name": "bauProbe",
+                "type": "Microsoft.Network/applicationGateways/probes",
+                "properties": {
+                    "protocol": "Http",
+                    "host": "__bauBackend__",
+                    "path": "/",
+                    "interval": 30,
+                    "timeout": 30,
+                    "unhealthyThreshold": 3,
+                    "pickHostNameFromBackendHttpSettings": false,
+                    "minServers": 0,
+                    "match": {
+                        "statusCodes": [
+                            "200-399"
+                        ]
+                    }
+                }
+            } ]
         },
         "appGatewayPoolHttpSettings": {
-            "value": [
-                {
-                    "name": "defaultHttpSettings",
-                    "port": 443,
-                    "protocol": "Https",
-                    "hostnameFromBackendAddress": true,
-                    "probeName": "appServiceProbe"
-                },
-                {
-                    "name": "SitefinityHttpSettings",
-                    "port": 443,
-                    "protocol": "Https",
-                    "hostnameFromBackendAddress": true,
-                    "probeName": "appServiceProbe"
-                },
-                {
-                    "name": "compuiHttpSettings",
-                    "port": 443,
-                    "protocol": "Https",
-                    "hostnameFromBackendAddress": true,
-                    "probeName": "compuiAppServiceProbe"
-                },
-                {
-                    "name": "compDysacHttpSettings",
-                    "port": 443,
-                    "protocol": "Https",
-                    "backendPath": "/discover-your-skills-and-careers/",
-                    "hostnameFromBackendAddress": true,
-                    "probeName": "compuiAppServiceProbe"
-                },
-                {
-                    "name": "bauHttpSettings",
-                    "port": 80,
-                    "protocol": "Http",
-                    "hostnameFromBackendAddress": false,
-                    "probeName": "bauProbe"
-                }
-            ]
+            "value": [ {
+                "name": "defaultHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "appServiceProbe"
+            },{
+                "name": "SitefinityHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "appServiceProbe"
+            },{
+                "name": "compuiHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "hostnameFromBackendAddress": true,
+                "probeName": "compuiAppServiceProbe"
+            },{	
+                "name": "compDysacHttpSettings",
+                "port": 443,
+                "protocol": "Https",
+                "backendPath": "/discover-your-skills-and-careers/",
+                "hostnameFromBackendAddress": true,
+                "probeName": "compuiAppServiceProbe"
+            },{
+                "name": "bauHttpSettings",
+                "port": 80,
+                "protocol": "Http",
+                "hostnameFromBackendAddress": false,
+                "probeName": "bauProbe"
+            }]
         },
         "appGatewayRouting": {
-            "value": [
-                {
-                    "name": "bauBackendDefault",
-                    "backendPool": "bauBackend",
-                    "backendHttp": "bauHttpSettings",
-                    "paths": [
-                        "/tools*",
-                        "/account*",
-                        "/startshclink*",
-                        "/ResourcePackages/*",
-                        "/bau/your-account*",
-                        "/home/signout*",
-                        "/home/signin*",
-                        "/course-directory/*",
-                        "/WebResource.axd*",
-                        "/ScriptResource.axd*",
-                        "/alerts/weve-changed-your-email-address*",
-                        "/alerts/session-timeout*",
-                        "/alerts/403*"
-                    ]
-                },
-                {
-                    "name": "Sitefinity",
-                    "backendPool": "SitefinityBackend",
-                    "backendHttp": "SitefinityHttpSettings",
-                    "paths": [
-                        "/explore-careers",
-                        "/explore-careers/*",
-                        "/job-categories",
-                        "/job-categories/*",
-                        "/esfa-welcome",
-                        "/esfa-welcome/*",
-                        "/search-results",
-                        "/search-results/*",
-                        "/searchautocomplete",
-                        "/searchautocomplete/*",
-                        "/jp-feedback-thankyou",
-                        "/jp-feedback-thankyou/*",
-                        "/health",
-                        "/health/*",
-                        "/feedback-survey",
-                        "/feedback-survey/*",
-                        "/sitemap",
-                        "/sitemap/*",
-                        "/robots.txt"
-                    ]
-                },
-                {
-                    "name": "sflookback",
-                    "backendPool": "SitefinityBackend",
-                    "backendHttp": "SitefinityHttpSettings",
-                    "paths": [
-                        "/sf/*"
-                    ]
-                }
-            ]
+            "value": [ {
+                "name": "bauBackendDefault",
+                "backendPool": "bauBackend",
+                "backendHttp": "bauHttpSettings",
+                "paths": [
+                    "/tools*",
+                    "/account*",
+                    "/startshclink*",
+                    "/ResourcePackages/*",
+                    "/bau/your-account*",
+                    "/home/signout*",
+                    "/home/signin*",
+                    "/course-directory/*",
+                    "/WebResource.axd*",
+                    "/ScriptResource.axd*",
+                    "/alerts/weve-changed-your-email-address*",
+                    "/alerts/session-timeout*",
+                    "/alerts/403*"
+                ]
+            },{
+                "name": "Sitefinity",
+                "backendPool": "SitefinityBackend",
+                "backendHttp": "SitefinityHttpSettings",
+                "paths": [
+                    "/esfa-welcome",
+                    "/esfa-welcome/*",
+                    "/jp-feedback-thankyou",
+                    "/jp-feedback-thankyou/*",
+                    "/health",
+                    "/health/*",
+                    "/feedback-survey",
+                    "/feedback-survey/*",
+                    "/sitemap",
+                    "/sitemap/*",
+                    "/robots.txt"
+                ]
+            },{
+                "name": "sflookback",
+                "backendPool": "SitefinityBackend",
+                "backendHttp": "SitefinityHttpSettings",
+                "paths": [
+                    "/sf/*"
+                ]
+            } ]
         },
         "appGatewayRewrites": {
             "value": [
