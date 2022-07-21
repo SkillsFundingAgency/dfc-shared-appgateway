@@ -139,8 +139,6 @@
                 "paths": [
                     "/esfa-welcome",
                     "/esfa-welcome/*",
-                    "/jp-feedback-thankyou",
-                    "/jp-feedback-thankyou/*",
                     "/health",
                     "/health/*",
                     "/feedback-survey",
