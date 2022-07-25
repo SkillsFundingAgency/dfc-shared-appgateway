@@ -137,8 +137,6 @@
                 "backendPool": "SitefinityBackend",
                 "backendHttp": "SitefinityHttpSettings",
                 "paths": [
-                    "/esfa-welcome",
-                    "/esfa-welcome/*",
                     "/health",
                     "/health/*",
                     "/feedback-survey",
