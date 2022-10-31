@@ -142,8 +142,7 @@
                     "/feedback-survey",
                     "/feedback-survey/*",
                     "/sitemap",
-                    "/sitemap/*",
-                    "/robots.txt"
+                    "/sitemap/*"
                 ]
             },{
                 "name": "sflookback",
