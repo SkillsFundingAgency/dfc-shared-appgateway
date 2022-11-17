@@ -18,9 +18,6 @@
             }, {
                 "name": "bauBackend",
                 "fqdn": "__bauBackendIP__"
-            }, {
-                "name": "SitefinityBackend",
-                "fqdn": "__liveBackend__"
             } ]
         },
         "customProbes": {
@@ -86,12 +83,6 @@
                 "hostnameFromBackendAddress": true,
                 "probeName": "appServiceProbe"
             },{
-                "name": "SitefinityHttpSettings",
-                "port": 443,
-                "protocol": "Https",
-                "hostnameFromBackendAddress": true,
-                "probeName": "appServiceProbe"
-            },{
                 "name": "compuiHttpSettings",
                 "port": 443,
                 "protocol": "Https",
@@ -131,30 +122,6 @@
                     "/alerts/weve-changed-your-email-address*",
                     "/alerts/session-timeout*",
                     "/alerts/403*"
-                ]
-            },{
-                "name": "Sitefinity",
-                "backendPool": "SitefinityBackend",
-                "backendHttp": "SitefinityHttpSettings",
-                "paths": [
-                    "/esfa-welcome",
-                    "/esfa-welcome/*",
-                    "/jp-feedback-thankyou",
-                    "/jp-feedback-thankyou/*",
-                    "/health",
-                    "/health/*",
-                    "/feedback-survey",
-                    "/feedback-survey/*",
-                    "/sitemap",
-                    "/sitemap/*",
-                    "/robots.txt"
-                ]
-            },{
-                "name": "sflookback",
-                "backendPool": "SitefinityBackend",
-                "backendHttp": "SitefinityHttpSettings",
-                "paths": [
-                    "/sf/*"
                 ]
             } ]
         },
