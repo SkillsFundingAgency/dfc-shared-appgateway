@@ -137,17 +137,12 @@
                 "backendPool": "SitefinityBackend",
                 "backendHttp": "SitefinityHttpSettings",
                 "paths": [
-                    "/esfa-welcome",
-                    "/esfa-welcome/*",
-                    "/jp-feedback-thankyou",
-                    "/jp-feedback-thankyou/*",
                     "/health",
                     "/health/*",
                     "/feedback-survey",
                     "/feedback-survey/*",
                     "/sitemap",
-                    "/sitemap/*",
-                    "/robots.txt"
+                    "/sitemap/*"
                 ]
             },{
                 "name": "sflookback",
